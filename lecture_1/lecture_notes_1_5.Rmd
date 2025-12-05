@@ -1,0 +1,59 @@
+# Lecture I: Introduction and Methods for E(r)
+
+## 1.5 Machine-learned interatomic potentials
+
+### Motivation
+
+We've now seen two approaches to calculating E(r). Classical potentials are fast and scale well, but require choosing a functional form and fitting parameters — the accuracy is bounded by these choices. DFT is transferable and doesn't assume a functional form, but the computational cost limits us to hundreds of atoms and short timescales.
+
+Machine-learned interatomic potentials sit between these. Like classical potentials, they're parameterised models fitted to data. But unlike classical potentials, they don't assume a functional form for the interactions — the model learns the shape of E(r) from training data. And the training data typically comes from DFT, so the model inherits DFT's accuracy for systems similar to those it was trained on.
+
+### The idea
+
+The principle is supervised learning. We generate a dataset of atomic configurations with their DFT energies and forces. We then train a model — typically a neural network or similar — to predict E(r) from atomic positions. Once trained, evaluating the model is much cheaper than running DFT, so we can use it for large systems and long simulations.
+
+The model learns a mapping: atomic positions → energy. But how should this mapping be structured?
+
+### Local atomic environments
+
+Most MLIPs decompose the total energy into contributions from each atom:
+
+$$E = \sum_i \varepsilon_i$$
+
+where εᵢ depends on the local environment around atom i — the species and positions of nearby atoms within some cutoff. The model learns a mapping from local environment to atomic energy contribution.
+
+This locality assumption is physically motivated: in most materials, an atom's energy contribution depends primarily on its immediate surroundings. It also makes the model size-transferable — a model trained on small cells can be applied to larger systems.
+
+There is considerable research into how local environments should be represented (descriptors, symmetry functions) and what model architectures work best (neural networks, Gaussian processes, equivariant networks). These details are beyond our scope. The key point is that MLIPs are flexible models with many parameters, fitted to reproduce DFT energies and forces.
+
+### The landscape
+
+The MLIP field is evolving rapidly. Broadly, you'll encounter three approaches.
+
+Purpose-trained potentials are models developed specifically for a particular system — a battery cathode material, a solid electrolyte, a class of alloys. The training data is generated for that system, covering the configurations relevant to the intended application. This typically gives the best accuracy, because the model is focused on what matters. But it requires substantial effort: generating training data means running many DFT calculations, which is expensive. Training the model and validating it carefully adds further work. This is analogous to developing a classical potential, but without assuming a functional form.
+
+Foundation models take a different approach. These are pre-trained on massive datasets spanning much of the periodic table and many structure types, then released for general use. Training such a model requires enormous computational resources — this is work done by large research groups or companies (Google, Meta, Microsoft) with access to that scale of compute. The result is a model that provides reasonable accuracy out of the box for many systems, without needing to generate training data or train anything yourself. Examples include MACE-MP, CHGNet, SevenNet, and others. Because foundation models have seen diverse training data, they tend to be more transferable across different chemistries. The tradeoff is that accuracy for any specific system may be lower than a purpose-trained model would achieve.
+
+Fine-tuning offers a middle path. Starting from a foundation model, you add training data for your specific system and continue training. The foundation model provides a starting point — it already knows something about interatomic interactions in general — and fine-tuning adapts it to your chemistry. This can give good accuracy with less effort than training from scratch.
+
+Which approach was used affects how much you should trust the results. A purpose-trained potential with careful validation is more reliable than a foundation model applied to a system far from its training data.
+
+### Strengths and limitations
+
+MLIPs learn the shape of E(r) from data, rather than assuming a functional form. This avoids the limitations of classical potentials, where accuracy is bounded by the mathematical form you write down. Once trained, evaluation is fast — approaching classical potential speeds for some architectures. And the approach is systematically improvable: more training data generally means a better model. If the potential fails in some region of configuration space, you can add more data there and retrain. Foundation models have also made the approach more accessible — you can get reasonable results without training anything yourself.
+
+The limitations are significant. The model can only be as good as its training data. Errors in the DFT calculations propagate to the potential, and the model inherits the limitations of whichever functional was used — if PBE gets something wrong, so will the MLIP trained on PBE data.
+
+More fundamentally, extrapolation is dangerous. MLIPs interpolate well within their training domain but can fail badly outside it. Unlike DFT, which will give you some answer for any configuration, an MLIP may give confident but wrong predictions for configurations far from training data. This failure can be silent — the model doesn't know it's extrapolating.
+
+MLIPs are also less interpretable than classical potentials. A Buckingham potential has parameters you can understand — charges, repulsion coefficients. An MLIP has thousands of internal parameters with no direct physical meaning. When something goes wrong, it's harder to diagnose why. This places a validation burden on the user: you need to check that the potential is accurate for the configurations you care about.
+
+### When to use
+
+MLIPs are increasingly the default choice when you need larger systems or longer timescales than DFT allows, when classical potentials don't exist for your system or aren't accurate enough, and when you're willing to validate carefully. They're the wrong choice when DFT is affordable for your problem (simpler, no training overhead), when you're studying configurations far from any available training data, or when you need guaranteed reliability with no possibility of silent failure.
+
+The field is moving fast. What's state-of-the-art now may be superseded within a year. For your purposes as consumers of computational work: ask what potential was used, what it was trained on, and how it was validated for the system being studied.
+
+---
+
+*[End of section 1.5 — approximately 7 minutes]*

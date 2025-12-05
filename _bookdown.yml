@@ -1,0 +1,19 @@
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Lecture "
+
+rmd_files: [
+  "index.Rmd",
+  "lecture_1/lecture_notes_1_1.Rmd",
+  "lecture_1/lecture_notes_1_2.Rmd",
+  "lecture_1/lecture_notes_1_3.Rmd",
+  "lecture_1/lecture_notes_1_4.Rmd",
+  "lecture_1/lecture_notes_1_5.Rmd",
+  "lecture_1/lecture_notes_1_6.Rmd",
+  "lecture_2/lecture_notes_2_1.Rmd",
+]
+
+output:
+  bookdown::html_book:
+    dev: "png"

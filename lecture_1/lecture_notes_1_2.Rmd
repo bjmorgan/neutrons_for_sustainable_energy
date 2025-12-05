@@ -1,0 +1,51 @@
+# Lecture I: Introduction and Methods for E(r)
+
+## 1.2 The potential energy surface
+
+All computational modelling of materials rests on a common foundation: for any arrangement of atoms, there is an associated energy. This mapping — configuration to energy — defines what we call the potential energy surface, or PES. Let me build this up with a simple example.
+
+### Part A: Building the concept
+
+Consider a two-dimensional crystal with two types of atoms in a square unit cell — call this structure S₁, with energy E₁. Now consider a second structure S₂: the same atoms, but the unit cell has been sheared into a parallelogram, with the atoms following along at fixed fractional coordinates. This structure has a different energy, E₂.
+
+This is the first key point: different arrangements of atoms have different energies.
+
+How do we get from S₁ to S₂? We can imagine continuously deforming the cell — gradually shearing from square to parallelogram. At every point along this deformation, we have a well-defined atomic configuration, and therefore a well-defined energy. This isn't a discrete jump from S₁ to S₂; it's a continuous pathway, and we can define an energy at every point along it.
+
+But cell deformation isn't the only degree of freedom. Consider a third structure, S₃: we keep the cell shape fixed (back to the original square), but we change where atoms sit within the cell. Imagine sliding one layer of atoms relative to another. If we have two species arranged in an ordered pattern, this slip changes the local ordering: some neighbour pairs that were A-B become A-A or B-B. This structure S₃ has its own energy E₃, and again there's a continuous pathway from S₁ to S₃.
+
+So now we have two independent directions on the potential energy surface: cell deformation (S₁ to S₂) and internal rearrangement (S₁ to S₃).
+
+What about disordered structures? Consider S₄, S₅, S₆ — arrangements where the two atom types don't follow a neat ordered pattern. Each of these has its own energy: E₄, E₅, E₆. The continuous pathways connecting the ordered structures to these disordered ones are harder to visualise — they might involve coordinated motion of many atoms, or sequences of local rearrangements. But they are all points on the same continuous surface.
+
+The examples I've described are low-dimensional slices through a much higher-dimensional space. The full potential energy surface is E(**r**), where **r** represents the positions of all atoms — 3N coordinates for N atoms. Every possible configuration of atoms corresponds to a point on this surface; every point has an energy. This includes configurations that might seem unphysical — we can always define the energy, even if we'll see shortly that some regions of the surface are never actually visited.
+
+### Part B: Features of the PES
+
+Now that we have the concept of a potential energy surface, what can its features tell us?
+
+**Minima are stable structures.** A minimum is a configuration where small displacements in any direction increase the energy — the forces on all atoms are zero, and the structure is locally stable. These are the crystal structures you determine from diffraction: the system sits at a minimum (or near one, at finite temperature).
+
+**Relative energies of minima tell you about thermodynamics.** If S₁ has lower energy than S₂, then S₁ is thermodynamically preferred — at least at zero temperature. At finite temperature, entropy also matters, and the relevant quantity becomes the free energy rather than the energy. We'll return to this when we discuss Monte Carlo sampling.
+
+**Barriers control kinetics.** Along the pathway from S₁ to S₂, there's typically a maximum — an energy barrier. The height of this barrier determines how fast the transformation happens. A high barrier means the process is slow; a low barrier means it's fast. This applies to phase transitions, to ionic diffusion, to any process where the system moves from one configuration to another. Diffraction tells you which structure you have; the barrier height explains why you have it (you might be trapped in a metastable minimum).
+
+This is why the shape of the PES tells you what's physically possible, not just what's energetically preferred. Consider a direct atom swap — two atoms simply exchanging positions. The continuous pathway for this exists on the PES, but it requires the atoms to pass through each other, where the energy diverges. The barrier is infinite; the pathway is kinetically forbidden. In real materials, atoms change places by other mechanisms — via vacancies, interstitials, or correlated motion — pathways through configuration space that avoid catastrophic overlap.
+
+**Curvature at minima determines vibrational properties.** How does the energy change for small displacements around a minimum? If the potential well is steep and narrow, atoms experience strong restoring forces and vibrate at high frequencies. If the well is shallow and broad, vibrations are softer and lower in frequency. This curvature is exactly what phonon calculations determine — and what inelastic neutron scattering measures. The shape of the PES around a minimum shows up directly in your INS spectra.
+
+### Part C: Two questions
+
+With the PES in mind, two questions arise:
+
+**How do we calculate E(r)?** Given an arrangement of atoms, how do we determine its energy? Different methods — classical potentials, density functional theory, machine-learned potentials — give different answers with different tradeoffs of accuracy and computational cost.
+
+**What do we do with E(r)?** Given the ability to calculate energies, what questions can we answer? Finding the lowest-energy structure is one thing. Characterising vibrations around that structure is another. Simulating how atoms move at finite temperature, or sampling over different configurations — these require different approaches.
+
+These are separate decisions. You can do molecular dynamics with a classical potential, or with DFT, or with a machine-learned potential — the choice of how to calculate E(r) is independent of the choice to do MD. People sometimes think "molecular dynamics" means "classical potentials" or "DFT" means "static calculations." Neither is true. Any method for calculating E(r) can be combined with any method for using it.
+
+In the rest of this lecture, I'll cover three approaches to calculating E(r): classical potentials, density functional theory, and machine-learned interatomic potentials. In Lectures II and III, we'll turn to what we do with that ability — geometry optimisation, phonon calculations, molecular dynamics, and Monte Carlo sampling.
+
+---
+
+*[End of section 1.2 — approximately 6–7 minutes]*

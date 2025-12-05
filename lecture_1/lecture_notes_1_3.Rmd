@@ -1,0 +1,67 @@
+# Lecture I: Introduction and Methods for E(r)
+
+## 1.3 Classical potentials
+
+### Why start here?
+
+Classical potentials are not the most accurate method for calculating E(r), but they are the most transparent. You can write down the function, plot it, and see the potential energy surface directly. This builds intuition before moving to methods where E(r) comes out of a more complex calculation.
+
+### The simplest model: pair potentials
+
+Classical potentials are parameterised analytical functions that give the energy of a configuration of atoms. A mathematical form is chosen, parameters are fitted to reproduce known properties, and the resulting function is used to calculate energies for any configuration.
+
+The simplest approach is to decompose the total energy into contributions from pairs of atoms:
+
+$$E = \sum_{ij} V(r_{ij})$$
+
+where rᵢⱼ is the distance between atoms i and j, and V(r) is a pair potential. For each pair of atoms, we look up their separation, evaluate the pair potential, and sum over all pairs. This is conceptually simple and computationally cheap.
+
+### Building a potential from physics
+
+What should V(r) look like for an ionic crystal? The dominant contribution is electrostatic. Ions carry charges, so opposite charges attract and like charges repel. For two ions with charges qᵢ and qⱼ separated by distance r, the Coulomb energy is qᵢqⱼ/r. This is long-range — it falls off slowly with distance.
+
+Electrostatics alone would cause the crystal to collapse — opposite charges attracting without limit. What prevents this is short-range repulsion. When ions get close, their electron clouds overlap, and this costs energy. The repulsion is modelled with a steeply rising function at short range. A common choice is the Born-Mayer form: A·exp(−r/ρ), an exponential that increases rapidly as r decreases.
+
+There is also a weak, long-range attraction from van der Waals forces, typically modelled as −C/r⁶. For hard ions this is often a small correction, but it matters more for polarisable species.
+
+Combining Coulomb, exponential repulsion, and dispersion gives a Buckingham-type potential — the workhorse for simulating ionic solids like oxides and halides.
+
+### Periodic systems and the Ewald problem
+
+To simulate a bulk crystal rather than a finite cluster, we use periodic boundary conditions: a unit cell is treated as if it tiles infinitely in all directions. For short-range interactions, the minimum image convention applies — each atom interacts with the nearest periodic image of every other atom, and if the potential decays fast enough, it can be truncated at some cutoff.
+
+For the Coulomb term, simple truncation doesn't work. The sum over periodic images is conditionally convergent — the answer depends on how you truncate, which is unphysical. The solution is Ewald summation. Each point charge is screened with a compensating Gaussian distribution. The screened charges are short-ranged and sum quickly in real space; the smooth Gaussian distributions sum quickly in reciprocal space. A correction is then applied for the self-interaction of each charge with its own screening cloud. Both sums are absolutely convergent, and the result is well-defined. The reciprocal-space machinery will be familiar from diffraction.
+
+### When pair potentials aren't enough
+
+Pair potentials assume the energy contribution from two atoms depends only on their separation. This works well for ionic materials where bonding is non-directional. But for covalent or partially covalent materials, where bond angles matter, pair potentials are insufficient.
+
+In a silicate, for instance, the O–Si–O angle isn't arbitrary — there's a preferred tetrahedral geometry. Capturing this requires three-body terms that penalise deviations from the preferred angle. For molecular systems or structures with well-defined bonded units, the "force field" approach uses harmonic springs for bond stretches, angle terms for bond angles, and torsional terms for dihedrals. More complex functional forms exist for metals (embedded atom method), semiconductors (Tersoff potentials), and reactive systems (ReaxFF).
+
+The basic ionic model also treats ions as fixed point charges. Real ions are polarisable — their electron clouds respond to local electric fields — and may have non-spherical charge distributions. Extensions address this through explicit induced dipoles, higher-order multipoles, variable ion size and shape, or charge equilibration schemes where charges vary self-consistently subject to a total charge constraint.
+
+Classical potentials can be much more sophisticated than the basic Buckingham form. But there is always a tradeoff: more realism means more parameters, more complexity, and more fitting required.
+
+### The parameterisation problem
+
+A classical potential has parameters — charges, repulsion coefficients, cutoffs. Where do they come from?
+
+Historically, parameters were fitted to reproduce experimental properties: lattice constants, elastic moduli, phonon frequencies, defect energies. The potential is only as good as the data it was fitted to, and only as transferable as that data allows. There is also a risk of overfitting: fitting five parameters to three experimental observables leaves the problem underdetermined. Parameter sets may reproduce those observables perfectly but for the wrong reasons, and fail elsewhere.
+
+Increasingly, potentials are fitted to DFT calculations. A set of configurations is generated, their energies and forces are calculated with DFT, and the potential parameters are fitted to reproduce them. This covers regions of configuration space that experiment doesn't probe directly, and provides enough data points to constrain all parameters.
+
+Either way, the quality of a classical potential depends entirely on how well the parameterisation captures the relevant physics. And there is a more fundamental issue: the functional form itself bounds the accuracy. The physics that can be captured is limited by the mathematical form chosen. If the real interactions don't match that form, no amount of parameter fitting will fix it.
+
+### Strengths and limitations
+
+Classical potentials are fast — orders of magnitude cheaper than quantum-mechanical methods. Simulations of millions of atoms for nanoseconds are routine. With methods like particle-mesh Ewald or fast multipole for electrostatics, computational cost scales as O(N log N) with system size. Classical potentials are also interpretable: each term's contribution is visible, and parameter–property relationships can be understood. When something goes wrong, diagnosis is possible. For some material classes — simple ionic solids, for instance — good potentials exist and have been extensively validated.
+
+The limitations are significant. The treatment of electrostatics is typically simple: fixed point charges throughout the simulation, with no polarisation response or charge transfer. Electronic structure is implicit — electrons aren't explicitly treated, so processes involving electronic rearrangement cannot be described.
+
+Developing a good classical potential is hard work — designing a functional form, generating training data, fitting, validating, finding problems, and iterating. This requires substantial effort with no guarantee of success. Classical potentials also have limited transferability. A potential fitted to one material, or one region of configuration space, may fail for another. Bulk doesn't guarantee surfaces; ambient conditions don't guarantee high pressure. Extrapolation fails silently — the potential gives a number even outside its valid domain.
+
+Classical potentials are the right choice for large system sizes or long timescales, for well-characterised material classes where good potentials exist, or for quick exploratory calculations. They are the wrong choice when the required accuracy exceeds what the potential can provide, or when moving outside its validated domain.
+
+---
+
+*[End of section 1.3 — approximately 8 minutes]*

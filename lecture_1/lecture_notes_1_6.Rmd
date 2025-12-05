@@ -1,0 +1,21 @@
+# Lecture I: Introduction and Methods for E(r)
+
+## 1.6 Summary and what comes next
+
+We have now covered three approaches to calculating E(r).
+
+Classical potentials are parameterised analytical functions — fast and interpretable, but bounded by the functional form you choose. The physics you can capture depends on the mathematical form you write down, and developing a good potential requires substantial effort.
+
+Density functional theory calculates E(r) from quantum mechanics, with all approximation localised in the exchange-correlation functional. It's transferable across chemistries without system-specific fitting, but computationally expensive — practical for hundreds of atoms, not millions.
+
+Machine-learned interatomic potentials learn E(r) from training data, typically DFT calculations. They avoid assuming a functional form, and can approach DFT accuracy at near-classical cost. But they inherit the limitations of their training data, and can fail silently outside their training domain.
+
+These are methods for calculating E(r) — given a configuration of atoms, what is its energy? But calculating the energy is not the end goal. The questions we actually want to answer determine what we do with that ability.
+
+In Lecture II, we turn to the second axis: methods that use E(r). We'll cover geometry optimisation (finding stable structures), phonon calculations (characterising vibrations), and molecular dynamics (simulating atomic motion at finite temperature). Each of these can be combined with any of the E(r) methods we've discussed — the choices are independent.
+
+In Lecture III, we'll cover Monte Carlo sampling and cluster expansion methods for treating configurational disorder, and look at case studies where experimental puzzles drove computational investigation.
+
+---
+
+*[End of section 1.6 — approximately 2 minutes]*
