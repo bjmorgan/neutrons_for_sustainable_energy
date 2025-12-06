@@ -1,5 +1,3 @@
-# (PART) Lattice Dynamics and Molecular Dynamics {-}
-
 # Introduction
 
 Part I introduced the potential energy surface — the mapping from atomic configuration to energy. For any arrangement of atoms, there is an associated energy, and the features of this surface encode the physics we care about. Minima correspond to stable structures. Curvature at a minimum determines how atoms vibrate around equilibrium. Barriers between minima control the rates of transitions — diffusion, phase transformations, chemical reactions.

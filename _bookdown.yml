@@ -13,6 +13,7 @@ rmd_files: [
   "lecture_1/1_5_summary.Rmd",
   "lecture_2/lecture2.Rmd",
   "lecture_3/lecture3.Rmd",
+  "close/close.Rmd",
   "appendices/phonon_derivation.Rmd"
 ]
 
