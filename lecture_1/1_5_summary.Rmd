@@ -1,6 +1,4 @@
-# Lecture I: Introduction and Methods for E(r)
-
-## 1.6 Summary and what comes next
+## Summary and what comes next
 
 We have now covered three approaches to calculating E(r).
 
@@ -15,7 +13,3 @@ These are methods for calculating E(r) — given a configuration of atoms, what 
 In Lecture II, we turn to the second axis: methods that use E(r). We'll cover geometry optimisation (finding stable structures), phonon calculations (characterising vibrations), and molecular dynamics (simulating atomic motion at finite temperature). Each of these can be combined with any of the E(r) methods we've discussed — the choices are independent.
 
 In Lecture III, we'll cover Monte Carlo sampling and cluster expansion methods for treating configurational disorder, and look at case studies where experimental puzzles drove computational investigation.
-
----
-
-*[End of section 1.6 — approximately 2 minutes]*

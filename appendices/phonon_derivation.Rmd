@@ -1,0 +1,91 @@
+# (APPENDIX) Appendix {-}
+
+# Appendix: Derivation of the dynamical matrix for periodic systems
+
+This appendix provides the full derivation of how translational symmetry reduces the phonon problem from a 3<i>N</i> × 3<i>N</i> eigenvalue problem (for <i>N</i> atoms in the crystal) to a 3<i>n</i> × 3<i>n</i> problem (for <i>n</i> atoms in the primitive cell) at each wavevector **q**.
+
+## Setup and notation
+
+Consider a periodic crystal with primitive lattice vectors. Let **R**ₗ denote the position of unit cell $l$, and let atom $i$ within the cell sit at position **R**ₗ + **τ**ᵢ, where **τ**ᵢ is the position of atom $i$ within the primitive cell.
+
+The displacement of atom $i$ in cell $l$ from its equilibrium position is **u**ᵢ(l). The equation of motion is:
+
+$$m_i \frac{d^2 \mathbf{u}_i(l)}{dt^2} = -\sum_{l'} \sum_j \Phi_{ij}(l, l') \, \mathbf{u}_j(l')$$
+
+where $\Phi_{ij}(l, l')$ is the force constant matrix coupling atom $i$ in cell $l$ to atom $j$ in cell $l'$. This is a 3 &times; 3 matrix (coupling <i>x</i>, <i>y</i>, <i>z</i> components), but we suppress the Cartesian indices for clarity.
+
+## Translational symmetry
+
+The key property is translational invariance: the force constants depend only on the separation between cells, not on which cell we started from:
+
+$$\Phi_{ij}(l, l') = \Phi_{ij}(\mathbf{R}_l - \mathbf{R}_{l'}) = \Phi_{ij}(\mathbf{R}_{l-l'})$$
+
+We can write this more simply by defining $\mathbf{R} = \mathbf{R}_l− \mathbf{R}_{l^\prime}$, so $\Psi_{ij}(\mathbf{R})$ is the force constant coupling atom $j$ at the origin to atom $i$ in the cell at $\mathbf{R}$.
+
+## Plane-wave ansatz
+
+We seek solutions where all atoms oscillate at the same frequency ω. Based on the discussion in the main text, translational symmetry constrains the allowed phase relationships to plane waves. We therefore assume:
+
+$$\mathbf{u}_i(l) = \mathbf{e}_i \exp(i\mathbf{q} \cdot \mathbf{R}_l) \exp(-i\omega t)$$
+
+where **e**ᵢ is the displacement amplitude (a complex vector) for atom i within the unit cell, and **q** is the wavevector. The time dependence exp(&minus;i&omega;<i>t</i>) gives the harmonic oscillation; the spatial dependence exp(i**q**·**R**ₗ) encodes the phase variation from cell to cell.
+
+## Substitution into equations of motion
+
+Substituting the plane-wave form into the equation of motion:
+
+$$-m_i \omega^2 \mathbf{e}_i \exp(i\mathbf{q} \cdot \mathbf{R}_l) = -\sum_{l'} \sum_j \Phi_{ij}(\mathbf{R}_l - \mathbf{R}_{l'}) \, \mathbf{e}_j \exp(i\mathbf{q} \cdot \mathbf{R}_{l'})$$
+
+where we have cancelled the common exp(−iωt) factor from both sides.
+
+Now we use translational invariance. Define **R** = **R**ₗ − **R**ₗ', so **R**ₗ' = **R**ₗ − **R**. The sum over l' becomes a sum over **R**:
+
+$$-m_i \omega^2 \mathbf{e}_i \exp(i\mathbf{q} \cdot \mathbf{R}_l) = -\sum_{\mathbf{R}} \sum_j \Phi_{ij}(\mathbf{R}) \, \mathbf{e}_j \exp(i\mathbf{q} \cdot (\mathbf{R}_l - \mathbf{R}))$$
+
+The exp(i**q**·**R**ₗ) factor appears on both sides:
+
+$$-m_i \omega^2 \mathbf{e}_i \exp(i\mathbf{q} \cdot \mathbf{R}_l) = -\sum_{\mathbf{R}} \sum_j \Phi_{ij}(\mathbf{R}) \, \mathbf{e}_j \exp(i\mathbf{q} \cdot \mathbf{R}_l) \exp(-i\mathbf{q} \cdot \mathbf{R})$$
+
+Dividing both sides by exp(i**q**·**R**ₗ):
+
+$$m_i \omega^2 \mathbf{e}_i = \sum_{\mathbf{R}} \sum_j \Phi_{ij}(\mathbf{R}) \exp(-i\mathbf{q} \cdot \mathbf{R}) \, \mathbf{e}_j$$
+
+## The dynamical matrix
+
+Define the **q**-dependent force constant matrix:
+
+$$C_{ij}(\mathbf{q}) = \sum_{\mathbf{R}} \Phi_{ij}(\mathbf{R}) \exp(-i\mathbf{q} \cdot \mathbf{R})$$
+
+This is the Fourier transform of the real-space force constants. The equation of motion becomes:
+
+$$m_i \omega^2 \mathbf{e}_i = \sum_j C_{ij}(\mathbf{q}) \, \mathbf{e}_j$$
+
+To put this in standard eigenvalue form, we define mass-weighted displacements **ẽ**ᵢ = √mᵢ **e**ᵢ and the dynamical matrix:
+
+$$D_{ij}(\mathbf{q}) = \frac{C_{ij}(\mathbf{q})}{\sqrt{m_i m_j}}$$
+
+The equation becomes:
+
+$$\omega^2 \tilde{\mathbf{e}}_i = \sum_j D_{ij}(\mathbf{q}) \, \tilde{\mathbf{e}}_j$$
+
+or in matrix form:
+
+$$\omega^2 \tilde{\mathbf{e}} = \mathbf{D}(\mathbf{q}) \tilde{\mathbf{e}}$$
+
+This is a standard eigenvalue problem. The eigenvalues are ω² and the eigenvectors **ẽ** give the (mass-weighted) displacement patterns within the unit cell.
+
+## The key result
+
+The dynamical matrix D(**q**) has dimensions 3n × 3n, where n is the number of atoms in the primitive cell. At each wavevector **q**, we diagonalise this matrix to obtain 3n eigenvalues ω²(**q**) and eigenvectors.
+
+The full displacement pattern across the crystal is reconstructed by multiplying the unit-cell eigenvector by the phase factor:
+
+$$\mathbf{u}_i(l) = \frac{\mathbf{e}_i}{\sqrt{m_i}} \exp(i\mathbf{q} \cdot \mathbf{R}_l) \exp(-i\omega t)$$
+
+Different values of **q** give different phase relationships between unit cells, but the mathematical structure of the eigenvalue problem is the same at each **q**. This is why we can compute phonon dispersion by solving many small problems rather than one impossibly large one.
+
+## Connection to experiment
+
+The phonon dispersion relation ω(**q**) can be measured by inelastic neutron scattering on single crystals, where the scattering condition relates the momentum transfer to **q**. For powder samples, the measurement averages over all **q**, giving the phonon density of states.
+
+Computationally, we calculate D(**q**) on a grid of **q**-points in the Brillouin zone, diagonalise at each point, and either plot the dispersion along high-symmetry paths or integrate to obtain the density of states.

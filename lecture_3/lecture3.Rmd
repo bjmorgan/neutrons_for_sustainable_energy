@@ -1,0 +1,329 @@
+# (PART) Configurational Disorder {-}
+
+# Introduction
+
+In Lecture I, we covered methods for calculating E(r) — classical potentials, DFT, and machine-learned interatomic potentials. In Lecture II, we turned to what we do with that ability: finding stable structures through geometry optimisation, characterising vibrations through phonon calculations, and simulating atomic motion through molecular dynamics.
+
+MD samples configurations by following the physical dynamics of the system. At finite temperature, atoms have kinetic energy and explore the potential energy surface. For fast processes — ionic diffusion in superionic conductors, thermal vibrations — MD captures the relevant configurations.
+
+But some configurational questions involve rearrangements that are far too slow for MD. Consider cation ordering in a mixed-metal oxide, or site occupancies in an alloy. The atoms can, in principle, rearrange — but the mechanisms are slow, involving vacancy diffusion or other activated processes that happen on timescales of seconds to hours, not nanoseconds. MD will never visit these configurations; the simulation is trapped in whatever arrangement it started with.
+
+Monte Carlo sampling takes a different approach. Rather than following dynamics, we propose configurational changes directly and accept or reject them based on energetics. This lets us sample configurations that MD cannot reach.
+
+# Monte Carlo sampling
+
+## The goal: ensemble averages
+
+Statistical mechanics tells us that macroscopic properties are ensemble averages. The expectation value of a property A in the canonical ensemble is:
+
+$$\langle A \rangle = \sum_i A_i P_i = \frac{1}{Z} \sum_i A_i \exp(-E_i / k_B T)$$
+
+where the sum runs over all microstates i, Eᵢ is the energy of state i, and Z is the partition function:
+
+$$Z = \sum_i \exp(-E_i / k_B T)$$
+
+In principle, this is straightforward: enumerate all states, calculate their energies and properties, weight by Boltzmann factors, sum. In practice, the number of states is astronomically large. For configurational disorder on N sites with two possible occupants per site, there are 2<sup><i>N</i></sup> configurations. Even for modest <i>N</i>, explicit enumeration is impossible.
+
+## Why not sample uniformly?
+
+One idea: sample configurations randomly and weight by their Boltzmann factors. The problem is that uniform sampling is inefficient. Most randomly chosen configurations have high energy and negligible Boltzmann weight — we waste effort sampling configurations that contribute almost nothing to the average.
+
+The solution is importance sampling: sample configurations in proportion to their Boltzmann weights. Then each sample contributes equally to the average:
+
+$$\langle A \rangle \approx \frac{1}{M} \sum_{m=1}^{M} A_m$$
+
+No explicit weights needed. The question is how to generate samples from this distribution.
+
+## Markov chain Monte Carlo
+
+The solution is to construct a Markov chain — a random walk through configuration space where each step depends only on the current configuration. At each step we propose a move to a new configuration and either accept or reject it. The question is: how should we choose the acceptance probabilities to ensure we sample from our target distribution?
+
+Consider two states. At equilibrium, the frequency of transitions from state 1 to state 2 must equal the frequency from 2 to 1 — otherwise probability would accumulate in one state. If we visit state 1 with probability π₁ and accept moves to state 2 with probability P(1→2), then balance requires:
+
+$$\pi_1 \, P(1 \to 2) = \pi_2 \, P(2 \to 1)$$
+
+Rearranging: the ratio of acceptance probabilities must equal the ratio of target probabilities:
+
+$$\frac{P(1 \to 2)}{P(2 \to 1)} = \frac{\pi_2}{\pi_1}$$
+
+For many states, we impose this constraint on every pair. The result is that we sample each state with probability proportional to our target distribution.
+
+For the Boltzmann distribution, the ratio of target probabilities is:
+
+$$\frac{\pi_2}{\pi_1} = \frac{e^{-E_2/kT}}{e^{-E_1/kT}} = e^{-\Delta E/kT}$$
+
+This depends only on the energy difference between the two states — not on absolute energies. Since we only ever compare states pairwise, we never need to know the partition function or evaluate absolute energies.
+
+Any acceptance rule where the ratio of forward to backward acceptance probabilities equals exp(−ΔE/kT) will sample from the Boltzmann distribution. The Metropolis criterion is one such choice.
+
+## The Metropolis algorithm
+
+The Metropolis algorithm is the standard approach. The procedure is:
+
+1. Start from some configuration with energy E₁
+2. Propose a move — for configurational disorder, typically swapping two atoms of different types
+3. Calculate the energy E₂ of the new configuration
+4. Accept or reject the move:
+   - If ΔE ≤ 0 (energy decreased): accept
+   - If ΔE > 0 (energy increased): accept with probability exp(−ΔE/kT)
+5. If accepted, the new configuration becomes the current one; if rejected, stay in the old configuration
+6. Repeat from step 2
+
+The acceptance rule ensures that, after many steps, the chain visits configurations with probability proportional to exp(−E/kT).
+
+The intuition for why the algorithm works:
+
+**Downhill moves are always accepted.** The chain readily finds low-energy configurations.
+
+**Uphill moves are sometimes accepted.** The probability exp(−ΔE/kT) decreases exponentially with the energy cost, but is never zero. This allows the chain to escape local minima and explore configuration space. Without occasional uphill moves, we would simply find the nearest local minimum — an optimisation algorithm, not a sampling algorithm.
+
+**Temperature controls exploration.** At high temperature, exp(−ΔE/kT) is close to 1 for moderate ΔE, so most moves are accepted and the system explores widely. At low temperature, only small uphill moves are accepted and the system stays near low-energy configurations.
+
+## What you get
+
+After an initial equilibration period, the MC chain samples configurations from the target ensemble. From these we calculate:
+
+**Ensemble averages** — the expectation value of any quantity A is simply the average over sampled configurations:
+
+$$\langle A \rangle = \frac{1}{M} \sum_{m=1}^{M} A_m$$
+
+No Boltzmann weights appear because the sampling already accounts for them.
+
+**Thermodynamic properties** — from fluctuations in energy we get heat capacity; from the temperature dependence of order parameters we identify phase transitions.
+
+**Equilibrium configurations** — snapshots from the MC chain represent the distribution of configurations at thermal equilibrium. These can be analysed for structural features or compared with experiment.
+
+## What you don't get
+
+MC does not give dynamics. The sequence of configurations is a random walk designed to sample the equilibrium distribution, not a physical trajectory through time. There is no "MC time" that corresponds to real time. Questions about rates, diffusion coefficients, or time correlation functions cannot be answered by MC.
+
+This is the fundamental distinction: MD samples by following dynamics and gives both equilibrium and dynamic properties; MC samples configuration space directly and gives only equilibrium properties.
+
+## MC for configurational disorder
+
+For site disorder — which atom occupies which site — MC is the natural approach. The configuration is specified by site occupancies, and a move swaps two atoms of different types.
+
+Consider a binary alloy A₁₋ₓBₓ on a fixed lattice. At high temperature, entropy favours disorder — a random arrangement maximises configurational entropy. At low temperature, energy may favour ordering — if A-B neighbours are more favourable than A-A or B-B, ordered arrangements are lower in energy. MC naturally captures this competition: at each temperature, we sample configurations with the correct Boltzmann weights and observe whether the system orders or disorders.
+
+## Neutron connection
+
+Neutron diffraction measures a spatial average — the scattering from many unit cells within the illuminated volume. For crystallographically disordered systems where atoms are not diffusing, this spatial average is what determines the measured structure.
+
+MC models this as an average over configurations. If the system is statistically homogeneous — if any region looks like any other on average — then the spatial average equals the ensemble average over configurations. MD provides the same ensemble average, but samples configuration space by following dynamics rather than by proposing direct moves.
+
+The pair distribution function from MC configurations can be compared directly with experimental PDF from total scattering. This is particularly powerful for systems with short-range order, where Bragg diffraction sees only the average but PDF captures local correlations.
+
+## The E(r) cost
+
+MC requires evaluating the energy change ΔE at every step. A typical MC simulation involves millions of proposed moves. The cost of E(r) therefore matters greatly.
+
+For configurational disorder, we need energies for many different arrangements. If E(r) is DFT, this is prohibitively expensive — a single DFT calculation might take minutes to hours, and we need millions of them. We need a faster way to evaluate configurational energies.
+
+# Cluster expansion
+
+## The problem
+
+Monte Carlo sampling requires many energy evaluations — typically millions. For configurational disorder, where we're asking which atoms sit on which sites, we need $E(r)$ for many different atomic arrangements on the same underlying lattice.
+
+DFT provides accurate energies but is expensive. A single DFT calculation for a modest supercell might take minutes to hours. Running millions of them is impractical.
+
+Classical potentials are fast but may not capture the relevant chemistry. The energy differences between different orderings can be subtle — tens of meV per atom — and depend on details of the electronic structure.
+
+We need a method that is fast enough for MC (millions of evaluations) but accurate enough to capture the energetics of configurational disorder (DFT-level accuracy). Cluster expansions provide this.
+
+## The idea
+
+For configurational disorder on a fixed lattice, the atomic positions don't change — only the site occupancies. The configuration is specified by which sites have which atoms. This is a discrete problem: each site has one of a finite number of possible occupants.
+
+We can represent the configuration using occupation variables. For a binary system (A and B atoms), assign σᵢ = +1 if site i has atom A, σᵢ = −1 if site i has atom B. The configuration is then specified by the set of all σᵢ.
+
+The cluster expansion writes the energy as a function of these occupation variables:
+
+$$E(\{\sigma\}) = J_0 + \sum_i J_i \sigma_i + \sum_{i<j} J_{ij} \sigma_i \sigma_j + \sum_{i<j<k} J_{ijk} \sigma_i \sigma_j \sigma_k + \ldots$$
+
+The first term J₀ is a constant (the reference energy). The second sum runs over single sites — but for a stoichiometric system, the number of A and B atoms is fixed, so Σσᵢ is constant and this term just shifts the reference. The third sum runs over pairs of sites; Jᵢⱼ captures how the energy depends on whether sites i and j have the same or different atoms. Higher-order terms capture three-body, four-body, and larger cluster interactions.
+
+## Symmetry and cluster types
+
+For a periodic crystal, symmetry constrains the expansion. All pairs related by symmetry have the same coefficient: nearest-neighbour pairs share one J value, second-neighbour pairs share another, and so on. We group sites into clusters by type — nearest-neighbour pairs, second-neighbour pairs, nearest-neighbour triangles, etc. — and assign one coefficient per cluster type.
+
+The expansion becomes:
+
+$$E = J_0 + \sum_\alpha J_\alpha \, m_\alpha \, \langle \Pi_\alpha \rangle$$
+
+where $\alpha$ labels cluster types, mα is the multiplicity (how many clusters of that type per site), and ⟨Πα⟩ is the average value of the product of occupation variables over all clusters of type α. The details of this notation are less important than the key point: symmetry reduces a potentially infinite expansion to a finite set of parameters {$J_\alpha$}.
+
+## Fitting the expansion
+
+The coefficients {\left{J_\alpha\right}$ are unknown. We determine them by fitting to DFT calculations.
+
+The procedure is:
+
+1. Generate a set of training configurations — different arrangements of A and B atoms on the lattice
+2. Calculate the DFT energy of each configuration
+3. Fit the cluster expansion coefficients to reproduce these energies
+
+The fitting is a linear least-squares problem: the energy is linear in the coefficients $J_\alpha$, so we minimise the squared error between predicted and DFT energies.
+
+The choice of training configurations matters. They should span the range of orderings we expect to encounter — not just random configurations, but also ordered structures, configurations with different degrees of short-range order, and any arrangements relevant to the problem at hand. Too few configurations or a poorly chosen set can lead to an expansion that fits the training data but fails elsewhere.
+
+The choice of which clusters to include also matters. More clusters give more flexibility but risk overfitting — capturing noise in the DFT data rather than physical trends. Fewer clusters may miss important interactions. Various approaches exist to select clusters and prevent overfitting: cross-validation, regularisation, or systematic testing against configurations not in the training set.
+
+## What you get
+
+A fitted cluster expansion gives $E(\sigma)$ for any configuration almost instantly — it's just a sum over clusters. This enables:
+
+**Extensive MC sampling** — millions of steps at effectively DFT accuracy. We can map out phase diagrams, find order-disorder transition temperatures, and characterise the distribution of configurations at any temperature.
+
+**Ground state searching** — by systematically enumerating configurations or using optimisation algorithms, we can find the lowest-energy orderings.
+
+**Thermodynamic properties** — heat capacities, ordering enthalpies, and entropies from MC sampling.
+
+## Limitations
+
+Cluster expansions are limited to configurational degrees of freedom. The atoms sit on fixed lattice sites; only the occupancies vary. Relaxation — the small displacements of atoms from ideal positions depending on local environment — is not captured directly, though it can be included approximately by fitting to relaxed DFT energies.
+
+The expansion assumes the energy can be written as a sum over clusters. This works well for many systems but may fail when long-range interactions (beyond the clusters included) are important, or when the electronic structure changes qualitatively with ordering.
+
+The quality depends entirely on the training data and the choice of clusters. A cluster expansion is a fit to DFT — it inherits the accuracy of the underlying DFT calculations and can only interpolate, not extrapolate. If the training set doesn't include configurations similar to what you're asking about, the expansion may give wrong answers.
+
+## Connection to other methods
+
+Cluster expansions are trained on DFT data — typically supercell calculations for different orderings. The training set might include 50–200 configurations, each requiring a DFT calculation. This is expensive upfront but pays off when we need millions of energy evaluations for MC.
+
+The combination of DFT + cluster expansion + MC is a powerful workflow for studying configurational disorder: DFT provides the accurate energetics, the cluster expansion makes it fast, and MC samples the configurations.
+
+# Short-range order and PDF
+
+## Long-range order vs short-range order
+
+Consider a binary alloy A<sub>0.5</sub>B<sub>0.5</sub> on a BCC lattice. At low temperature, it might order into a CsCl-type structure: all A atoms on one sublattice, all B on the other. This is long-range order (LRO) — a periodic pattern that extends throughout the crystal. Bragg diffraction sees this clearly: the ordering produces superlattice reflections at positions forbidden by the disordered structure.
+
+At high temperature, entropy wins and the alloy disorders: A and B atoms distributed randomly over sites. No long-range pattern, no superlattice reflections.
+
+But there is an intermediate regime. Even without long-range order, there may be local correlations — short-range order (SRO). Perhaps A atoms prefer B neighbours, or avoid other A atoms, but only over the first few coordination shells. Beyond that, the arrangement is random. There's no periodic pattern, but there is local structure.
+
+## What Bragg diffraction misses
+
+Bragg diffraction is sensitive to the average, periodic structure. For a disordered alloy without LRO, you see only the underlying lattice with average scattering length. The local correlations show up as diffuse scattering between Bragg peaks — broad features that are often ignored or hard to analyse quantitatively.
+
+Consider what diffraction tells you about site occupancies. If a site is 50% A and 50% B on average, that's what you measure — regardless of whether A and B are randomly distributed or have strong local correlations. Two structures with the same average occupancy but different SRO give the same Bragg intensities.
+
+This is a fundamental limitation: Bragg diffraction reports the spatially averaged structure. Local correlations that don't produce a periodic pattern are invisible to it.
+
+## PDF captures local structure
+
+Total scattering includes both Bragg and diffuse contributions. The Fourier transform of the total scattering gives the pair distribution function G(r), which measures the probability of finding atoms at separation $r$.
+
+For a single-element material, $g(r)$ has peaks at the neighbour distances — first shell, second shell, and so on. For a multi-component material, we can define partial pair distribution functions $g_{\alpha\beta}(r)$: the probability of finding a $\beta$ atom at distance $r$ from an α atom.
+
+These partials contain information about local ordering. If A atoms preferentially have B neighbours, the A-B partial shows enhanced correlations at the nearest-neighbour distance compared to a random distribution. If A atoms cluster together, the A-A partial is enhanced instead.
+
+PDF analysis can extract this local structural information. The challenge is that a measured PDF sums over all partials, weighted by scattering lengths and concentrations. Separating the contributions — seeing the A-A vs A-B vs B-B correlations independently — requires additional information or constraints.
+
+## Computational approach
+
+This is where computation and experiment are powerfully complementary.
+
+From MC (with cluster expansion), we generate an ensemble of configurations at thermal equilibrium. Each configuration specifies which atoms are on which sites. From these configurations we directly calculate partial pair distribution functions — we know exactly which atom is where, so separating by species is trivial.
+
+We can then:
+
+**Compare total $g(r)$ to experiment.** Sum the partials with appropriate weights and compare to the measured PDF. Agreement means our model captures the local structure; disagreement points to problems with the cluster expansion or the assumed chemistry.
+
+**Analyse what we can't measure.** The partials themselves — $g_\mathrm{AA}(r)$, $g_\mathrm{AB}(r)$, $g_\mathrm{BB}(r)$ — reveal the nature of the short-range order. Does A prefer A or B neighbours? How far do correlations extend? These are direct answers to structural questions that experiment alone struggles to resolve.
+
+**Test structural hypotheses.** If experimentalists propose a model for local ordering based on PDF analysis, we can test it: does that model correspond to a thermodynamically reasonable arrangement? What temperature would produce that degree of order?
+
+## Warren-Cowley parameters
+
+A common way to quantify SRO is through Warren-Cowley parameters. For a binary alloy, the parameter for shell n is:
+
+$$\alpha_n = 1 - \frac{p_n^{AB}}{x_B}$$
+
+where pₙᴬᴮ is the probability that a site in shell n around an A atom is occupied by B, and xB is the overall B concentration. 
+
+If atoms are randomly distributed, $p_n^\mathrm{AB} = x_\mathrm{B}$ and $α_n = 0$. If A atoms preferentially have B neighbours in shell n, $p_n^\mathrm{AB} > x_\mathrm{B}$ and $\alpha_n < 0$. If A atoms avoid B neighbours (clustering of like atoms), $\alpha_n > 0$.
+
+These parameters can be extracted from diffuse scattering measurements and compared directly with values calculated from MC simulations. This provides a quantitative check on whether the simulated SRO matches experiment.
+
+## The connection to energy materials
+
+Short-range order matters for properties. In battery cathode materials, the arrangement of different transition metals affects voltage, capacity, and cycling stability. In thermoelectrics, local ordering influences phonon scattering and thermal conductivity. In solid electrolytes, how dopants are arranged can enhance or block ion transport.
+
+Bragg diffraction might tell you the average composition on each site. But the local arrangement — the short-range order — can be the key to understanding performance. PDF, combined with computational modelling, provides access to this local structure.
+
+# Wrap-up
+
+## The two-axis picture revisited
+
+We began with a conceptual framework: two independent choices determine what a computational study looks like.
+
+**How do we calculate E(r)?** Classical potentials are fast but limited by their functional form. DFT is accurate and transferable but expensive. Machine-learned potentials can approach DFT accuracy at near-classical cost, though they require good training data and can fail outside their domain.
+
+**What do we do with E(r)?** Geometry optimisation finds stable structures. Phonon calculations characterise vibrations in the harmonic limit. Molecular dynamics simulates atomic motion at finite temperature. Monte Carlo samples configurational space directly.
+
+These choices are orthogonal. You can do MD with classical potentials, DFT, or MLIPs. You can drive MC with a cluster expansion (fitted to DFT) or an MLIP. The methods for calculating energy and the methods for using that energy are separate decisions, made based on what accuracy you need and what computational cost you can afford.
+
+## E(r) choice is problem-dependent
+
+Different questions favour different combinations:
+
+| Question | Method | E(r) choice | Why |
+|----------|--------|-------------|-----|
+| Accurate structure | Geometry optimisation | DFT | Few evaluations, accuracy matters |
+| Phonons | Lattice dynamics | DFT or MLIP | Need accurate force constants |
+| Diffusion dynamics | MD | MLIP or classical | Long trajectories, many atoms |
+| Configurational disorder | MC | CE (from DFT) | Many configurations, lattice fixed |
+
+There's no single best method. The choice depends on the question you're asking and the system you're studying.
+
+## Three modes of interaction
+
+Throughout these lectures, we've seen three ways computation and experiment connect:
+
+**Direct comparison.** Calculate the same observable — g(r), S(Q,ω), phonon DOS — and compare quantitatively. Agreement gives confidence; disagreement identifies problems or interesting physics.
+
+**Mechanistic interpretation.** Computation can explain why you see what you see. Why does this ion diffuse fast? What causes the local distortion? Where does the anharmonicity come from? The simulation provides microscopic detail that experiment averages over.
+
+**Complementary information.** Some quantities are hard or impossible to measure directly but straightforward to calculate. Energies, barriers, the relative stability of structures, the partials of a pair distribution function — computation provides what experiment cannot access.
+
+## Bidirectionality
+
+The relationship goes both ways. Computation predicts; experiment tests. But equally: experiment reveals puzzles that computation can address.
+
+A PDF that doesn't fit the expected structure. Dynamics faster than models predict. An unexpected phase transition. These observations drive computational investigation. "This doesn't look right" is where interesting science often starts.
+
+The most productive work is genuinely collaborative — not modellers serving experimentalists or vice versa, but a dialogue where each side contributes what it does best.
+
+## Where to go from here
+
+You don't need to become a computational scientist. But knowing what's possible, what's reliable, and how computational results connect to your measurements makes you a better scientist.
+
+When reading papers: What E(r) method was used? What approximations were made? How does the calculated quantity relate to what was measured? Is the comparison direct, or are there steps in between?
+
+When collaborating: What question are you trying to answer? What experimental data constrain the problem? What can computation add that experiment can't provide?
+
+When reviewing: Are the computational methods appropriate for the question? Are the comparisons with experiment meaningful? What are the limitations?
+
+The tools are increasingly accessible. Codes are available; MLIPs make large simulations feasible; workflows are becoming standardised. The barrier to using computation is lower than it's ever been. Understanding what it can and cannot tell you is more important than ever.
+
+---
+
+## Resources
+
+**Textbooks:**
+[To be added — suggestions for accessible introductions to computational materials science]
+
+**Software:**
+- DFT: VASP, Quantum ESPRESSO, CASTEP
+- MD: LAMMPS, ASE
+- MLIPs: MACE, GAP, CHGNet
+- Cluster expansion: CLEASE, icet, CASM
+- Phonons: Phonopy
+
+**And most importantly:** talk to a modeller.
+
+
+
+

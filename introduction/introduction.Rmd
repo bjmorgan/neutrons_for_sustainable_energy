@@ -1,0 +1,60 @@
+# Introduction {-}
+
+Neutron scattering probes structure and dynamics — where atoms are and how they move. Computational modelling calculates structure and dynamics. In many cases, both approaches produce the same observables: pair distribution functions, phonon densities of states, dynamic structure factors. This overlap is not coincidence. Neutrons scatter from nuclei; computational methods model nuclear positions and motion. The two approaches interrogate the same physics from different directions.
+
+This complementarity makes computation valuable for neutron scientists. Calculated observables can be compared directly with measurements. Where experiment and calculation agree, both are supported. Where they disagree, something interesting demands investigation — an inadequate model, an unexpected feature of the material, or a sample that differs from its idealised description.
+
+Computation also provides what experiment cannot directly access. Scattering data reveal that atoms occupy certain positions and move at certain rates. Computation can explain why: the energetics that favour one structure over another, the barriers that control diffusion, the anharmonicity that limits thermal conductivity. This explanatory power complements the descriptive power of measurement.
+
+The relationship runs both ways. Experimental puzzles drive computational investigation. A PDF that does not fit the expected structure, a relaxation process faster than models predict, an anomalous temperature dependence — these observations prompt computational work. The most productive research often emerges from this dialogue.
+
+## Shared observables {-}
+
+The following tables summarise quantities accessible from both neutron experiments and computation:
+
+*Structure — where are atoms?*
+
+| Observable | From neutrons | From computation |
+|------------|---------------|------------------|
+| Structure (ordered) | Diffraction | Geometry optimisation, structure prediction |
+| Structure (disordered / finite T) | Diffraction | Ensemble average from MD or MC |
+| g(r) / PDF | Total scattering | MD or MC configurations |
+
+*Dynamics — how do atoms move?*
+
+| Observable | From neutrons | From computation |
+|------------|---------------|------------------|
+| S(Q,ω) — vibrational | INS | Lattice dynamics or MD |
+| S(Q,ω) — diffusive | QENS | MD → Van Hove → Fourier transform |
+
+These are not loose analogies. When a modeller calculates S(Q,ω) from molecular dynamics and an experimentalist measures S(Q,ω) with QENS, the results can be overlaid directly.
+
+## Scope {-}
+
+These notes are not an exhaustive survey of computational methods. The focus is on techniques that either calculate observables measurable with neutrons, or provide complementary information about structure and dynamics. This means largely ignoring electronic properties — band gaps, optical response, electronic transport, and magnetism — even though these are important for some applications.
+
+Photovoltaics require optical properties, excited states, and electron-phonon coupling. Thermoelectrics require electronic transport properties alongside phonon properties. Magnetocalorics require treatment of magnetic ordering and spin-lattice coupling. These are beyond the present scope — the focus here is structure and dynamics, where neutron scattering and computational methods most directly connect.
+
+Neutrons primarily probe nuclear positions and motion — that is where these notes focus.
+
+The level of detail reflects the goal of building understanding rather than expertise. The emphasis is on conceptual foundations: what each method does, what approximations it makes, what questions it can answer, and how its outputs connect to experiment. Detailed derivations and underlying theory are not always included, though key results are stated and their significance explained. Practical aspects of running calculations — software choices, input file preparation, convergence testing — are largely omitted. The aim is to produce informed consumers of computational work and effective collaborators, not practicing computational scientists.
+
+## Energy materials {-}
+
+The materials relevant to sustainable energy — batteries, supercapacitors, hydrogen storage, photovoltaics, thermoelectrics — share common features:
+
+- Ion transport matters (Li, H, O moving through structures)
+- Disorder is often present (mixed site occupancy, local distortions)
+- Finite-temperature behaviour is important (materials operate at room temperature or above, not 0 K)
+
+These are exactly the areas where computation and neutron scattering are most powerfully complementary. Neutrons are sensitive to light elements — hydrogen, lithium, oxygen — that X-rays struggle with. Computation can decompose complex dynamics into contributions from different species or different mechanisms, which experiment averages over.
+
+## Learning objectives {-}
+
+By the end of these notes, readers should be able to:
+
+- Recognise the main computational methods and understand what questions each one answers
+- Understand the limitations of each method and what inputs they require
+- See how simulation outputs connect quantitatively to neutron observables
+- Read computational papers more critically and collaborate with modellers more effectively
+- Recognise when computational input would strengthen an experimental study
