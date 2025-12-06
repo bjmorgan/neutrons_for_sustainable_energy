@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3 Density functional theory | Neutrons for Sustainable Energy Lecture Notes</title>
+  <title>13 Case study: short-range order in Li2FeSO | Neutrons for Sustainable Energy Lecture Notes</title>
   <meta name="description" content="These are notes to accompany the Computaional Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3 Density functional theory | Neutrons for Sustainable Energy Lecture Notes" />
+  <meta property="og:title" content="13 Case study: short-range order in Li2FeSO | Neutrons for Sustainable Energy Lecture Notes" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="These are notes to accompany the Computaional Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3 Density functional theory | Neutrons for Sustainable Energy Lecture Notes" />
+  <meta name="twitter:title" content="13 Case study: short-range order in Li2FeSO | Neutrons for Sustainable Energy Lecture Notes" />
   
   <meta name="twitter:description" content="These are notes to accompany the Computaional Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="classical-potentials.html"/>
-<link rel="next" href="machine-learned-interatomic-potentials.html"/>
+<link rel="prev" href="short-range-order-and-pdf.html"/>
+<link rel="next" href="wrap-up.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -219,69 +219,53 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="density-functional-theory" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number">3</span> Density functional theory<a href="density-functional-theory.html#density-functional-theory" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="why-first-principles" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Why first principles?<a href="density-functional-theory.html#why-first-principles" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Classical potentials have fundamental limitations: the accuracy is bounded by the functional form you choose, and someone has to develop and validate a potential for your specific system.</p>
-<p>First-principles methods address this. Instead of parameterising interactions, we calculate E(r) from quantum mechanics—solving (approximately) for the electrons in your system. The physics is built in, not fitted.</p>
+<div id="case-study-short-range-order-in-li2feso" class="section level1 hasAnchor" number="13">
+<h1><span class="header-section-number">13</span> Case study: short-range order in Li<sub>2</sub>FeSO<a href="case-study-short-range-order-in-li2feso.html#case-study-short-range-order-in-li2feso" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This section presents a case study illustrating the computational workflow developed in the preceding sections. The example — cation ordering in the antiperovskite cathode material Li<sub>2</sub>FeSO — demonstrates how cluster expansion, Monte Carlo sampling, and pair distribution function analysis combine to characterise short-range order that Bragg diffraction cannot detect. Full details are available in Coles <em>et al.</em>, <em>Journal of Materials Chemistry A</em> (2023).</p>
+<div id="the-puzzle" class="section level2 hasAnchor" number="13.1">
+<h2><span class="header-section-number">13.1</span> The puzzle<a href="case-study-short-range-order-in-li2feso.html#the-puzzle" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Li<sub>2</sub>FeSO adopts the antiperovskite structure. Sulfur occupies the 12-coordinate site, oxygen occupies the 6-coordinate octahedral site, and lithium and iron share the remaining sites in a 2:1 ratio (Fig. X). Previous diffraction studies found no superlattice reflections — no evidence of long-range cation order — leading to the assumption that Li and Fe are randomly distributed over their shared sites.</p>
+<p>[Figure: Li<sub>2</sub>FeSO antiperovskite structure showing the shared Li/Fe sites]</p>
+<p>But this assumption is puzzling on physical grounds. Fe²⁺ and Li⁺ have different formal charges. Simple electrostatic arguments suggest that configurations which separate the higher-charged Fe²⁺ ions should be lower in energy than configurations that cluster them together. If an energetic preference exists, why would the cation distribution be random?</p>
+<p>The absence of long-range order does not necessarily imply the absence of short-range order. Diffraction probes the average, periodic structure; local correlations that do not produce a periodic pattern are invisible to Bragg peaks. The question is whether Li<sub>2</sub>FeSO exhibits preferential short-range cation ordering, and if so, what form it takes.</p>
 </div>
-<div id="the-problem-the-many-electron-wavefunction" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> The problem: the many-electron wavefunction<a href="density-functional-theory.html#the-problem-the-many-electron-wavefunction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In principle, the energy of a collection of electrons and nuclei comes from solving the Schrödinger equation. The ground-state wavefunction <span class="math inline">\(\psi(r_1, r_2, \ldots, r_n)\)</span> gives you everything—the energy, the electron density, all ground-state properties.</p>
-<p>The problem is dimensionality. For <i>N</i> electrons, the wavefunction is a function of 3<i>N</i> spatial coordinates. The complexity grows exponentially with the number of electrons—intractable for real materials.</p>
+<div id="the-computational-approach-1" class="section level2 hasAnchor" number="13.2">
+<h2><span class="header-section-number">13.2</span> The computational approach<a href="case-study-short-range-order-in-li2feso.html#the-computational-approach-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To address this question, we calculated DFT energies for approximately 100 different Li/Fe configurations in supercells of Li<sub>2</sub>FeSO. These energies were used to fit a cluster expansion — a parameterised model that expresses the configurational energy as a function of site occupancies, as described in section 3.2.</p>
+<p>With the cluster expansion in hand, Monte Carlo sampling becomes computationally tractable. We performed MC simulations in an 8×8×8 supercell at 1025 K, corresponding to the experimental synthesis temperature. The simulation generates an ensemble of configurations representative of thermal equilibrium at that temperature.</p>
+<p>From the MC trajectory, we can extract the probability distribution of local coordination environments. Each oxygen in the structure is surrounded by six cation sites. In a material with 2:1 Li:Fe stoichiometry, the possible oxygen coordinations range from OLi<sub>6</sub> (all lithium) to OFe<sub>6</sub> (all iron), with intermediate compositions OLi₅Fe, OLi<sub>4</sub>Fe<sub>2</sub>, OLi<sub>3</sub>Fe<sub>3</sub>, OLi<sub>2</sub>Fe<sub>4</sub>, and OLiFe<sub>5</sub>.</p>
+<p>For OLi<sub>4</sub>Fe<sub>2</sub> coordination — four lithium and two iron around the central oxygen — there are two distinct geometric arrangements. In <em>cis</em>-OLi<sub>4</sub>Fe<sub>2</sub>, the two iron atoms occupy adjacent vertices of the octahedron. In <em>trans</em>-OLi<sub>4</sub>Fe<sub>2</sub>, they occupy opposite vertices.</p>
+<p>[Figure: Schematic of cis versus trans OLi<sub>4</sub>Fe<sub>2</sub> coordination environments]</p>
 </div>
-<div id="the-dft-insight" class="section level2 hasAnchor" number="3.3">
-<h2><span class="header-section-number">3.3</span> The DFT insight<a href="density-functional-theory.html#the-dft-insight" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The electron density <span class="math inline">\(\rho(r)\)</span> is always three-dimensional—ten electrons or ten thousand, it’s still just <span class="math inline">\(\rho(x, y, z)\)</span>.</p>
-<p>The first Hohenberg-Kohn theorem (1964) says that for ground states, the energy can be written as a functional of the density, <span class="math inline">\(E = E[\rho]\)</span>. (A functional maps a function to a number—here <span class="math inline">\(\rho(r)\)</span> is a function of position, and <span class="math inline">\(E\)</span> is a single number.) The theorem doesn’t tell us what this functional is—just that it exists.</p>
-<p>The second Hohenberg-Kohn theorem says this functional is variational: the density that minimises $E[$ is the true ground-state density.] is the electron-electron repulsion, and the last term is the electron-nuclear attraction (integrating the density against the nuclear potential <span class="math inline">\(v\)</span>).</p>
-<p>The last term we can calculate—we know <span class="math inline">\(v\)</span> from the nuclear positions. The first two we cannot: we don’t know how to write them as functionals of the density that we can evaluate.</p>
+<div id="the-result-preferential-short-range-order" class="section level2 hasAnchor" number="13.3">
+<h2><span class="header-section-number">13.3</span> The result: preferential short-range order<a href="case-study-short-range-order-in-li2feso.html#the-result-preferential-short-range-order" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The Monte Carlo simulations predict that the cation distribution is not random.</p>
+<p>For a random arrangement of Li and Fe over the available sites, the probability of each oxygen coordination environment follows a binomial distribution. The most probable coordination would be OLi<sub>4</sub>Fe<sub>2</sub>, occurring in approximately 33% of oxygen environments.</p>
+<p>The DFT-derived cluster expansion predicts a markedly different distribution. OLi<sub>4</sub>Fe<sub>2</sub> coordination accounts for 65% of oxygen environments — roughly twice the random expectation. This enhanced preference for OLi<sub>4</sub>Fe<sub>2</sub> is consistent with Pauling’s second rule: coordination environments that achieve local electroneutrality are energetically favoured.</p>
+<p>[Figure: Oxygen coordination probability distributions comparing DFT-CE model, random distribution, and point-charge model]</p>
+<p>More unexpectedly, within the OLi<sub>4</sub>Fe<sub>2</sub> environments, 81% adopt the <em>cis</em> configuration and only 19% adopt the <em>trans</em> configuration.</p>
+<p>This result contradicts simple electrostatic reasoning. If Li⁺ and Fe²⁺ are treated as point charges at their formal crystallographic positions, the electrostatic energy of an OLi<sub>4</sub>Fe<sub>2</sub> octahedron is minimised when the two Fe²⁺ ions occupy opposite vertices — the <em>trans</em> configuration — maximising their separation. A point-charge model predicts preferential <em>trans</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination and, consequently, long-range cation order. The DFT-derived model predicts preferential <em>cis</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination, which produces long-range disorder.</p>
 </div>
-<div id="the-kohn-sham-approach" class="section level2 hasAnchor" number="3.4">
-<h2><span class="header-section-number">3.4</span> The Kohn-Sham approach<a href="density-functional-theory.html#the-kohn-sham-approach" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Kohn and Sham (1965) addressed this by separating each unknown term into a part we can calculate plus a correction.</p>
-<p>For the electron-electron interaction, separate <span class="math inline">\(V_\mathrm{ee}\)</span> into a classical part plus the remainder:</p>
-<p><span class="math display">\[V_{ee}[\rho] = J[\rho] + (V_{ee}[\rho] - J[\rho])\]</span></p>
-<p>where <span class="math inline">\(J[\rho]\)</span> is the classical Coulomb energy—the electrostatic self-repulsion of a charge distribution:</p>
-<p><span class="math display">\[J[\rho] = \frac{1}{2}\int\int \frac{\rho(\mathbf{r})\rho(\mathbf{r}&#39;)}{|\mathbf{r}-\mathbf{r}&#39;|} d\mathbf{r} d\mathbf{r}&#39;\]</span></p>
-<p>This we can calculate directly from the density. The remainder contains two effects we’re not capturing: exchange (electrons with parallel spin avoid each other, a consequence of the Pauli principle) and correlation (electrons avoid each other due to their mutual repulsion).</p>
-<p>For the kinetic energy, there’s a system for which this is straightforward: non-interacting electrons. For these, the ground state is a Slater determinant of one-electron orbitals <span class="math inline">\(\phi_i\)</span>, and the kinetic energy is just the sum of one-electron contributions:</p>
-<p><span class="math display">\[T_s = -\frac{1}{2}\sum_i \langle\phi_i|\nabla^2|\phi_i\rangle\]</span></p>
-<p>So we separate <span class="math inline">\(T\)</span> into this non-interacting kinetic energy <span class="math inline">\(T_\mathrm{s}\)</span> plus the remainder:</p>
-<p><span class="math display">\[T[\rho] = T_s[\rho] + (T[\rho] - T_s[\rho])\]</span></p>
-<p>The remainder exists because interacting electrons move differently from non-interacting ones—but it’s small. Both systems have the same density, so electrons are confined to the same regions of space, and kinetic energy is largely determined by spatial confinement.</p>
-<p>The remainders from both separations are bundled into a single correction called the exchange-correlation functional:</p>
-<p><span class="math display">\[E_{xc}[\rho] = (T[\rho] - T_s[\rho]) + (V_{ee}[\rho] - J[\rho])\]</span></p>
-<p>The total energy becomes:</p>
-<p><span class="math display">\[E[\rho] = T_s[\rho] + J[\rho] + \int v(\mathbf{r})\rho(\mathbf{r})d\mathbf{r} + E_{xc}[\rho]\]</span></p>
-<p>The first three terms we can calculate. All the unknowns are in <span class="math inline">\(E_\mathrm{xc}\)</span>.</p>
+<div id="validation-against-experiment" class="section level2 hasAnchor" number="13.4">
+<h2><span class="header-section-number">13.4</span> Validation against experiment<a href="case-study-short-range-order-in-li2feso.html#validation-against-experiment" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The PDF provides a direct test of these competing structural models. From the Monte Carlo configurations, we can calculate the pair distribution function and compare it to experimental total scattering data. This particular study used X-ray total scattering, which is most sensitive to the heavier Fe and S atoms; neutron PDF on the same system would provide complementary sensitivity to the lithium correlations. The principles of the comparison — generating configurations computationally and comparing calculated g(r) to experiment — are identical regardless of the probe.</p>
+<p>Three models were tested. The DFT-derived cluster expansion model, with its preference for <em>cis</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination, gives the best agreement with experiment (R<sub>w</sub> = 14.0%). A random Li/Fe distribution gives poorer agreement (R<sub>w</sub> = 16.5%) — the difference is modest but systematic, reflecting the failure to capture the enhanced OLi<sub>4</sub>Fe<sub>2</sub> coordination that the DFT model predicts. Most tellingly, a point-charge ground state with 100% <em>trans</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination gives substantially worse agreement (R<sub>w</sub> = 35.2%). The structure that simple electrostatics predicts is incompatible with the experimental PDF at short range.</p>
+<p>[Figure: Comparison of experimental and simulated PDFs for the three models]</p>
+<p>The PDF comparison validates the DFT-derived model. The short-range order in Li<sub>2</sub>FeSO is real, and it takes the form of preferential <em>cis</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination — not the <em>trans</em> preference that point-charge electrostatics would suggest.</p>
 </div>
-<div id="the-kohn-sham-equations" class="section level2 hasAnchor" number="3.5">
-<h2><span class="header-section-number">3.5</span> The Kohn-Sham equations<a href="density-functional-theory.html#the-kohn-sham-equations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>To compute <span class="math inline">\(T_\mathrm{s}\)</span> we need to find the orbitals of our non-interacting system. These satisfy one-electron Schrödinger equations in an effective potential <span class="math inline">\(v_\mathrm{eff} = v + v_J + v_\mathrm{xc}\)</span>, where <span class="math inline">\(v\)</span> is the nuclear potential, <span class="math inline">\(v_J\)</span> is the classical Coulomb potential from the electron density, and <span class="math inline">\(v_\mathrm{xc}\)</span> is the functional derivative of <span class="math inline">\(E_\mathrm{xc}\)</span> with respect to <span class="math inline">\(\rho\)</span>.</p>
-<p>From the orbitals we construct the density:</p>
-<p><span class="math display">\[\rho(\mathbf{r}) = \sum_i |\phi_i(\mathbf{r})|^2\]</span></p>
-<p>Since <span class="math inline">\(v_\mathrm{j}\)</span> and <span class="math inline">\(v_\mathrm{xc}\)</span> depend on <span class="math inline">\(\rho\)</span>, which depends on the orbitals, which depend on <span class="math inline">\(v_\mathrm{eff}\)</span>, we must iterate until self-consistent.</p>
+<div id="the-physical-origin-anion-polarisation" class="section level2 hasAnchor" number="13.5">
+<h2><span class="header-section-number">13.5</span> The physical origin: anion polarisation<a href="case-study-short-range-order-in-li2feso.html#the-physical-origin-anion-polarisation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Why does DFT favour <em>cis</em> over <em>trans</em>, when simple electrostatics predicts the opposite?</p>
+<p>The key lies in the symmetry of the anion coordination environment. In <em>trans</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination, the oxygen sits at a centre of symmetry — the distribution of cations around it is centrosymmetric. In <em>cis</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination, the oxygen sits in a non-centrosymmetric environment.</p>
+<p>Anions in non-centrosymmetric environments experience an asymmetric electric field from the surrounding cations. This field induces electronic polarisation — the anion’s electron density shifts in response. The induced dipole lowers the total electrostatic energy of the system.</p>
+<p>Point charges cannot polarise. A model that treats ions as fixed charges at crystallographic positions misses this physics entirely. It correctly captures the preference for OLi<sub>4</sub>Fe<sub>2</sub> coordination (local electroneutrality), but incorrectly predicts <em>trans</em> over <em>cis</em> because it cannot account for the stabilisation of polar coordination environments through anion polarisation.</p>
+<p>Analysis of the DFT calculations confirms this picture. In structures with <em>cis</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination, the oxygen anions exhibit significant electronic dipole moments. In structures with <em>trans</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination, the oxygen dipole moments are zero by symmetry. The polarisation energy tips the balance from <em>trans</em> to <em>cis</em>.</p>
 </div>
-<div id="still-exactin-principle" class="section level2 hasAnchor" number="3.6">
-<h2><span class="header-section-number">3.6</span> Still exact—in principle<a href="density-functional-theory.html#still-exactin-principle" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Nothing so far is an approximation—it’s exact repackaging into terms we can calculate plus a correction. If we knew <span class="math inline">\(E_\mathrm{xc}[\rho]\)</span> exactly, we’d get the exact ground-state energy.</p>
-<p>All the approximation in practical DFT lives in one place: <span class="math inline">\(E_\mathrm{xc}\)</span>.</p>
-</div>
-<div id="exchange-correlation-functionals" class="section level2 hasAnchor" number="3.7">
-<h2><span class="header-section-number">3.7</span> Exchange-correlation functionals<a href="density-functional-theory.html#exchange-correlation-functionals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The simplest approximation is the local density approximation (LDA): at each point, use the exchange-correlation energy of a uniform electron gas with that density. This is surprisingly effective, but tends to overbind—predicting bonds that are too strong and too short.</p>
-<p>Generalised gradient approximations (GGAs) improve on this by including how the density varies—not just <span class="math inline">\(\rho\)</span> but also <span class="math inline">\(\nabla \rho\)</span>. PBE is the most common GGA in materials science.</p>
-<p>Meta-GGAs go further, including the kinetic energy density as well. r<sup>2</sup>SCAN is increasingly the reference level for materials science calculations.</p>
-<p>Hybrid functionals mix in a fraction of exact exchange from Hartree-Fock theory. These often give better band gaps and reaction energies, but are significantly more expensive—you’re reintroducing the costly exact exchange integrals.</p>
-</div>
-<div id="strengths-and-limitations-1" class="section level2 hasAnchor" number="3.8">
-<h2><span class="header-section-number">3.8</span> Strengths and limitations<a href="density-functional-theory.html#strengths-and-limitations-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>DFT is first-principles and transferable—the same functional works across different chemistries without system-specific parameterisation. It’s accurate for structures and relative energies, and scales as roughly <i>N</i><sup>3</sup>, making it practical for systems of hundreds of atoms.</p>
-<p>The limitations are significant. The computational cost means DFT is practical for hundreds of atoms, not thousands, and for static calculations or short dynamics rather than the long timescales often needed to study diffusion or phase transitions. For those problems, you need classical potentials or machine-learned interatomic potentials.</p>
-<p>More fundamentally, DFT offers no systematic path to the exact answer. In wavefunction methods, you can improve accuracy by including more excitations or larger basis sets—the path is clear even if expensive. In DFT, accuracy depends on choosing a good functional, and a better functional requires new physical insight, not just more computer time. This also means different functionals give different answers, and it’s not always obvious which to trust.</p>
-<p>Finally, approximate functionals suffer from self-interaction error: an electron spuriously repels itself because <span class="math inline">\(J[\rho]\)</span> includes the interaction of each electron with the total density, including its own contribution. This causes particular problems for localised states and transition-metal chemistry, where the error doesn’t cancel out.</p>
+<div id="what-this-example-illustrates" class="section level2 hasAnchor" number="13.6">
+<h2><span class="header-section-number">13.6</span> What this example illustrates<a href="case-study-short-range-order-in-li2feso.html#what-this-example-illustrates" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This case study demonstrates the interplay between experiment and computation that runs through the preceding sections. Bragg diffraction correctly reported no long-range order, but could not distinguish between a truly random cation distribution and one with short-range order that lacks long-range periodicity. The combination of DFT, cluster expansion, and Monte Carlo sampling predicted a specific form of short-range order — preferential <em>cis</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination — and the PDF comparison validated this prediction against experiment. Further analysis then revealed the physical origin of this preference: anion polarisation in non-centrosymmetric coordination environments, physics that the experiment could not directly access but that computation reveals.</p>
+<p>The relationship was bidirectional throughout. The experimental observation of “no long-range order” prompted the computational investigation. The computational result was validated against experimental PDF data. And the physical insight emerged from analysing why the DFT results differed from simple electrostatic expectations.</p>
+<p>For this material, “disordered” does not mean “random.” The distinction matters: short-range cation order in cathode materials affects lithium transport, redox behaviour, and electrochemical performance. Characterising that order required the combination of total scattering and computation that this case study illustrates.</p>
 
 </div>
 </div>
@@ -290,8 +274,8 @@
           </div>
         </div>
       </div>
-<a href="classical-potentials.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="machine-learned-interatomic-potentials.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="short-range-order-and-pdf.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="wrap-up.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -322,7 +306,7 @@ gitbook.start({
     "size": 2
   },
   "edit": {
-    "link": "https://github.com/bjmorgan/neutrons_for_sustainable_energy/main/lecture_1/1_3_density_functional_theory.Rmd",
+    "link": "https://github.com/bjmorgan/neutrons_for_sustainable_energy/main/lecture_3/lecture3.Rmd",
     "text": "Edit"
   },
   "history": {
