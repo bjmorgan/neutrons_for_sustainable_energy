@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Machine-learned interatomic potentials | Neutrons for Sustainable Energy Lecture Notes</title>
+  <meta name="description" content="These are notes to accompany the Computaional Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Machine-learned interatomic potentials | Neutrons for Sustainable Energy Lecture Notes" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="These are notes to accompany the Computaional Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Machine-learned interatomic potentials | Neutrons for Sustainable Energy Lecture Notes" />
+  
+  <meta name="twitter:description" content="These are notes to accompany the Computaional Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
+  
+
+<meta name="author" content="Benjamin J. Morgan" />
+
+
+<meta name="date" content="2025-12-06" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="density-functional-theory.html"/>
+<link rel="next" href="introduction-1.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Neutrons for Sustainable Energy</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#shared-observables"><i class="fa fa-check"></i>Shared observables</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#scope"><i class="fa fa-check"></i>Scope</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#energy-materials"><i class="fa fa-check"></i>Energy materials</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#learning-objectives"><i class="fa fa-check"></i>Learning objectives</a></li>
+</ul></li>
+<li class="part"><span><b>I Methods for E(r)</b></span></li>
+<li class="chapter" data-level="1" data-path="the-potential-energy-surface.html"><a href="the-potential-energy-surface.html"><i class="fa fa-check"></i><b>1</b> The potential energy surface</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="the-potential-energy-surface.html"><a href="the-potential-energy-surface.html#building-the-concept"><i class="fa fa-check"></i><b>1.1</b> Building the concept</a></li>
+<li class="chapter" data-level="1.2" data-path="the-potential-energy-surface.html"><a href="the-potential-energy-surface.html#features-of-the-pes"><i class="fa fa-check"></i><b>1.2</b> Features of the PES</a></li>
+<li class="chapter" data-level="1.3" data-path="the-potential-energy-surface.html"><a href="the-potential-energy-surface.html#two-questions"><i class="fa fa-check"></i><b>1.3</b> Two questions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="classical-potentials.html"><a href="classical-potentials.html"><i class="fa fa-check"></i><b>2</b> Classical potentials</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="classical-potentials.html"><a href="classical-potentials.html#why-start-here"><i class="fa fa-check"></i><b>2.1</b> Why start here?</a></li>
+<li class="chapter" data-level="2.2" data-path="classical-potentials.html"><a href="classical-potentials.html#the-simplest-model-pair-potentials"><i class="fa fa-check"></i><b>2.2</b> The simplest model: pair potentials</a></li>
+<li class="chapter" data-level="2.3" data-path="classical-potentials.html"><a href="classical-potentials.html#building-a-potential-from-physics"><i class="fa fa-check"></i><b>2.3</b> Building a potential from physics</a></li>
+<li class="chapter" data-level="2.4" data-path="classical-potentials.html"><a href="classical-potentials.html#periodic-systems-and-the-ewald-problem"><i class="fa fa-check"></i><b>2.4</b> Periodic systems and the Ewald problem</a></li>
+<li class="chapter" data-level="2.5" data-path="classical-potentials.html"><a href="classical-potentials.html#when-pair-potentials-arent-enough"><i class="fa fa-check"></i><b>2.5</b> When pair potentials aren’t enough</a></li>
+<li class="chapter" data-level="2.6" data-path="classical-potentials.html"><a href="classical-potentials.html#the-parameterisation-problem"><i class="fa fa-check"></i><b>2.6</b> The parameterisation problem</a></li>
+<li class="chapter" data-level="2.7" data-path="classical-potentials.html"><a href="classical-potentials.html#strengths-and-limitations"><i class="fa fa-check"></i><b>2.7</b> Strengths and limitations</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="density-functional-theory.html"><a href="density-functional-theory.html"><i class="fa fa-check"></i><b>3</b> Density functional theory</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="density-functional-theory.html"><a href="density-functional-theory.html#why-first-principles"><i class="fa fa-check"></i><b>3.1</b> Why first principles?</a></li>
+<li class="chapter" data-level="3.2" data-path="density-functional-theory.html"><a href="density-functional-theory.html#the-problem-the-many-electron-wavefunction"><i class="fa fa-check"></i><b>3.2</b> The problem: the many-electron wavefunction</a></li>
+<li class="chapter" data-level="3.3" data-path="density-functional-theory.html"><a href="density-functional-theory.html#the-dft-insight"><i class="fa fa-check"></i><b>3.3</b> The DFT insight</a></li>
+<li class="chapter" data-level="3.4" data-path="density-functional-theory.html"><a href="density-functional-theory.html#the-kohn-sham-approach"><i class="fa fa-check"></i><b>3.4</b> The Kohn-Sham approach</a></li>
+<li class="chapter" data-level="3.5" data-path="density-functional-theory.html"><a href="density-functional-theory.html#the-kohn-sham-equations"><i class="fa fa-check"></i><b>3.5</b> The Kohn-Sham equations</a></li>
+<li class="chapter" data-level="3.6" data-path="density-functional-theory.html"><a href="density-functional-theory.html#still-exactin-principle"><i class="fa fa-check"></i><b>3.6</b> Still exact—in principle</a></li>
+<li class="chapter" data-level="3.7" data-path="density-functional-theory.html"><a href="density-functional-theory.html#exchange-correlation-functionals"><i class="fa fa-check"></i><b>3.7</b> Exchange-correlation functionals</a></li>
+<li class="chapter" data-level="3.8" data-path="density-functional-theory.html"><a href="density-functional-theory.html#strengths-and-limitations-1"><i class="fa fa-check"></i><b>3.8</b> Strengths and limitations</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html"><i class="fa fa-check"></i><b>4</b> Machine-learned interatomic potentials</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html#motivation"><i class="fa fa-check"></i><b>4.1</b> Motivation</a></li>
+<li class="chapter" data-level="4.2" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html#the-idea"><i class="fa fa-check"></i><b>4.2</b> The idea</a></li>
+<li class="chapter" data-level="4.3" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html#local-atomic-environments"><i class="fa fa-check"></i><b>4.3</b> Local atomic environments</a></li>
+<li class="chapter" data-level="4.4" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html#the-landscape"><i class="fa fa-check"></i><b>4.4</b> The landscape</a></li>
+<li class="chapter" data-level="4.5" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html#strengths-and-limitations-2"><i class="fa fa-check"></i><b>4.5</b> Strengths and limitations</a></li>
+<li class="chapter" data-level="4.6" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html#when-to-use"><i class="fa fa-check"></i><b>4.6</b> When to use</a></li>
+<li class="chapter" data-level="4.7" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html#summary-and-what-comes-next"><i class="fa fa-check"></i><b>4.7</b> Summary and what comes next</a></li>
+</ul></li>
+<li class="part"><span><b>II Lattice Dynamics and Molecular Dynamics</b></span></li>
+<li class="chapter" data-level="5" data-path="introduction-1.html"><a href="introduction-1.html"><i class="fa fa-check"></i><b>5</b> Introduction</a></li>
+<li class="chapter" data-level="6" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html"><i class="fa fa-check"></i><b>6</b> Finding minima: geometry optimisation</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#why-compute-a-structure"><i class="fa fa-check"></i><b>6.1</b> Why compute a structure?</a></li>
+<li class="chapter" data-level="6.2" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#structures-and-minima"><i class="fa fa-check"></i><b>6.2</b> Structures and minima</a></li>
+<li class="chapter" data-level="6.3" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#steepest-descent"><i class="fa fa-check"></i><b>6.3</b> Steepest descent</a></li>
+<li class="chapter" data-level="6.4" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#doing-better-with-curvature"><i class="fa fa-check"></i><b>6.4</b> Doing better with curvature</a></li>
+<li class="chapter" data-level="6.5" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#local-and-global-minima"><i class="fa fa-check"></i><b>6.5</b> Local and global minima</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="phonon-calculations.html"><a href="phonon-calculations.html"><i class="fa fa-check"></i><b>7</b> Phonon calculations</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="phonon-calculations.html"><a href="phonon-calculations.html#vibrations-around-equilibrium"><i class="fa fa-check"></i><b>7.1</b> Vibrations around equilibrium</a></li>
+<li class="chapter" data-level="7.2" data-path="phonon-calculations.html"><a href="phonon-calculations.html#the-harmonic-approximation"><i class="fa fa-check"></i><b>7.2</b> The harmonic approximation</a></li>
+<li class="chapter" data-level="7.3" data-path="phonon-calculations.html"><a href="phonon-calculations.html#periodic-systems-and-phonon-dispersion"><i class="fa fa-check"></i><b>7.3</b> Periodic systems and phonon dispersion</a></li>
+<li class="chapter" data-level="7.4" data-path="phonon-calculations.html"><a href="phonon-calculations.html#calculating-phonons-in-practice"><i class="fa fa-check"></i><b>7.4</b> Calculating phonons in practice</a></li>
+<li class="chapter" data-level="7.5" data-path="phonon-calculations.html"><a href="phonon-calculations.html#what-you-get"><i class="fa fa-check"></i><b>7.5</b> What you get</a></li>
+<li class="chapter" data-level="7.6" data-path="phonon-calculations.html"><a href="phonon-calculations.html#limitations"><i class="fa fa-check"></i><b>7.6</b> Limitations</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html"><i class="fa fa-check"></i><b>8</b> Molecular dynamics: principles</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#from-local-curvature-to-global-exploration"><i class="fa fa-check"></i><b>8.1</b> From local curvature to global exploration</a></li>
+<li class="chapter" data-level="8.2" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#equations-of-motion"><i class="fa fa-check"></i><b>8.2</b> Equations of motion</a></li>
+<li class="chapter" data-level="8.3" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#numerical-integration"><i class="fa fa-check"></i><b>8.3</b> Numerical integration</a></li>
+<li class="chapter" data-level="8.4" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#phase-space-and-trajectories"><i class="fa fa-check"></i><b>8.4</b> Phase space and trajectories</a></li>
+<li class="chapter" data-level="8.5" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#ensembles-and-what-they-mean"><i class="fa fa-check"></i><b>8.5</b> Ensembles and what they mean</a></li>
+<li class="chapter" data-level="8.6" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#thermostats-and-barostats"><i class="fa fa-check"></i><b>8.6</b> Thermostats and barostats</a></li>
+<li class="chapter" data-level="8.7" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#what-you-get-1"><i class="fa fa-check"></i><b>8.7</b> What you get</a></li>
+<li class="chapter" data-level="8.8" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#the-er-choice"><i class="fa fa-check"></i><b>8.8</b> The E(r) choice</a></li>
+</ul></li>
+<li class="part"><span><b>III Configurational Disorder</b></span></li>
+<li class="chapter" data-level="9" data-path="introduction-2.html"><a href="introduction-2.html"><i class="fa fa-check"></i><b>9</b> Introduction</a></li>
+<li class="chapter" data-level="10" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html"><i class="fa fa-check"></i><b>10</b> Monte Carlo sampling</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-goal-ensemble-averages"><i class="fa fa-check"></i><b>10.1</b> The goal: ensemble averages</a></li>
+<li class="chapter" data-level="10.2" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#why-not-sample-uniformly"><i class="fa fa-check"></i><b>10.2</b> Why not sample uniformly?</a></li>
+<li class="chapter" data-level="10.3" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#markov-chain-monte-carlo"><i class="fa fa-check"></i><b>10.3</b> Markov chain Monte Carlo</a></li>
+<li class="chapter" data-level="10.4" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-metropolis-algorithm"><i class="fa fa-check"></i><b>10.4</b> The Metropolis algorithm</a></li>
+<li class="chapter" data-level="10.5" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#what-you-get-2"><i class="fa fa-check"></i><b>10.5</b> What you get</a></li>
+<li class="chapter" data-level="10.6" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#what-you-dont-get"><i class="fa fa-check"></i><b>10.6</b> What you don’t get</a></li>
+<li class="chapter" data-level="10.7" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#mc-for-configurational-disorder"><i class="fa fa-check"></i><b>10.7</b> MC for configurational disorder</a></li>
+<li class="chapter" data-level="10.8" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#neutron-connection"><i class="fa fa-check"></i><b>10.8</b> Neutron connection</a></li>
+<li class="chapter" data-level="10.9" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-er-cost"><i class="fa fa-check"></i><b>10.9</b> The E(r) cost</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="cluster-expansion.html"><a href="cluster-expansion.html"><i class="fa fa-check"></i><b>11</b> Cluster expansion</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-problem"><i class="fa fa-check"></i><b>11.1</b> The problem</a></li>
+<li class="chapter" data-level="11.2" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-idea-1"><i class="fa fa-check"></i><b>11.2</b> The idea</a></li>
+<li class="chapter" data-level="11.3" data-path="cluster-expansion.html"><a href="cluster-expansion.html#symmetry-and-cluster-types"><i class="fa fa-check"></i><b>11.3</b> Symmetry and cluster types</a></li>
+<li class="chapter" data-level="11.4" data-path="cluster-expansion.html"><a href="cluster-expansion.html#fitting-the-expansion"><i class="fa fa-check"></i><b>11.4</b> Fitting the expansion</a></li>
+<li class="chapter" data-level="11.5" data-path="cluster-expansion.html"><a href="cluster-expansion.html#what-you-get-3"><i class="fa fa-check"></i><b>11.5</b> What you get</a></li>
+<li class="chapter" data-level="11.6" data-path="cluster-expansion.html"><a href="cluster-expansion.html#limitations-1"><i class="fa fa-check"></i><b>11.6</b> Limitations</a></li>
+<li class="chapter" data-level="11.7" data-path="cluster-expansion.html"><a href="cluster-expansion.html#connection-to-other-methods"><i class="fa fa-check"></i><b>11.7</b> Connection to other methods</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html"><i class="fa fa-check"></i><b>12</b> Short-range order and PDF</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#long-range-order-vs-short-range-order"><i class="fa fa-check"></i><b>12.1</b> Long-range order vs short-range order</a></li>
+<li class="chapter" data-level="12.2" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#what-bragg-diffraction-misses"><i class="fa fa-check"></i><b>12.2</b> What Bragg diffraction misses</a></li>
+<li class="chapter" data-level="12.3" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#pdf-captures-local-structure"><i class="fa fa-check"></i><b>12.3</b> PDF captures local structure</a></li>
+<li class="chapter" data-level="12.4" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#computational-approach"><i class="fa fa-check"></i><b>12.4</b> Computational approach</a></li>
+<li class="chapter" data-level="12.5" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#warren-cowley-parameters"><i class="fa fa-check"></i><b>12.5</b> Warren-Cowley parameters</a></li>
+<li class="chapter" data-level="12.6" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#the-connection-to-energy-materials"><i class="fa fa-check"></i><b>12.6</b> The connection to energy materials</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="wrap-up.html"><a href="wrap-up.html"><i class="fa fa-check"></i><b>13</b> Wrap-up</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="wrap-up.html"><a href="wrap-up.html#the-two-axis-picture-revisited"><i class="fa fa-check"></i><b>13.1</b> The two-axis picture revisited</a></li>
+<li class="chapter" data-level="13.2" data-path="wrap-up.html"><a href="wrap-up.html#er-choice-is-problem-dependent"><i class="fa fa-check"></i><b>13.2</b> E(r) choice is problem-dependent</a></li>
+<li class="chapter" data-level="13.3" data-path="wrap-up.html"><a href="wrap-up.html#three-modes-of-interaction"><i class="fa fa-check"></i><b>13.3</b> Three modes of interaction</a></li>
+<li class="chapter" data-level="13.4" data-path="wrap-up.html"><a href="wrap-up.html#bidirectionality"><i class="fa fa-check"></i><b>13.4</b> Bidirectionality</a></li>
+<li class="chapter" data-level="13.5" data-path="wrap-up.html"><a href="wrap-up.html#where-to-go-from-here"><i class="fa fa-check"></i><b>13.5</b> Where to go from here</a></li>
+<li class="chapter" data-level="13.6" data-path="wrap-up.html"><a href="wrap-up.html#resources"><i class="fa fa-check"></i><b>13.6</b> Resources</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html"><i class="fa fa-check"></i><b>A</b> Appendix: Derivation of the dynamical matrix for periodic systems</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html#setup-and-notation"><i class="fa fa-check"></i><b>A.1</b> Setup and notation</a></li>
+<li class="chapter" data-level="A.2" data-path="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html#translational-symmetry"><i class="fa fa-check"></i><b>A.2</b> Translational symmetry</a></li>
+<li class="chapter" data-level="A.3" data-path="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html#plane-wave-ansatz"><i class="fa fa-check"></i><b>A.3</b> Plane-wave ansatz</a></li>
+<li class="chapter" data-level="A.4" data-path="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html#substitution-into-equations-of-motion"><i class="fa fa-check"></i><b>A.4</b> Substitution into equations of motion</a></li>
+<li class="chapter" data-level="A.5" data-path="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html#the-dynamical-matrix"><i class="fa fa-check"></i><b>A.5</b> The dynamical matrix</a></li>
+<li class="chapter" data-level="A.6" data-path="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html#the-key-result"><i class="fa fa-check"></i><b>A.6</b> The key result</a></li>
+<li class="chapter" data-level="A.7" data-path="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html#connection-to-experiment"><i class="fa fa-check"></i><b>A.7</b> Connection to experiment</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Neutrons for Sustainable Energy Lecture Notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="machine-learned-interatomic-potentials" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> Machine-learned interatomic potentials<a href="machine-learned-interatomic-potentials.html#machine-learned-interatomic-potentials" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="motivation" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Motivation<a href="machine-learned-interatomic-potentials.html#motivation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We’ve now seen two approaches to calculating <span class="math inline">\(E(r)\)</span>. Classical potentials are fast and scale well, but require choosing a functional form and fitting parameters — the accuracy is bounded by these choices. DFT is transferable and doesn’t assume a functional form, but the computational cost limits us to hundreds of atoms and short timescales.</p>
+<p>Machine-learned interatomic potentials sit between these. Like classical potentials, they’re parameterised models fitted to data. But unlike classical potentials, they don’t assume a functional form for the interactions — the model learns the shape of E(r) from training data. And the training data typically comes from DFT, so the model inherits DFT’s accuracy for systems similar to those it was trained on.</p>
+</div>
+<div id="the-idea" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> The idea<a href="machine-learned-interatomic-potentials.html#the-idea" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The principle is supervised learning. We generate a dataset of atomic configurations with their DFT energies and forces. We then train a model — typically a neural network or similar — to predict <span class="math inline">\(E(r)\)</span> from atomic positions. Once trained, evaluating the model is much cheaper than running DFT, so we can use it for large systems and long simulations.</p>
+<p>The model learns a mapping: atomic positions → energy. But how should this mapping be structured?</p>
+</div>
+<div id="local-atomic-environments" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Local atomic environments<a href="machine-learned-interatomic-potentials.html#local-atomic-environments" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Most MLIPs decompose the total energy into contributions from each atom:</p>
+<p><span class="math display">\[E = \sum_i \varepsilon_i\]</span></p>
+<p>where <span class="math inline">\(\varepsilon_i\)</span> depends on the local environment around atom i — the species and positions of nearby atoms within some cutoff. The model learns a mapping from local environment to atomic energy contribution.</p>
+<p>This locality assumption is physically motivated: in most materials, an atom’s energy contribution depends primarily on its immediate surroundings. It also makes the model size-transferable — a model trained on small cells can be applied to larger systems.</p>
+<p>There is considerable research into how local environments should be represented (descriptors, symmetry functions) and what model architectures work best (neural networks, Gaussian processes, equivariant networks). These details are beyond our scope. The key point is that MLIPs are flexible models with many parameters, fitted to reproduce DFT energies and forces.</p>
+</div>
+<div id="the-landscape" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> The landscape<a href="machine-learned-interatomic-potentials.html#the-landscape" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The MLIP field is evolving rapidly. Broadly, you’ll encounter three approaches.</p>
+<p>Purpose-trained potentials are models developed specifically for a particular system — a battery cathode material, a solid electrolyte, a class of alloys. The training data is generated for that system, covering the configurations relevant to the intended application. This typically gives the best accuracy, because the model is focused on what matters. But it requires substantial effort: generating training data means running many DFT calculations, which is expensive. Training the model and validating it carefully adds further work. This is analogous to developing a classical potential, but without assuming a functional form.</p>
+<p>Foundation models take a different approach. These are pre-trained on massive datasets spanning much of the periodic table and many structure types, then released for general use. Training such a model requires enormous computational resources — this is work done by large research groups or companies (Google, Meta, Microsoft) with access to that scale of compute. The result is a model that provides reasonable accuracy out of the box for many systems, without needing to generate training data or train anything yourself. Examples include MACE-MP, CHGNet, SevenNet, and others. Because foundation models have seen diverse training data, they tend to be more transferable across different chemistries. The tradeoff is that accuracy for any specific system may be lower than a purpose-trained model would achieve.</p>
+<p>Fine-tuning offers a middle path. Starting from a foundation model, you add training data for your specific system and continue training. The foundation model provides a starting point — it already knows something about interatomic interactions in general — and fine-tuning adapts it to your chemistry. This can give good accuracy with less effort than training from scratch.</p>
+<p>Which approach was used affects how much you should trust the results. A purpose-trained potential with careful validation is more reliable than a foundation model applied to a system far from its training data.</p>
+</div>
+<div id="strengths-and-limitations-2" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Strengths and limitations<a href="machine-learned-interatomic-potentials.html#strengths-and-limitations-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>MLIPs learn the shape of E(r) from data, rather than assuming a functional form. This avoids the limitations of classical potentials, where accuracy is bounded by the mathematical form you write down. Once trained, evaluation is fast — approaching classical potential speeds for some architectures. And the approach is systematically improvable: more training data generally means a better model. If the potential fails in some region of configuration space, you can add more data there and retrain. Foundation models have also made the approach more accessible — you can get reasonable results without training anything yourself.</p>
+<p>The limitations are significant. The model can only be as good as its training data. Errors in the DFT calculations propagate to the potential, and the model inherits the limitations of whichever functional was used — if PBE gets something wrong, so will the MLIP trained on PBE data.</p>
+<p>More fundamentally, extrapolation is dangerous. MLIPs interpolate well within their training domain but can fail badly outside it. Unlike DFT, which will give you some answer for any configuration, an MLIP may give confident but wrong predictions for configurations far from training data. This failure can be silent — the model doesn’t know it’s extrapolating.</p>
+<p>MLIPs are also less interpretable than classical potentials. A Buckingham potential has parameters you can understand — charges, repulsion coefficients. An MLIP has thousands of internal parameters with no direct physical meaning. When something goes wrong, it’s harder to diagnose why. This places a validation burden on the user: you need to check that the potential is accurate for the configurations you care about.</p>
+</div>
+<div id="when-to-use" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> When to use<a href="machine-learned-interatomic-potentials.html#when-to-use" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>MLIPs are increasingly the default choice when you need larger systems or longer timescales than DFT allows, when classical potentials don’t exist for your system or aren’t accurate enough, and when you’re willing to validate carefully. They’re the wrong choice when DFT is affordable for your problem (simpler, no training overhead), when you’re studying configurations far from any available training data, or when you need guaranteed reliability with no possibility of silent failure.</p>
+<p>The field is moving fast. What’s state-of-the-art now may be superseded within a year. For your purposes as consumers of computational work: ask what potential was used, what it was trained on, and how it was validated for the system being studied.</p>
+
+</div>
+<div id="summary-and-what-comes-next" class="section level2 hasAnchor" number="4.7">
+<h2><span class="header-section-number">4.7</span> Summary and what comes next<a href="machine-learned-interatomic-potentials.html#summary-and-what-comes-next" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We have now covered three approaches to calculating E(r).</p>
+<p>Classical potentials are parameterised analytical functions — fast and interpretable, but bounded by the functional form you choose. The physics you can capture depends on the mathematical form you write down, and developing a good potential requires substantial effort.</p>
+<p>Density functional theory calculates E(r) from quantum mechanics, with all approximation localised in the exchange-correlation functional. It’s transferable across chemistries without system-specific fitting, but computationally expensive — practical for hundreds of atoms, not millions.</p>
+<p>Machine-learned interatomic potentials learn E(r) from training data, typically DFT calculations. They avoid assuming a functional form, and can approach DFT accuracy at near-classical cost. But they inherit the limitations of their training data, and can fail silently outside their training domain.</p>
+<p>These are methods for calculating E(r) — given a configuration of atoms, what is its energy? But calculating the energy is not the end goal. The questions we actually want to answer determine what we do with that ability.</p>
+<p>In Lecture II, we turn to the second axis: methods that use E(r). We’ll cover geometry optimisation (finding stable structures), phonon calculations (characterising vibrations), and molecular dynamics (simulating atomic motion at finite temperature). Each of these can be combined with any of the E(r) methods we’ve discussed — the choices are independent.</p>
+<p>In Lecture III, we’ll cover Monte Carlo sampling and cluster expansion methods for treating configurational disorder, and look at case studies where experimental puzzles drove computational investigation.</p>
+
+</div>
+</div>
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="density-functional-theory.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introduction-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/bjmorgan/neutrons_for_sustainable_energy/main/lecture_1/1_4_MLIPs.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "mathjax": {
+    "extensions": "mhchem.js"
+  },
+  "mathjax_config": {
+    "TeX": {
+      "Macros": {
+        "conc": [
+          "[\mathrm{#1}]",
+          1
+        ],
+        "diffc": [
+          "\frac{\mathrm{d}\conc{#1}}{\mathrm{d}t}",
+          1
+        ]
+      }
+    }
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
