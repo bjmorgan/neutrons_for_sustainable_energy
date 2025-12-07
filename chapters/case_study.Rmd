@@ -1,6 +1,6 @@
 # Case study: short-range order in Li<sub>2</sub>FeSO
 
-This section presents a case study illustrating the computational workflow developed in the preceding sections. The example — cation ordering in the antiperovskite cathode material Li<sub>2</sub>FeSO — demonstrates how cluster expansion, Monte Carlo sampling, and pair distribution function analysis combine to characterise short-range order that Bragg diffraction cannot detect. Full details are available in Coles *et al.*, *Journal of Materials Chemistry A* (2023).
+This chapter presents a case study illustrating the computational workflow developed in the preceding chapters. The example — cation ordering in the antiperovskite cathode material Li<sub>2</sub>FeSO — demonstrates how cluster expansion, Monte Carlo sampling, and pair distribution function analysis combine to characterise short-range order that Bragg diffraction cannot detect. Full details are available in <a href="https://doi.org/10.1039/D2TA10037A">Coles *et al.*, *Journal of Materials Chemistry A* (2023)</a>.
 
 ## The puzzle
 
@@ -8,15 +8,15 @@ Li<sub>2</sub>FeSO adopts the antiperovskite structure. Sulfur occupies the 12-c
 
 [Figure: Li<sub>2</sub>FeSO antiperovskite structure showing the shared Li/Fe sites]
 
-But this assumption is puzzling on physical grounds. Fe²⁺ and Li⁺ have different formal charges. Simple electrostatic arguments suggest that configurations which separate the higher-charged Fe²⁺ ions should be lower in energy than configurations that cluster them together. If an energetic preference exists, why would the cation distribution be random?
+But this assumption is puzzling on physical grounds. Fe<sup>2+</sup> and Li<sup>+</sup> have different formal charges. Simple electrostatic arguments suggest that configurations which separate the higher-charged Fe<sup>2+</sup> ions should be lower in energy than configurations that cluster them together. If an energetic preference exists, why would the cation distribution be random?
 
 The absence of long-range order does not necessarily imply the absence of short-range order. Diffraction probes the average, periodic structure; local correlations that do not produce a periodic pattern are invisible to Bragg peaks. The question is whether Li<sub>2</sub>FeSO exhibits preferential short-range cation ordering, and if so, what form it takes.
 
 ## The computational approach
 
-To address this question, we calculated DFT energies for approximately 100 different Li/Fe configurations in supercells of Li<sub>2</sub>FeSO. These energies were used to fit a cluster expansion — a parameterised model that expresses the configurational energy as a function of site occupancies, as described in section 3.2.
+To address this question, we calculated DFT energies for approximately 100 different Li/Fe configurations in supercells of Li<sub>2</sub>FeSO. These energies were used to fit a cluster expansion — a parameterised model that expresses the configurational energy as a function of site occupancies, as described in Chapter \@ref(cluster-expansion)2.
 
-With the cluster expansion in hand, Monte Carlo sampling becomes computationally tractable. We performed MC simulations in an 8&times;8&times;8 supercell at 1025 K, corresponding to the experimental synthesis temperature. The simulation generates an ensemble of configurations representative of thermal equilibrium at that temperature.
+With the cluster expansion in hand, Monte Carlo sampling becomes computationally tractable. We performed MC simulations in an 8&times;8&times;8 supercell at 1025&nbsp;K, corresponding to the experimental synthesis temperature. The simulation generates an ensemble of configurations representative of thermal equilibrium at that temperature.
 
 From the MC trajectory, we can extract the probability distribution of local coordination environments. Each oxygen in the structure is surrounded by six cation sites. In a material with 2:1 Li:Fe stoichiometry, the possible oxygen coordinations range from OLi<sub>6</sub> (all lithium) to OFe<sub>6</sub> (all iron), with intermediate compositions OLi₅Fe, OLi<sub>4</sub>Fe<sub>2</sub>, OLi<sub>3</sub>Fe<sub>3</sub>, OLi<sub>2</sub>Fe<sub>4</sub>, and OLiFe<sub>5</sub>.
 
@@ -36,13 +36,13 @@ The DFT-derived cluster expansion predicts a markedly different distribution. OL
 
 More unexpectedly, within the OLi<sub>4</sub>Fe<sub>2</sub> environments, 81% adopt the *cis* configuration and only 19% adopt the *trans* configuration.
 
-This result contradicts simple electrostatic reasoning. If Li⁺ and Fe²⁺ are treated as point charges at their formal crystallographic positions, the electrostatic energy of an OLi<sub>4</sub>Fe<sub>2</sub> octahedron is minimised when the two Fe²⁺ ions occupy opposite vertices — the *trans* configuration — maximising their separation. A point-charge model predicts preferential *trans*-OLi<sub>4</sub>Fe<sub>2</sub> coordination and, consequently, long-range cation order. The DFT-derived model predicts preferential *cis*-OLi<sub>4</sub>Fe<sub>2</sub> coordination, which produces long-range disorder.
+This result contradicts simple electrostatic reasoning. If Li<sup>+</sup> and Fe<sup>2+</sup> are treated as point charges at their formal crystallographic positions, the electrostatic energy of an OLi<sub>4</sub>Fe<sub>2</sub> octahedron is minimised when the two Fe<sup>2+</sup> ions occupy opposite vertices — the *trans* configuration — maximising their separation. A point-charge model predicts preferential *trans*-OLi<sub>4</sub>Fe<sub>2</sub> coordination and, consequently, long-range cation order. The DFT-derived model predicts preferential *cis*-OLi<sub>4</sub>Fe<sub>2</sub> coordination, which produces long-range disorder.
 
 ## Validation against experiment
 
 The PDF provides a direct test of these competing structural models. From the Monte Carlo configurations, we can calculate the pair distribution function and compare it to experimental total scattering data. This particular study used X-ray total scattering, which is most sensitive to the heavier Fe and S atoms; neutron PDF on the same system would provide complementary sensitivity to the lithium correlations. The principles of the comparison — generating configurations computationally and comparing calculated g(r) to experiment — are identical regardless of the probe.
 
-Three models were tested. The DFT-derived cluster expansion model, with its preference for *cis*-OLi<sub>4</sub>Fe<sub>2</sub> coordination, gives the best agreement with experiment (R~w~ = 14.0%). A random Li/Fe distribution gives poorer agreement (R~w~ = 16.5%) — the difference is modest but systematic, reflecting the failure to capture the enhanced OLi<sub>4</sub>Fe<sub>2</sub> coordination that the DFT model predicts. Most tellingly, a point-charge ground state with 100% *trans*-OLi<sub>4</sub>Fe<sub>2</sub> coordination gives substantially worse agreement (R~w~ = 35.2%). The structure that simple electrostatics predicts is incompatible with the experimental PDF at short range.
+Three models were tested. The DFT-derived cluster expansion model, with its preference for *cis*-OLi<sub>4</sub>Fe<sub>2</sub> coordination, gives the best agreement with experiment ($R_\mathrm{w} = 14.0%$). A random Li/Fe distribution gives poorer agreement ($R_\mathrm{w} = 16.5%$) — the difference is modest but systematic, reflecting the failure to capture the enhanced OLi<sub>4</sub>Fe<sub>2</sub> coordination that the DFT model predicts. Most tellingly, a point-charge ground state with 100% *trans*-OLi<sub>4</sub>Fe<sub>2</sub> coordination gives substantially worse agreement ($R_\mathrm{w} = 35.2%$). The structure that simple electrostatics predicts is incompatible with the experimental PDF at short range.
 
 [Figure: Comparison of experimental and simulated PDFs for the three models]
 
