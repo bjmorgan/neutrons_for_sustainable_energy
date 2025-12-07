@@ -18,8 +18,7 @@ exchange-correlation-functionals
 strengths-and-limitations-1
 mlips
 motivation
-the-idea
-local-atomic-environments
+how-mlips-work
 the-landscape
 strengths-and-limitations-2
 when-to-use
@@ -56,7 +55,7 @@ what-you-dont-get
 neutron-connection
 cluster-expansion
 the-problem
-the-idea-1
+the-idea
 symmetry-and-truncation
 fitting-the-expansion
 what-you-get-3

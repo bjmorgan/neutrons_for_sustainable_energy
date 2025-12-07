@@ -111,11 +111,10 @@
 <li class="chapter" data-level="4" data-path="mlips.html"><a href="mlips.html"><i class="fa fa-check"></i><b>4</b> Machine-learned interatomic potentials</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="mlips.html"><a href="mlips.html#motivation"><i class="fa fa-check"></i><b>4.1</b> Motivation</a></li>
-<li class="chapter" data-level="4.2" data-path="mlips.html"><a href="mlips.html#the-idea"><i class="fa fa-check"></i><b>4.2</b> The idea</a></li>
-<li class="chapter" data-level="4.3" data-path="mlips.html"><a href="mlips.html#local-atomic-environments"><i class="fa fa-check"></i><b>4.3</b> Local atomic environments</a></li>
-<li class="chapter" data-level="4.4" data-path="mlips.html"><a href="mlips.html#the-landscape"><i class="fa fa-check"></i><b>4.4</b> The landscape</a></li>
-<li class="chapter" data-level="4.5" data-path="mlips.html"><a href="mlips.html#strengths-and-limitations-2"><i class="fa fa-check"></i><b>4.5</b> Strengths and limitations</a></li>
-<li class="chapter" data-level="4.6" data-path="mlips.html"><a href="mlips.html#when-to-use"><i class="fa fa-check"></i><b>4.6</b> When to use</a></li>
+<li class="chapter" data-level="4.2" data-path="mlips.html"><a href="mlips.html#how-mlips-work"><i class="fa fa-check"></i><b>4.2</b> How MLIPs work</a></li>
+<li class="chapter" data-level="4.3" data-path="mlips.html"><a href="mlips.html#the-landscape"><i class="fa fa-check"></i><b>4.3</b> The landscape</a></li>
+<li class="chapter" data-level="4.4" data-path="mlips.html"><a href="mlips.html#strengths-and-limitations-2"><i class="fa fa-check"></i><b>4.4</b> Strengths and limitations</a></li>
+<li class="chapter" data-level="4.5" data-path="mlips.html"><a href="mlips.html#when-to-use"><i class="fa fa-check"></i><b>4.5</b> When to use</a></li>
 </ul></li>
 <li class="part"><span><b>II Structure and Dynamics</b></span></li>
 <li class="chapter" data-level="5" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html"><i class="fa fa-check"></i><b>5</b> Finding minima: geometry optimisation</a>
@@ -161,7 +160,7 @@
 <li class="chapter" data-level="9" data-path="cluster-expansion.html"><a href="cluster-expansion.html"><i class="fa fa-check"></i><b>9</b> Cluster expansion</a>
 <ul>
 <li class="chapter" data-level="9.1" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-problem"><i class="fa fa-check"></i><b>9.1</b> The problem</a></li>
-<li class="chapter" data-level="9.2" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-idea-1"><i class="fa fa-check"></i><b>9.2</b> The idea</a></li>
+<li class="chapter" data-level="9.2" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-idea"><i class="fa fa-check"></i><b>9.2</b> The idea</a></li>
 <li class="chapter" data-level="9.3" data-path="cluster-expansion.html"><a href="cluster-expansion.html#symmetry-and-truncation"><i class="fa fa-check"></i><b>9.3</b> Symmetry and truncation</a></li>
 <li class="chapter" data-level="9.4" data-path="cluster-expansion.html"><a href="cluster-expansion.html#fitting-the-expansion"><i class="fa fa-check"></i><b>9.4</b> Fitting the expansion</a></li>
 <li class="chapter" data-level="9.5" data-path="cluster-expansion.html"><a href="cluster-expansion.html#what-you-get-3"><i class="fa fa-check"></i><b>9.5</b> What you get</a></li>
@@ -224,8 +223,8 @@
 <p>The challenge is evaluating the energy. A typical MC simulation involves millions of proposed moves, each requiring ΔE to be calculated. To make matters worse, atoms do not sit exactly on ideal lattice positions — they relax slightly depending on the local chemical environment. To calculate ΔE properly, each proposed configuration requires a geometry optimisation. The computational cost is not just millions of energy evaluations, but millions of geometry optimisations. With DFT, this is completely impractical. With classical potentials, it is possible but computationally demanding and slow.</p>
 <p>Cluster expansions sidestep this entirely. The idea is to construct an effective Hamiltonian that depends only on site occupancies — not on continuous atomic positions. This Hamiltonian is parameterised by fitting to the energies of relaxed structures calculated with a more accurate method, typically DFT. Because the training data comes from fully relaxed configurations, the relaxation energy is already incorporated into the fitted coefficients. During MC sampling, no geometry optimisation is needed — evaluating the energy for any configuration is computationally trivial, enabling hundreds of MC steps per second with near-DFT accuracy.</p>
 </div>
-<div id="the-idea-1" class="section level2 hasAnchor" number="9.2">
-<h2><span class="header-section-number">9.2</span> The idea<a href="cluster-expansion.html#the-idea-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-idea" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> The idea<a href="cluster-expansion.html#the-idea" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>How is the effective Hamiltonian constructed? For a binary system (A and B atoms on fixed sites), the configuration can be represented using occupation variables: assign σ<sub>i</sub> = +1 if site i has atom A, σ<sub>i</sub> = −1 if site i has atom B. The full configuration is then specified by the set of all σ<sub>i</sub>.</p>
 <p>The cluster expansion writes the energy as a function of these occupation variables:</p>
 <p><span class="math display">\[E(\{\sigma\}) = J_0 + \sum_i J_i \sigma_i + \sum_{i&lt;j} J_{ij} \sigma_i \sigma_j + \sum_{i&lt;j&lt;k} J_{ijk} \sigma_i \sigma_j \sigma_k + \ldots\]</span></p>
