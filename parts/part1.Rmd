@@ -1,1 +1,1 @@
-# (PART) Calculating $E(r)$ {-}
+# (PART) Calculating <i>E</i>(<i>r</i>) {-}
