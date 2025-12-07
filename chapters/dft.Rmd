@@ -6,81 +6,98 @@ Classical potentials have fundamental limitations: the accuracy is bounded by th
 
 First-principles methods address this. Instead of parameterising interactions, we calculate $E(r)$ from quantum mechanics—solving (approximately) for the electrons in your system. The physics is built in, not fitted.
 
-## The problem: the many-electron wavefunction
+## From wavefunctions to density
 
-In principle, the energy of a collection of electrons and nuclei comes from solving the Schrödinger equation. The ground-state wavefunction $\psi(r_1, r_2, \ldots, r_n)$ gives you everything—the energy, the electron density, all ground-state properties.
+In principle, the energy of a collection of electrons and nuclei comes from 
+solving the Schrödinger equation. The ground-state wavefunction 
+$\psi(r_1, r_2, \ldots, r_n)$ gives everything — the energy, the electron 
+density, all ground-state properties. The problem is dimensionality. For $N$ 
+electrons, the wavefunction is a function of $3N$ spatial coordinates. The 
+complexity grows exponentially with the number of electrons — intractable for 
+real materials.
 
-The problem is dimensionality. For <i>N</i> electrons, the wavefunction is a function of 3<i>N</i> spatial coordinates. The complexity grows exponentially with the number of electrons—intractable for real materials.
+The electron density $\rho(\mathbf{r})$ offers an alternative. Unlike the 
+wavefunction, the density is always three-dimensional — ten electrons or ten 
+thousand, it is still just $\rho(x, y, z)$. The first Hohenberg-Kohn theorem 
+(1964) established that for ground states, the energy can be written as a 
+functional of the density: $E = E[\rho]$. A functional maps a function to a 
+number — here $\rho(\mathbf{r})$ is a function of position, and $E$ is a 
+single number. The theorem does not specify what this functional is, only 
+that it exists. The second Hohenberg-Kohn theorem establishes that this 
+functional is variational: the density that minimises $E[\rho]$ is the true 
+ground-state density.
 
-## The DFT insight
+Together, these theorems imply that the exact ground-state energy could be 
+found by minimising over three-dimensional densities rather than 
+$3N$-dimensional wavefunctions — if we knew $E[\rho]$. We can write:
 
-The electron density $\rho(r)$ is always three-dimensional—ten electrons or ten thousand, it's still just $\rho(x, y, z)$.
+$$E[\rho] = T[\rho] + V_\mathrm{ee}[\rho] + \int v(\mathbf{r})\rho(\mathbf{r})\,d\mathbf{r}$$
 
-The first Hohenberg-Kohn theorem (1964) says that for ground states, the energy can be written as a functional of the density, $E = E[\rho]$. (A functional maps a function to a number—here $\rho(r)$ is a function of position, and $E$ is a single number.) The theorem doesn't tell us what this functional is—just that it exists.
-
-The second Hohenberg-Kohn theorem says this functional is variational: the density that minimises $E[\rho\$ is the true ground-state density.
-
-Together: if we knew $E[\rho]$, we could find the exact ground-state energy by minimising over 3D densities rather than 3<i>N</i>-dimensional wavefunctions.
-
-## The practical problem
-
-We can write:
-
-$$E[\rho] = T[\rho] + V_\mathrm{ee}[\rho] + \int v(\mathbf{r})\rho(\mathbf{r})d\mathbf{r}$$
-
-where $T[\rho]$ is the kinetic energy, $V_\mathrm{ee}[\rho]$] is the electron-electron repulsion, and the last term is the electron-nuclear attraction (integrating the density against the nuclear potential $v$).
-
-The last term we can calculate—we know $v$ from the nuclear positions. The first two we cannot: we don't know how to write them as functionals of the density that we can evaluate.
+where $T[\rho]$ is the kinetic energy, $V_\mathrm{ee}[\rho]$ is the 
+electron-electron repulsion, and the final term is the electron-nuclear 
+attraction. The last term is straightforward — we know $v$ from the nuclear 
+positions. The first two are not: we do not know how to write them as 
+explicit functionals of the density.
 
 ## The Kohn-Sham approach
 
-Kohn and Sham (1965) addressed this by separating each unknown term into a part we can calculate plus a correction.
+Kohn and Sham (1965) addressed this by separating each unknown term into a 
+part that can be calculated plus a remainder.
 
-For the electron-electron interaction, separate $V_\mathrm{ee}$ into a classical part plus the remainder:
+For the electron-electron interaction, the classical Coulomb energy of a 
+charge distribution is:
 
-$$V_{ee}[\rho] = J[\rho] + (V_{ee}[\rho] - J[\rho])$$
+$$J[\rho] = \frac{1}{2}\int\int \frac{\rho(\mathbf{r})\rho(\mathbf{r}')}{|\mathbf{r}-\mathbf{r}'|}\, d\mathbf{r}\, d\mathbf{r}'$$
 
-where $J[\rho]$ is the classical Coulomb energy—the electrostatic self-repulsion of a charge distribution:
+This can be evaluated directly from the density. What it misses are exchange 
+(electrons with parallel spin avoid each other, a consequence of the Pauli 
+principle) and correlation (electrons avoid each other due to their mutual 
+repulsion).
 
-$$J[\rho] = \frac{1}{2}\int\int \frac{\rho(\mathbf{r})\rho(\mathbf{r}')}{|\mathbf{r}-\mathbf{r}'|} d\mathbf{r} d\mathbf{r}'$$
-
-This we can calculate directly from the density. The remainder contains two effects we're not capturing: exchange (electrons with parallel spin avoid each other, a consequence of the Pauli principle) and correlation (electrons avoid each other due to their mutual repulsion).
-
-For the kinetic energy, there's a system for which this is straightforward: non-interacting electrons. For these, the ground state is a Slater determinant of one-electron orbitals $\phi_i$, and the kinetic energy is just the sum of one-electron contributions:
+For the kinetic energy, there is a system for which this is straightforward: 
+non-interacting electrons. For such a system, the ground state is a Slater 
+determinant of one-electron orbitals $\phi_i$, and the kinetic energy is the 
+sum of one-electron contributions:
 
 $$T_s = -\frac{1}{2}\sum_i \langle\phi_i|\nabla^2|\phi_i\rangle$$
 
-So we separate $T$ into this non-interacting kinetic energy $T_\mathrm{s}$ plus the remainder:
+The true kinetic energy $T[\rho]$ differs from $T_s[\rho]$ because 
+interacting electrons move differently from non-interacting ones — but the 
+difference is small. Both systems have the same density, so electrons are 
+confined to the same regions of space, and kinetic energy is largely 
+determined by spatial confinement.
 
-$$T[\rho] = T_s[\rho] + (T[\rho] - T_s[\rho])$$
+The remainders from both separations are bundled into a single correction, 
+the exchange-correlation functional:
 
-The remainder exists because interacting electrons move differently from non-interacting ones—but it's small. Both systems have the same density, so electrons are confined to the same regions of space, and kinetic energy is largely determined by spatial confinement.
-
-The remainders from both separations are bundled into a single correction called the exchange-correlation functional:
-
-$$E_{xc}[\rho] = (T[\rho] - T_s[\rho]) + (V_{ee}[\rho] - J[\rho])$$
+$$E_\mathrm{xc}[\rho] = (T[\rho] - T_s[\rho]) + (V_\mathrm{ee}[\rho] - J[\rho])$$
 
 The total energy becomes:
 
-$$E[\rho] = T_s[\rho] + J[\rho] + \int v(\mathbf{r})\rho(\mathbf{r})d\mathbf{r} + E_{xc}[\rho]$$
+$$E[\rho] = T_s[\rho] + J[\rho] + \int v(\mathbf{r})\rho(\mathbf{r})\,d\mathbf{r} + E_\mathrm{xc}[\rho]$$
 
-The first three terms we can calculate. All the unknowns are in $E_\mathrm{xc}$.
+The first three terms can be calculated; all the unknowns are in 
+$E_\mathrm{xc}$.
 
-## The Kohn-Sham equations
-
-To compute $T_\mathrm{s}$ we need to find the orbitals of our non-interacting system. These satisfy one-electron Schrödinger equations in an effective potential $v_\mathrm{eff} = v + v_J + v_\mathrm{xc}$, where $v$ is the nuclear potential, $v_J$ is the classical Coulomb potential from the electron density, and $v_\mathrm{xc}$ is the functional derivative of $E_\mathrm{xc}$ with respect to $\rho$.
-
-From the orbitals we construct the density:
+To evaluate $T_s$ requires finding the orbitals of the non-interacting 
+system. These satisfy one-electron Schrödinger equations in an effective 
+potential $v_\mathrm{eff} = v + v_J + v_\mathrm{xc}$, where $v$ is the nuclear 
+potential, $v_J$ is the classical Coulomb potential from the electron 
+density, and $v_\mathrm{xc}$ is the functional derivative of $E_\mathrm{xc}$ 
+with respect to $\rho$. The density is constructed from the occupied 
+orbitals:
 
 $$\rho(\mathbf{r}) = \sum_i |\phi_i(\mathbf{r})|^2$$
 
-Since $v_\mathrm{j}$ and $v_\mathrm{xc}$ depend on $\rho$, which depends on the orbitals, which depend on $v_\mathrm{eff}$, we must iterate until self-consistent.
+Since $v_J$ and $v_\mathrm{xc}$ depend on $\rho$, which depends on the 
+orbitals, which depend on $v_\mathrm{eff}$, the equations must be solved 
+iteratively until self-consistent.
 
-## Still exact—in principle
-
-Nothing so far is an approximation—it's exact repackaging into terms we can calculate plus a correction. If we knew $E_\mathrm{xc}[\rho]$ exactly, we'd get the exact ground-state energy.
-
-All the approximation in practical DFT lives in one place: $E_\mathrm{xc}$.
+Nothing in this development is an approximation — it is exact repackaging 
+into terms that can be evaluated plus a correction. If $E_\mathrm{xc}[\rho]$ 
+were known exactly, Kohn-Sham DFT would give the exact ground-state energy. 
+All the approximation in practical DFT lives in one place: 
+$E_\mathrm{xc}$.
 
 ## Exchange-correlation functionals
 
