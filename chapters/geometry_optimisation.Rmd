@@ -1,0 +1,81 @@
+# Finding minima: geometry optimisation
+
+## Introduction
+
+The previous chapters introduced the potential energy surface — the mapping from atomic configuration to energy. For any arrangement of atoms, there is an associated energy, and the features of this surface encode the physics we care about. Minima correspond to stable structures. Curvature at a minimum determines how atoms vibrate around equilibrium. Barriers between minima control the rates of transitions — diffusion, phase transformations, chemical reactions.
+
+We then covered three approaches to calculating $E(r)$: classical potentials, which are fast but bounded by their functional form; density functional theory, which is transferable but expensive; and machine-learned interatomic potentials, which learn from DFT data and can approach DFT accuracy at near-classical cost. These methods differ in their tradeoffs, but any of them can be combined with the techniques we'll cover today.
+
+The goal now is to answer scientific questions. What structure is stable at a given composition? How do atoms vibrate, and what frequencies characterise that motion? How do atoms move at finite temperature — do they diffuse, and by what mechanism? These questions connect directly to what you measure: stable structures to diffraction, vibrations to inelastic neutron scattering, diffusive motion to quasielastic scattering.
+
+This lecture covers methods that use $E(r)$ to interrogate the potential energy surface. Geometry optimisation locates minima — finding the stable structures. Phonon calculations characterise the curvature at those minima — predicting vibrational frequencies. Molecular dynamics simulates atomic motion at finite temperature, capturing behaviour that goes beyond the harmonic picture. Each of these methods works with any of the $E(r)$ approaches from Part I.
+
+## Why compute a structure?
+
+Geometry optimisation locates minima on the potential energy surface — finding stable structures. But diffraction already tells us where atoms are. Why compute structures at all?
+
+Sometimes the goal is direct comparison: validating a structural model from diffraction analysis. If the optimised structure matches the experimental one, both the calculation and the diffraction analysis are supported. If they disagree, something needs investigation — perhaps the experimental model is incomplete, perhaps the computational method is inadequate for this system, perhaps the disagreement points to something interesting.
+
+More often, computation provides complementary information. Diffraction tells you *what* structure forms; computation tells you *why*. By calculating the energies of competing structures, we can understand polymorph stability, site preferences for dopants, or the driving forces behind structural distortions. We can also calculate energies for structures that *don't* form — understanding what's metastable, what's unstable, and why.
+
+Computation can also resolve what Bragg diffraction struggles with. Some elements have similar scattering lengths — oxygen and fluorine, for instance, are nearly indistinguishable by neutron diffraction, making oxyfluoride structures hard to solve from scattering data alone. Computation can test whether O or F at a given site is energetically preferred. Similarly, partial site occupancies appear as averages in Bragg diffraction, but computation can test the energetics of specific configurations.
+
+Local distortions and short-range order present a different challenge. Bragg diffraction reports only the average structure, so local correlations are invisible. Computation can capture these by optimising large supercells with different local arrangements.
+
+Finally, there is prediction. Computational screening can assess the stability of hypothetical materials before synthesis — testing whether a proposed composition would be thermodynamically stable, and if so, what structure it would adopt. This is increasingly important for materials discovery.
+
+## Structures and minima
+
+When we say a material has a particular "structure", we typically mean the positions determined by diffraction — the time-averaged positions of atoms at the measurement temperature. Computationally, a structure corresponds to a basin on the potential energy surface — a region of configuration space that drains to a particular minimum. Different basins correspond to different structures: polymorphs of the same composition, different orderings of atoms on sites, different local arrangements. A real material's PES has many such basins.
+
+The simplest description of a basin is the position of its minimum — the 0&nbsp;K atomic positions, where atoms sit with no thermal motion. In the harmonic approximation, these are also the mean positions at finite temperature; with anharmonicity they can differ, thermal expansion being the most familiar example.
+
+The procedure for finding such minima is called geometry optimisation. The force on an atom is the negative gradient of energy:
+
+$$\mathbf{F}_i = -\frac{\partial E}{\partial \mathbf{r}_i}$$
+
+At a minimum, all forces are zero. Geometry optimisation adjusts atomic positions (and usually cell parameters) until this condition is satisfied.
+
+## Steepest descent
+
+The simplest approach is steepest descent: calculate the forces on all atoms and move each atom in the direction of its force. Since forces point downhill on the potential energy surface, this reduces the energy. Recalculate forces, move again, iterate.
+
+Steepest descent tells you which direction to move, but not how far. Too small a step and convergence is slow; too large and you overshoot, oscillate, or diverge. Various approaches exist — fixed step sizes, line searches to find the minimum along each descent direction, adaptive schemes that adjust based on whether the energy decreased — but none is universally optimal. The algorithm also tends to zigzag in narrow valleys of the energy surface, where the steepest direction points across the valley rather than along it towards the minimum.
+
+## Doing better with curvature
+
+Newton-Raphson can do better by using more information. Consider first a one-dimensional case: we have $E(x)$ and want to find the minimum. Near any point $x_0$, we can approximate the energy as a Taylor expansion:
+
+$$E(x) \approx E(x_0) + E'(x_0)(x - x_0) + \frac{1}{2}E''(x_0)(x - x_0)^2$$
+
+This expansion is truncated at second order — we assume the energy surface is approximately quadratic near our current point. This is the harmonic approximation, and its validity depends on where we are on the surface. Near a minimum, where the surface is smooth and bowl-shaped, the quadratic approximation is accurate. Far from a minimum, where the surface may have more complex shape, the approximation can be poor.
+
+For a quadratic function, we can find the minimum exactly: differentiate, set to zero, solve. The result is:
+
+$$x = x_0 - \frac{E'(x_0)}{E''(x_0)}$$
+
+This is the predicted position of the minimum, under the assumption that the PES is locally harmonic. The step to take — gradient divided by curvature — makes physical sense: if the curvature is large (a steep, narrow well), we take a small step; if the curvature is small (a shallow, broad well), we take a large step. The curvature tells us how far away the minimum is likely to be.
+
+Because the harmonic assumption is not exact, $x$ won't be the exact minimum — but it usually provides a good estimate. From the new position we can repeat the procedure: recalculate the gradient and curvature, predict a new minimum position, move there. Each iteration refines the approximation. Near a minimum, where the harmonic approximation is accurate, Newton-Raphson converges rapidly — often in just a few iterations.
+
+In three dimensions with <i>N</i> atoms, the same principle applies. The first derivative $E^\prime$ becomes a gradient vector $\mathbf{g}$ with 3<i>N</i> components — one for each atomic coordinate. The second derivative E″ becomes the Hessian matrix **H**, a 3<i>N</i> &times; 3<i>N</i> matrix of second derivatives:
+
+$$H_{ij} = \frac{\partial^2 E}{\partial r_i \partial r_j}$$
+
+The quadratic approximation becomes:
+
+$$E(\mathbf{r}) \approx E_0 + \mathbf{g}^T \mathbf{u} + \frac{1}{2}\mathbf{u}^T \mathbf{H} \mathbf{u}$$
+
+where **u** is the displacement from the current position. The Newton-Raphson step generalises to:
+
+$$\mathbf{u} = -\mathbf{H}^{-1}\mathbf{g}$$
+
+The same iterative logic applies: predict the minimum position, move there, repeat until converged.
+
+Newton-Raphson performs well when the starting guess is close to a minimum, where the harmonic approximation is reasonable. Far from a minimum, where the harmonic approximation breaks down, the algorithm may converge slowly, take erratic steps, or fail to find a minimum at all. In practice, optimisation codes often use methods that are more robust across the whole energy surface — conjugate gradient methods, or quasi-Newton methods (such as BFGS) that build up an approximate Hessian from the gradient information accumulated over successive steps. These handle the early stages of optimisation more reliably, while still converging rapidly near a minimum where the harmonic approximation holds.
+
+## Local and global minima
+
+Geometry optimisation finds a *local* minimum — the one nearest your starting point. A real potential energy surface has many local minima, corresponding to different polymorphs, different site orderings, different local arrangements of atoms. Which minimum you find depends on where you start. This is usually fine: you're testing a specific structural hypothesis, not searching for the global minimum. If you want to compare polymorphs, you optimise each one separately and compare their energies.
+
+Finding the global minimum without knowing where to start — structure prediction — is a harder problem, but not one we need to solve for most purposes. When it is needed, the approach is conceptually simple: generate many starting points and optimise each one. Methods differ in how they generate those starting points — random structures with sensible constraints, evolutionary algorithms that breed new candidates from successful ones, or perturbations from known minima — but at the core, they all rely on the same local optimisation we've just discussed.

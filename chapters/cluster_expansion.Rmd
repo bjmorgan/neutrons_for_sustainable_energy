@@ -1,0 +1,49 @@
+# Cluster expansion
+
+## The problem
+
+Some questions in materials science concern configurational disorder on a lattice: which atoms sit on which sites? In a mixed-metal oxide, how are the cations distributed? In an alloy, do the components cluster or order? These are questions about a discrete configurational space — the lattice sites are fixed, only the occupancies vary. Monte Carlo sampling handles this naturally: propose a swap of two atoms, accept or reject based on energy change, repeat.
+
+The challenge is evaluating the energy. A typical MC simulation involves millions of proposed moves, each requiring ΔE to be calculated. To make matters worse, atoms do not sit exactly on ideal lattice positions — they relax slightly depending on the local chemical environment. To calculate ΔE properly, each proposed configuration requires a geometry optimisation. The computational cost is not just millions of energy evaluations, but millions of geometry optimisations. With DFT, this is completely impractical. With classical potentials, it is possible but computationally demanding and slow.
+
+Cluster expansions sidestep this entirely. The idea is to construct an effective Hamiltonian that depends only on site occupancies — not on continuous atomic positions. This Hamiltonian is parameterised by fitting to the energies of relaxed structures calculated with a more accurate method, typically DFT. Because the training data comes from fully relaxed configurations, the relaxation energy is already incorporated into the fitted coefficients. During MC sampling, no geometry optimisation is needed — evaluating the energy for any configuration is computationally trivial, enabling hundreds of MC steps per second with near-DFT accuracy.
+
+## The idea
+
+How is the effective Hamiltonian constructed? For a binary system (A and B atoms on fixed sites), the configuration can be represented using occupation variables: assign σ<sub>i</sub> = +1 if site i has atom A, σ<sub>i</sub> = −1 if site i has atom B. The full configuration is then specified by the set of all σ<sub>i</sub>.
+
+The cluster expansion writes the energy as a function of these occupation variables:
+
+$$E(\{\sigma\}) = J_0 + \sum_i J_i \sigma_i + \sum_{i<j} J_{ij} \sigma_i \sigma_j + \sum_{i<j<k} J_{ijk} \sigma_i \sigma_j \sigma_k + \ldots$$
+
+The first term J<sub>0</sub> is a constant (the reference energy). The second sum runs over single sites — but for a stoichiometric system, the number of A and B atoms is fixed, so Σσ<sub>i</sub> is constant and this term just shifts the reference. The third sum runs over pairs of sites; J<sub>ij</sub> captures how the energy depends on whether sites i and j have the same or different atoms. Higher-order terms capture three-body, four-body, and larger cluster interactions.
+
+## Symmetry and truncation
+
+For a periodic crystal, symmetry constrains the expansion. All pairs related by symmetry have the same coefficient: nearest-neighbour pairs share one J value, second-nearest-neighbour pairs share another, and so on. Similarly for triplets and larger clusters. Symmetry groups the clusters into types, reducing the number of independent parameters from one per cluster to one per symmetry-distinct cluster type.
+
+The expansion becomes:
+
+$$E = J_0 + \sum_\alpha J_\alpha \, m_\alpha \, \langle \Pi_\alpha \rangle$$
+
+where α labels cluster types, m<sub>α</sub> is the multiplicity (how many clusters of that type per site), and ⟨Π<sub>α</sub>⟩ is the average value of the product of occupation variables over all clusters of type α.
+
+An infinite cluster expansion — including all cluster types — is provably exact; it can represent any function of the site occupancies. In practice, the expansion is truncated by selecting which cluster types to include. This is done by limiting both the cluster size (e.g., up to triplets or quartets) and the cluster radius (e.g., pairs only up to third-nearest neighbours).
+
+## Fitting the expansion
+
+The coefficients {J<sub>α</sub>} are unknown. They are determined by fitting to DFT calculations: a set of training configurations is generated, covering different arrangements of atoms on the lattice, and the DFT energy of each is calculated. The cluster expansion coefficients are then fitted to reproduce these energies. Because the energy is linear in the coefficients J<sub>α</sub>, this is a linear least-squares problem.
+
+The training set typically includes 50–200 configurations, each requiring a DFT calculation. This is expensive upfront, but pays off when the fitted expansion enables millions of energy evaluations that would be impossible with direct DFT.
+
+## What you get
+
+A fitted cluster expansion evaluates E(σ) for any configuration as a sum over clusters — a fraction of a second, rather than the minutes to hours required for DFT. This makes extensive MC sampling possible: millions of steps at effectively DFT accuracy. We can map out phase diagrams, find order-disorder transition temperatures, and characterise the distribution of configurations at any temperature. Ground state searching becomes tractable — systematically enumerating configurations or using optimisation algorithms to find the lowest-energy orderings. Thermodynamic properties such as heat capacities, ordering enthalpies, and entropies follow from MC sampling.
+
+## Limitations
+
+Cluster expansions require that every relaxed structure can be mapped back to exactly one on-lattice configuration. The atoms in the training structures are fully relaxed — they sit at their true equilibrium positions, not ideal lattice sites — but each structure must correspond unambiguously to a particular set of site occupancies. This works well when relaxations are small, but breaks down if atoms move so far from their nominal sites that the mapping becomes ambiguous.
+
+The expansion assumes the energy can be written as a sum over clusters. This works well for many systems but may fail when long-range interactions (beyond the clusters included) are important, or when the electronic structure changes qualitatively with ordering.
+
+The quality depends entirely on the training data and the choice of clusters. A cluster expansion is a fit to DFT — it inherits the accuracy of the underlying DFT calculations and can only interpolate, not extrapolate. If the training set doesn't include configurations similar to what you're asking about, the expansion may give wrong answers.

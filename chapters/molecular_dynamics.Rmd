@@ -1,0 +1,105 @@
+# Molecular dynamics: principles
+
+## From local curvature to global exploration
+
+Geometry optimisation finds minima on the potential energy surface. Phonon calculations characterise the curvature at those minima — how the energy changes for small displacements. Both assume atoms remain close to their equilibrium positions: optimisation iterates toward a minimum, and the harmonic approximation expands the energy around it.
+
+At finite temperature, this picture becomes incomplete. Atoms have kinetic energy and explore the potential energy surface. For mildly anharmonic systems, we can extend lattice dynamics with higher-order terms — but as we saw, this becomes expensive. For systems where atoms don't remain near any single minimum — diffusing ions, phase transitions, liquids — no Taylor expansion around one point will suffice.
+
+Molecular dynamics takes a different approach. Rather than expanding E(r) and truncating, we follow the actual motion of atoms over the potential energy surface. Given positions and velocities at some instant, we calculate the forces on all atoms, use these to update the velocities and positions a short time later, and repeat. The result is a trajectory: a sequence of configurations showing how the system evolves in time.
+
+## Equations of motion
+
+The force on atom i is the negative gradient of the potential energy:
+
+$$\mathbf{F}_i = -\nabla_i E(\mathbf{r})$$
+
+Given the force, Newton's second law gives the acceleration:
+
+$$m_i \frac{d^2 \mathbf{r}_i}{dt^2} = \mathbf{F}_i$$
+
+The motion of our system is described by two coupled differential equations:
+
+$$\frac{d\mathbf{r}}{dt} = \mathbf{v}$$
+
+$$\frac{d\mathbf{v}}{dt} = \mathbf{a} = \frac{\mathbf{F}}{m}$$
+
+If we could integrate these equations exactly, we could predict the positions and velocities at any future time. But the forces depend on positions, which change as the system evolves — for any realistic system, we cannot solve these equations analytically.
+
+## Numerical integration
+
+Instead, we integrate numerically. The principle is to approximate the continuous equations over small time intervals. If we assume the acceleration is roughly constant over a short time Δt, we can write:
+
+$$\mathbf{v}(t + \Delta t) \approx \mathbf{v}(t) + \mathbf{a}(t) \Delta t$$
+
+$$\mathbf{r}(t + \Delta t) \approx \mathbf{r}(t) + \mathbf{v}(t) \Delta t + \frac{1}{2}\mathbf{a}(t) \Delta t^2$$
+
+This is Euler integration: use the current acceleration and velocity to predict the state at the next timestep, then repeat. The approximation becomes exact as Δt → 0, but practical calculations require finite timesteps.
+
+Euler integration has problems. First, it introduces systematic errors at each step — small discrepancies between the predicted trajectory and the true one. These errors accumulate over many steps, causing the total energy to drift rather than remaining constant as it should for an isolated system.
+
+Second, Euler integration is not time-reversible. Newtonian mechanics is symmetric under time reversal: if we reverse all velocities, the system should retrace its path. Euler's method breaks this symmetry because it uses information only from the beginning of each timestep. A forward step followed by reversing velocities and stepping again does not return to the starting point.
+
+The velocity Verlet algorithm, used in most practical MD codes, avoids these problems. It updates positions using both the current and next accelerations:
+
+$$\mathbf{r}(t + \Delta t) = \mathbf{r}(t) + \mathbf{v}(t) \Delta t + \frac{1}{2}\mathbf{a}(t) \Delta t^2$$
+
+$$\mathbf{v}(t + \Delta t) = \mathbf{v}(t) + \frac{1}{2}[\mathbf{a}(t) + \mathbf{a}(t + \Delta t)] \Delta t$$
+
+The velocity update uses the average of the old and new accelerations, making the algorithm time-reversible. Energy is not conserved exactly, but fluctuates around the correct value without systematic drift.
+
+The timestep must be small enough to capture the fastest motion in the system — typically the highest-frequency vibrations — which means Δt is usually around 1 femtosecond. A nanosecond trajectory therefore requires 10⁶ timesteps, each requiring a force evaluation.
+
+## Phase space and trajectories
+
+The state of a classical system is specified by the positions and momenta of all atoms — a point in phase space. As we integrate the equations of motion, this point traces out a trajectory through phase space.
+
+For an isolated system (no external heat bath), the total energy E = K + V is conserved — kinetic energy converts to potential and back, but the sum remains constant. The trajectory is confined to a surface of constant energy in phase space. This is the microcanonical ensemble: all accessible states have the same total energy.
+
+The temperature in such a system is related to the average kinetic energy:
+
+$$\langle K \rangle = \frac{3}{2} N k_B T$$
+
+where N is the number of atoms. This follows from the equipartition theorem: each quadratic degree of freedom contributes ½kT to the average energy, and kinetic energy is quadratic in the velocities.
+
+## Ensembles and what they mean
+
+Real experiments are usually not performed at constant energy. A sample in a furnace exchanges heat with its surroundings; it has a well-defined temperature, not a fixed total energy. Different experimental conditions correspond to different statistical ensembles.
+
+The **microcanonical ensemble (NVE)** has fixed particle number N, volume V, and energy E. This is what unmodified Newtonian dynamics samples. It describes an isolated system.
+
+The **canonical ensemble (NVT)** has fixed N, V, and temperature T. The system exchanges energy with a heat bath at temperature T. States are weighted by the Boltzmann factor exp(−E/kT): lower-energy configurations are more probable, but higher-energy configurations are accessible with probability that decreases exponentially.
+
+The **isothermal-isobaric ensemble (NPT)** has fixed N, pressure P, and temperature T. The system exchanges both energy and volume with its surroundings. This corresponds to most laboratory conditions — a sample at ambient pressure and controlled temperature.
+
+Which ensemble we simulate determines what statistical distribution we sample. This matters for calculating thermodynamic properties and for comparing with experiment.
+
+## Thermostats and barostats
+
+To simulate NVT or NPT, we need to modify the equations of motion so that the trajectory samples the correct statistical distribution. A thermostat couples the system to a heat bath; a barostat couples it to a pressure reservoir.
+
+The details of how thermostats work are technical, but the key point is conceptual: a good thermostat is designed so that, over a long trajectory, configurations are visited with the correct Boltzmann weights. The time-average of any property over the trajectory then equals the ensemble average — the thermodynamic expectation value.
+
+This is the ergodic hypothesis in practice: for a sufficiently long trajectory, the time spent in each region of phase space is proportional to its statistical weight. We can therefore compute ensemble averages — the quantities that connect to thermodynamics and to time-averaged experimental measurements — from a single long trajectory.
+
+## What you get
+
+A molecular dynamics simulation produces a trajectory: atomic positions (and velocities) at each timestep. From this trajectory, we can calculate:
+
+**Equilibrium properties** — averages over the trajectory. The mean potential energy, the average structure, the distribution of atomic positions. These are ensemble averages, directly comparable to time-averaged experimental measurements.
+
+**Dynamic properties** — how the system evolves in time. How do atomic positions correlate between different times? How quickly do correlations decay? These time correlation functions contain information about dynamics that equilibrium measurements cannot access.
+
+**Transport properties** — diffusion coefficients, viscosities, thermal conductivities. These emerge from how quickly the system loses memory of its initial state.
+
+## The E(r) choice
+
+Every MD timestep requires calculating forces — one evaluation of E(r) and its gradient. A typical simulation might run for millions of timesteps. The cost of E(r) therefore determines what simulations are feasible.
+
+**Classical potentials** are cheap to evaluate. Simulations of millions of atoms for nanoseconds to microseconds are routine. The limitation is accuracy: the functional form constrains what physics can be captured.
+
+**Ab initio MD (AIMD)** calculates forces from DFT at each timestep. This is accurate but expensive — practical for hundreds of atoms and picoseconds. Many dynamical processes happen on longer timescales or require larger system sizes.
+
+**Machine-learned interatomic potentials** approach DFT accuracy at near-classical cost. They are increasingly the method of choice when classical potentials aren't accurate enough but AIMD is too expensive. The caveats from Lecture I apply: they inherit limitations from their training data, and can fail outside their training domain.
+
+The choice is problem-dependent. For a quick estimate of dynamics in a well-characterised material, classical potentials may suffice. For quantitative comparison with experiment in a system where accuracy matters, MLIPs or AIMD may be necessary.

@@ -1,0 +1,39 @@
+# Short-range order and PDF
+
+## Long-range order vs short-range order
+
+Between fully ordered and maximally disordered (maximum entropy) lies an intermediate regime: the system is disordered in the sense that there is no long-range periodic pattern, but local correlations exist. This is short-range order.
+
+Consider a binary alloy A<sub>0.5</sub>B<sub>0.5</sub> on a BCC lattice. At low temperature, it might order into a CsCl-type structure: all A atoms on one sublattice, all B on the other. This is long-range order (LRO) — correlations extend throughout the crystal, producing a periodic pattern. Bragg diffraction sees this clearly: the ordering produces superlattice reflections at positions forbidden by the disordered structure.
+
+At high temperature, entropy wins and the alloy disorders: A and B atoms distributed over sites with no correlations between them. No long-range pattern, no superlattice reflections. This is maximum entropy — the arrangement is completely uncorrelated.
+
+But there is an intermediate regime. Even without long-range order, local correlations may exist — short-range order (SRO). Perhaps A atoms preferentially have B neighbours, or tend to avoid other A atoms, but only over the first few coordination shells. Beyond that, correlations decay and the arrangement becomes uncorrelated. There's no periodic pattern, but there is local structure.
+
+## What Bragg diffraction misses
+
+Bragg diffraction is sensitive to the average, periodic structure. For a disordered alloy without LRO, the pattern shows only the underlying lattice with average scattering length. The local correlations show up as diffuse scattering between Bragg peaks — broad features that are often ignored or hard to analyse quantitatively.
+
+Consider what diffraction tells you about site occupancies. If a site is 50% A and 50% B on average, that's what the measurement reports — regardless of whether A and B are randomly distributed or have strong local correlations. Two structures with the same average occupancy but different SRO give the same Bragg intensities.
+
+This is a fundamental limitation: Bragg diffraction reports the spatially averaged structure. Local correlations that don't produce a periodic pattern are invisible to it.
+
+## PDF captures local structure
+
+Total scattering includes both Bragg and diffuse contributions. The Fourier transform of the total scattering gives the pair distribution function G(r), which measures the probability of finding atoms at separation r. Unlike Bragg diffraction, which sees only the average periodic structure, PDF is sensitive to local correlations.
+
+For a single-element material, g(r) has peaks at the neighbour distances — first shell, second shell, and so on. For a multi-component material, partial pair distribution functions g<sub>αβ</sub>(r) can be defined: the probability of finding a β atom at distance r from an α atom. These partials encode information about local ordering. If A atoms preferentially have B neighbours, the A-B partial shows enhanced correlations at the nearest-neighbour distance compared to an uncorrelated distribution. If A atoms cluster together, the A-A partial is enhanced instead.
+
+When short-range order is present, it shows up in the PDF: the short-range region is not well described by the model fitted to Bragg data. But while PDF can reveal that local structure differs from the long-range average, understanding what is actually happening is harder. The measured PDF sums over all partials, weighted by scattering lengths and concentrations — separating the contributions requires additional information. Even if correlations can be quantified, this does not explain them: we may learn that A prefers B neighbours, but not why. And many different local arrangements can produce similar g(r), so determining the structure from PDF alone requires additional constraints or physical insight.
+
+## The computational approach
+
+This is where cluster expansion and Monte Carlo methods help. CE+MC samples configurations at thermal equilibrium, weighted by their Boltzmann probabilities. This is not just generating plausible structures — it's sampling from the correct statistical distribution.
+
+From these equilibrium configurations we can calculate ensemble-averaged properties: the probability that an A atom has a B neighbour, how correlations decay with distance, which local arrangements are favoured and which are suppressed.
+
+Comparing with experimental PDF requires an additional step. The CE operates on-lattice, but real atoms relax from ideal positions. To generate a predicted g(r), we select representative configurations from the MC sampling, relax each using DFT (or another accurate method), and average g(r) over these relaxed structures. This ensemble-averaged g(r) can then be compared directly with experiment.
+
+Alternatively, the relaxed structures can serve as starting models for PDF refinement. Rather than comparing computed and experimental g(r) directly, the DFT-relaxed configurations provide physically motivated structural models that experimentalists can refine against their data.
+
+If experiment and computation agree, we have a validated atomistic model. We can then interrogate that model for insight that experiment alone cannot provide: why certain correlations exist, what drives the local ordering, how it changes with temperature or composition.

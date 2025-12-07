@@ -1,6 +1,6 @@
-# Wrap-up {-}
+# Conclusion {-}
 
-These three lectures have covered substantial ground: methods for calculating$ $E(r)$, techniques for using those calculations to answer scientific questions, and approaches for treating configurational disorder. Before closing, it is worth drawing out the threads that run through this material.
+These notes have covered substantial ground: methods for calculating$ $E(r)$, techniques for using those calculations to answer scientific questions, and approaches for treating configurational disorder. Before closing, it is worth drawing out the threads that run through this material.
 
 ## Four themes
 

@@ -1,0 +1,92 @@
+# Monte Carlo sampling
+
+## Beyond molecular dynamics
+
+In Part I, we covered methods for calculating E(r) — classical potentials, DFT, and machine-learned interatomic potentials. In Part II, we turned to what we do with that ability: finding stable structures through geometry optimisation, characterising vibrations through phonon calculations, and simulating atomic motion through molecular dynamics.
+
+MD samples configurations by following the physical dynamics of the system. At finite temperature, atoms have kinetic energy and explore the potential energy surface. For fast processes — ionic diffusion in superionic conductors, thermal vibrations — MD captures the relevant configurations.
+
+But some configurational questions involve rearrangements that are far too slow for MD. Consider cation ordering in a mixed-metal oxide, or site occupancies in an alloy. The atoms can, in principle, rearrange — but the mechanisms are slow, involving vacancy diffusion or other activated processes that happen on timescales of seconds to hours, not nanoseconds. MD will never visit these configurations; the simulation is trapped in whatever arrangement it started with.
+
+Monte Carlo sampling takes a different approach. Rather than following dynamics, we propose configurational changes directly and accept or reject them based on energetics. This lets us sample configurations that MD cannot reach.
+
+## The goal: ensemble averages
+
+Statistical mechanics tells us that macroscopic properties are ensemble averages. The expectation value of a property A in the canonical ensemble is:
+
+$$\langle A \rangle = \sum_i A_i P_i = \frac{1}{Z} \sum_i A_i \exp(-E_i / k_B T)$$
+
+where the sum runs over all microstates i, E<sub>i</sub> is the energy of state i, and Z is the partition function:
+
+$$Z = \sum_i \exp(-E_i / k_B T)$$
+
+In principle, this is straightforward: enumerate all states, calculate their energies and properties, weight by Boltzmann factors, sum. In practice, the number of states is astronomically large. For configurational disorder on N sites with two possible occupants per site, there are 2<sup>N</sup> configurations. Even for modest N, explicit enumeration is impossible.
+
+## Why not sample uniformly?
+
+One idea: sample configurations randomly and weight by their Boltzmann factors. The problem is that uniform sampling is inefficient. Most randomly chosen configurations have high energy and negligible Boltzmann weight — we waste effort sampling configurations that contribute almost nothing to the average.
+
+The solution is importance sampling: sample configurations in proportion to their Boltzmann weights. Then each sample contributes equally to the average:
+
+$$\langle A \rangle \approx \frac{1}{M} \sum_{m=1}^{M} A_m$$
+
+No explicit weights needed. The question is how to generate samples from this distribution.
+
+## Markov chain Monte Carlo
+
+The solution is to construct a Markov chain — a random walk through configuration space where each step depends only on the current configuration. At each step we propose a move to a new configuration and either accept or reject it. The question is: how should we choose the acceptance probabilities to ensure we sample from our target distribution?
+
+Consider two states. At equilibrium, the frequency of transitions from state 1 to state 2 must equal the frequency from 2 to 1 — otherwise probability would accumulate in one state. If we visit state 1 with probability π<sub>1</sub> and accept moves to state 2 with probability P(1→2), then balance requires:
+
+$$\pi_1 \, P(1 \to 2) = \pi_2 \, P(2 \to 1)$$
+
+Rearranging: the ratio of acceptance probabilities must equal the ratio of target probabilities:
+
+$$\frac{P(1 \to 2)}{P(2 \to 1)} = \frac{\pi_2}{\pi_1}$$
+
+For many states, we impose this constraint on every pair. The result is that we sample each state with probability proportional to our target distribution.
+
+For the Boltzmann distribution, the ratio of target probabilities is:
+
+$$\frac{\pi_2}{\pi_1} = \frac{e^{-E_2/kT}}{e^{-E_1/kT}} = e^{-\Delta E/kT}$$
+
+This depends only on the energy difference between the two states — not on absolute energies. Since we only ever compare states pairwise, we never need to know the partition function or evaluate absolute energies.
+
+Any acceptance rule where the ratio of forward to backward acceptance probabilities equals $\exp(-\Delta E/kT)$ will sample from the Boltzmann distribution. The Metropolis criterion is one such choice.
+
+## The Metropolis algorithm
+
+The Metropolis algorithm is the standard approach. The procedure is:
+
+1. Start from some configuration with energy E<sub>1</sub>
+2. Propose a move — for configurational disorder, typically swapping two atoms of different types
+3. Calculate the energy E<sub>2</sub> of the new configuration
+4. Accept or reject the move:
+   - If ΔE ≤ 0 (energy decreased): accept
+   - If ΔE > 0 (energy increased): accept with probability $\exp(-\Delta E/kT)$
+5. If accepted, the new configuration becomes the current one; if rejected, stay in the old configuration
+6. Repeat from step 2
+
+The acceptance rule ensures that, after many steps, the chain visits configurations with probability proportional to $\exp(-E/kT)$.
+
+The intuition for why the algorithm works: downhill moves are always accepted, so the chain readily finds low-energy configurations. Uphill moves are sometimes accepted — the probability $\exp(-\Delta E/kT)$ decreases exponentially with the energy cost, but is never zero. This allows the chain to escape local minima and explore configuration space. Without occasional uphill moves, we would simply find the nearest local minimum — an optimisation algorithm, not a sampling algorithm. Temperature controls exploration: at high temperature, $\exp(-\Delta E/kT)$ is close to 1 for moderate ΔE, so most moves are accepted and the system explores widely; at low temperature, only small uphill moves are accepted and the system stays near low-energy configurations.
+
+## What you get
+
+After an initial equilibration period, the MC chain samples configurations from the target ensemble. The expectation value of any quantity A is simply the average over sampled configurations:
+
+$$\langle A \rangle = \frac{1}{M} \sum_{m=1}^{M} A_m$$
+
+No Boltzmann weights appear because the sampling already accounts for them. Thermodynamic properties follow: from fluctuations in energy we get heat capacity; from the temperature dependence of order parameters we identify phase transitions. Snapshots from the MC chain represent the distribution of configurations at thermal equilibrium, and can be analysed for structural features or compared with experiment.
+
+## What you don't get
+
+MC does not give dynamics. The sequence of configurations is a random walk designed to sample the equilibrium distribution, not a physical trajectory through time. There is no "MC time" that corresponds to real time. Questions about rates, diffusion coefficients, or time correlation functions cannot be answered by MC.
+
+This is the fundamental distinction: MD samples by following dynamics and gives both equilibrium and dynamic properties; MC samples configuration space directly and gives only equilibrium properties.
+
+## Neutron connection
+
+Neutron diffraction measures a spatial average — the scattering from many unit cells within the illuminated volume. For crystallographically disordered systems where atoms are not diffusing, this spatial average determines the measured structure.
+
+MC models this as an average over configurations. If the system is statistically homogeneous — if any region looks like any other on average — then the spatial average equals the ensemble average over configurations.
