@@ -4,17 +4,15 @@ All computational modelling of materials rests on a common foundation: for any a
 
 ## Configuration and energy
 
-Consider a two-dimensional crystal with two types of atoms in a square unit cell. Call this structure $S_1$, with energy $E_1$. A second structure $S_2$ has the same atoms, but the unit cell has been sheared into a parallelogram, with atoms at the same fractional coordinates. This structure has a different energy, $E_2$.
+Consider a crystal with two types of atoms in a square unit cell. Call this structure $S_1$, with atomic positions $\mathbf{r}_1$ and energy $E_1$.
 
-The transition from $S_1$ to $S_2$ can be imagined as a continuous deformation — gradually shearing the cell from square to parallelogram. At every point along this deformation, there is a well-defined atomic configuration, and therefore a well-defined energy. The change from $S_1$ to $S_2$ is not a discrete jump; it is a continuous pathway, with an energy defined at every point.
+Swap some atoms: sites that held A atoms now hold B atoms, and vice versa. The atoms sit at different positions, $\mathbf{r}_2$, and this structure $S_2$ has a different energy $E_2$. We can consider different changes — shearing the unit cell into a parallelogram, for example, gives structure $S_3$, with another different set of positions $\mathbf{r}_3$ and another different energy $E_3$. This behaviour generalises: a structure is defined by a set of atomic positions, and each set of positions maps to a corresponding energy.
 
-Cell deformation is not the only degree of freedom. A third structure $S_3$ keeps the cell shape fixed (back to the original square) but changes where atoms sit within the cell. Sliding one layer of atoms relative to another changes the local ordering: some neighbour pairs that were A-B become A-A or B-B. This structure $S_3$ has its own energy $E_3$, and again there is a continuous pathway from $S_1$ to $S_3$.
+The shear transformation reveals something more. The transition from $S_1$ to $S_3$ is continuous: gradually shearing the cell, every point along the way has positions slightly different from the last, with a correspondingly different energy. The mapping from positions to energy is not just defined at discrete structures — it is a continuous surface.
 
-Cell deformation ($S_1$ to $S_2$) and internal rearrangement ($S_1$ to $S_3$) are independent directions on the potential energy surface.
+This is the potential energy surface: $E(\mathbf{r})$, where $\mathbf{r}$ represents the positions of all atoms. For $N$ atoms in three dimensions, $\mathbf{r}$ has $3N$ coordinates. Any point in this $3N$-dimensional space is a **configuration** — a complete specification of all atomic positions. And every configuration has an energy $E(\mathbf{r})$.
 
-Disordered structures extend this picture further. Structures $S_4$, $S_5$, $S_6$ — arrangements where the two atom types do not follow a neat ordered pattern — each have their own energies $E_4$, $E_5$, $E_6$. The continuous pathways connecting ordered structures to disordered ones may involve coordinated motion of many atoms or sequences of local rearrangements, but they are all points on the same continuous surface.
-
-These are low-dimensional slices through a much higher-dimensional space. The full potential energy surface is $E(\mathbf{r})$, where $\mathbf{r}$ represents the positions of all atoms — $3N$ coordinates for $N$ atoms. Every possible configuration of atoms corresponds to a point on this surface; every point has an energy.
+The potential energy surface is a mathematical object. A direct physical pathway between two points is not required for both to exist on the surface. The transition from $S_1$ to $S_2$ has no direct pathway — exchanging atom types would require atoms to pass through each other. Yet both are well-defined points with well-defined energies. In real materials, such changes happen by indirect routes: vacancy diffusion, interstitial migration, or other mechanisms that avoid atomic overlap. These indirect routes are themselves paths on the surface.
 
 ## Features of the PES
 

@@ -100,6 +100,6 @@ Every MD timestep requires calculating forces — one evaluation of $E(r)$ and i
 
 **Ab initio MD (AIMD)** calculates forces from DFT at each timestep. This is accurate but expensive — practical for hundreds of atoms and picoseconds. Many dynamical processes happen on longer timescales or require larger system sizes.
 
-**Machine-learned interatomic potentials** approach DFT accuracy at near-classical cost. They are increasingly the method of choice when classical potentials aren't accurate enough but AIMD is too expensive. The caveats from Chapter \@ref{mlips} apply: they inherit limitations from their training data, and can fail outside their training domain.
+**Machine-learned interatomic potentials** approach DFT accuracy at near-classical cost. They are increasingly the method of choice when classical potentials aren't accurate enough but AIMD is too expensive. The caveats discussed in Chapter \@ref{mlips} apply: MLIPs inherit limitations from their training data, and can fail outside their training domain.
 
 The choice is problem-dependent. For a quick estimate of dynamics in a well-characterised material, classical potentials may suffice. For quantitative comparison with experiment in a system where accuracy matters, MLIPs or AIMD may be necessary.
