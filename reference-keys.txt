@@ -12,11 +12,8 @@ the-parameterisation-problem
 strengths-and-limitations
 density-functional-theory
 why-first-principles
-the-problem-the-many-electron-wavefunction
-the-dft-insight
+from-wavefunctions-to-density
 the-kohn-sham-approach
-the-kohn-sham-equations
-still-exactin-principle
 exchange-correlation-functionals
 strengths-and-limitations-1
 mlips
@@ -27,7 +24,6 @@ the-landscape
 strengths-and-limitations-2
 when-to-use
 finding-minima-geometry-optimisation
-introduction-1
 why-compute-a-structure
 structures-and-minima
 steepest-descent
