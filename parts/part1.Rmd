@@ -1,1 +1,1 @@
-# (PART) Calculating E(r) {-}
+# (PART) Calculating $E(r)$ {-}

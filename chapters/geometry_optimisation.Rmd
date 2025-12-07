@@ -8,7 +8,7 @@ We then covered three approaches to calculating $E(r)$: classical potentials, wh
 
 The goal now is to answer scientific questions. What structure is stable at a given composition? How do atoms vibrate, and what frequencies characterise that motion? How do atoms move at finite temperature — do they diffuse, and by what mechanism? These questions connect directly to what you measure: stable structures to diffraction, vibrations to inelastic neutron scattering, diffusive motion to quasielastic scattering.
 
-This lecture covers methods that use $E(r)$ to interrogate the potential energy surface. Geometry optimisation locates minima — finding the stable structures. Phonon calculations characterise the curvature at those minima — predicting vibrational frequencies. Molecular dynamics simulates atomic motion at finite temperature, capturing behaviour that goes beyond the harmonic picture. Each of these methods works with any of the $E(r)$ approaches from Part I.
+This Part covers methods that use $E(r)$ to interrogate the potential energy surface. Geometry optimisation locates minima — finding the stable structures. Phonon calculations characterise the curvature at those minima — predicting vibrational frequencies. Molecular dynamics simulates atomic motion at finite temperature, capturing behaviour that goes beyond the harmonic picture. Each of these methods works with any of the $E(r)$ approaches from Part I.
 
 ## Why compute a structure?
 

@@ -2,8 +2,6 @@
 
 ## Beyond molecular dynamics
 
-In Part I, we covered methods for calculating E(r) — classical potentials, DFT, and machine-learned interatomic potentials. In Part II, we turned to what we do with that ability: finding stable structures through geometry optimisation, characterising vibrations through phonon calculations, and simulating atomic motion through molecular dynamics.
-
 MD samples configurations by following the physical dynamics of the system. At finite temperature, atoms have kinetic energy and explore the potential energy surface. For fast processes — ionic diffusion in superionic conductors, thermal vibrations — MD captures the relevant configurations.
 
 But some configurational questions involve rearrangements that are far too slow for MD. Consider cation ordering in a mixed-metal oxide, or site occupancies in an alloy. The atoms can, in principle, rearrange — but the mechanisms are slow, involving vacancy diffusion or other activated processes that happen on timescales of seconds to hours, not nanoseconds. MD will never visit these configurations; the simulation is trapped in whatever arrangement it started with.

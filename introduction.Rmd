@@ -48,13 +48,3 @@ The materials relevant to sustainable energy — batteries, supercapacitors, hyd
 - Finite-temperature behaviour is important (materials operate at room temperature or above, not 0 K)
 
 These are exactly the areas where computation and neutron scattering are most powerfully complementary. Neutrons are sensitive to light elements — hydrogen, lithium, oxygen — that X-rays struggle with. Computation can decompose complex dynamics into contributions from different species or different mechanisms, which experiment averages over.
-
-## Learning objectives {-}
-
-By the end of these notes, readers should be able to:
-
-- Recognise the main computational methods and understand what questions each one answers
-- Understand the limitations of each method and what inputs they require
-- See how simulation outputs connect quantitatively to neutron observables
-- Read computational papers more critically and collaborate with modellers more effectively
-- Recognise when computational input would strengthen an experimental study

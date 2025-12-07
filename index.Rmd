@@ -1,18 +1,26 @@
 --- 
-title: "Neutrons for Sustainable Energy Lecture Notes"
+title: "Computational Techniques for Sustainable Energy Materials"
 author: "Benjamin J. Morgan"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
-# url: your book url like https://bookdown.org/yihui/bookdown
-# cover-image: path to the social sharing image like images/cover.jpg
 description: |
-  These are notes to accompany the Computaional Tools lectures for the 2025 Neutrons for Sustainable Energy training school.
+  Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school.
 link-citations: yes
-github-repo: rstudio/bookdown-demo
+github-repo: bjmorgan/neutrons_for_sustainable_energy
 ---
 
 # About {-}
 
-These notes accompany the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school.
+These notes accompany the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school at KTH Stockholm.
+
+The material is organised in three parts:
+
+| Part | Topic | Lecture |
+|------|-------|---------|
+| I | Calculating $E(r)$ | Lecture I |
+| II | Structure and Dynamics | Lecture II |
+| III | Configurational Disorder | Lecture III |
+
+The notes can be read before the lectures as preparation, used during the lectures as reference, or consulted afterwards for review. They are also intended to stand alone for readers who did not attend the training school.

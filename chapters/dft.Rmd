@@ -4,7 +4,7 @@
 
 Classical potentials have fundamental limitations: the accuracy is bounded by the functional form you choose, and someone has to develop and validate a potential for your specific system.
 
-First-principles methods address this. Instead of parameterising interactions, we calculate E(r) from quantum mechanics—solving (approximately) for the electrons in your system. The physics is built in, not fitted.
+First-principles methods address this. Instead of parameterising interactions, we calculate $E(r)$ from quantum mechanics—solving (approximately) for the electrons in your system. The physics is built in, not fitted.
 
 ## The problem: the many-electron wavefunction
 

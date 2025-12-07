@@ -54,7 +54,7 @@ At each **q**, diagonalisation gives 3n eigenvalues and eigenvectors, correspond
 
 ## Calculating phonons in practice
 
-Phonon calculations require the Hessian — the matrix of second derivatives of energy with respect to atomic positions. Most E(r) methods provide forces (first derivatives) directly, but not second derivatives. However, second derivatives can be constructed from forces numerically.
+Phonon calculations require the Hessian — the matrix of second derivatives of energy with respect to atomic positions. Most $E(r)$ methods provide forces (first derivatives) directly, but not second derivatives. However, second derivatives can be constructed from forces numerically.
 
 The Hessian element Hᵢⱼ = ∂²E/∂rᵢ∂rⱼ can be written as:
 

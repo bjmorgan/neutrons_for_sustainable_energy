@@ -2,7 +2,7 @@
 
 ## Why start here?
 
-Classical potentials are not the most accurate method for calculating E(r), but they are the most transparent. You can write down the function, plot it, and see the potential energy surface directly. This builds intuition before moving to methods where E(r) comes out of a more complex calculation.
+Classical potentials are not the most accurate method for calculating E(r), but they are the most transparent. You can write down the function, plot it, and see the potential energy surface directly. This builds intuition before moving to methods where $E(r)$ comes out of a more complex calculation.
 
 ## The simplest model: pair potentials
 

@@ -1,10 +1,10 @@
-# Machine-learned interatomic potentials
+# Machine-learned interatomic potentials {#mlips}
 
 ## Motivation
 
 We've now seen two approaches to calculating $E(r)$. Classical potentials are fast and scale well, but require choosing a functional form and fitting parameters — the accuracy is bounded by these choices. DFT is transferable and doesn't assume a functional form, but the computational cost limits us to hundreds of atoms and short timescales.
 
-Machine-learned interatomic potentials sit between these. Like classical potentials, they're parameterised models fitted to data. But unlike classical potentials, they don't assume a functional form for the interactions — the model learns the shape of E(r) from training data. And the training data typically comes from DFT, so the model inherits DFT's accuracy for systems similar to those it was trained on.
+Machine-learned interatomic potentials sit between these. Like classical potentials, they're parameterised models fitted to data. But unlike classical potentials, they don't assume a functional form for the interactions — the model learns the shape of $E(r)$ from training data. And the training data typically comes from DFT, so the model inherits DFT's accuracy for systems similar to those it was trained on.
 
 ## The idea
 
@@ -18,7 +18,7 @@ Most MLIPs decompose the total energy into contributions from each atom:
 
 $$E = \sum_i \varepsilon_i$$
 
-where $\varepsilon_i$ depends on the local environment around atom i — the species and positions of nearby atoms within some cutoff. The model learns a mapping from local environment to atomic energy contribution.
+where $\varepsilon_i$ depends on the local environment around atom $i$ — the species and positions of nearby atoms within some cutoff. The model learns a mapping from local environment to atomic energy contribution.
 
 This locality assumption is physically motivated: in most materials, an atom's energy contribution depends primarily on its immediate surroundings. It also makes the model size-transferable — a model trained on small cells can be applied to larger systems.
 
@@ -38,7 +38,7 @@ Which approach was used affects how much you should trust the results. A purpose
 
 ## Strengths and limitations
 
-MLIPs learn the shape of E(r) from data, rather than assuming a functional form. This avoids the limitations of classical potentials, where accuracy is bounded by the mathematical form you write down. Once trained, evaluation is fast — approaching classical potential speeds for some architectures. And the approach is systematically improvable: more training data generally means a better model. If the potential fails in some region of configuration space, you can add more data there and retrain. Foundation models have also made the approach more accessible — you can get reasonable results without training anything yourself.
+MLIPs learn the shape of $E(r)$ from data, rather than assuming a functional form. This avoids the limitations of classical potentials, where accuracy is bounded by the mathematical form you write down. Once trained, evaluation is fast — approaching classical potential speeds for some architectures. And the approach is systematically improvable: more training data generally means a better model. If the potential fails in some region of configuration space, you can add more data there and retrain. Foundation models have also made the approach more accessible — you can get reasonable results without training anything yourself.
 
 The limitations are significant. The model can only be as good as its training data. Errors in the DFT calculations propagate to the potential, and the model inherits the limitations of whichever functional was used — if PBE gets something wrong, so will the MLIP trained on PBE data.
 

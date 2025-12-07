@@ -6,7 +6,7 @@ Geometry optimisation finds minima on the potential energy surface. Phonon calcu
 
 At finite temperature, this picture becomes incomplete. Atoms have kinetic energy and explore the potential energy surface. For mildly anharmonic systems, we can extend lattice dynamics with higher-order terms — but as we saw, this becomes expensive. For systems where atoms don't remain near any single minimum — diffusing ions, phase transitions, liquids — no Taylor expansion around one point will suffice.
 
-Molecular dynamics takes a different approach. Rather than expanding E(r) and truncating, we follow the actual motion of atoms over the potential energy surface. Given positions and velocities at some instant, we calculate the forces on all atoms, use these to update the velocities and positions a short time later, and repeat. The result is a trajectory: a sequence of configurations showing how the system evolves in time.
+Molecular dynamics takes a different approach. Rather than expanding $E(r)$ and truncating, we follow the actual motion of atoms over the potential energy surface. Given positions and velocities at some instant, we calculate the forces on all atoms, use these to update the velocities and positions a short time later, and repeat. The result is a trajectory: a sequence of configurations showing how the system evolves in time.
 
 ## Equations of motion
 
@@ -92,14 +92,14 @@ A molecular dynamics simulation produces a trajectory: atomic positions (and vel
 
 **Transport properties** — diffusion coefficients, viscosities, thermal conductivities. These emerge from how quickly the system loses memory of its initial state.
 
-## The E(r) choice
+## The $E(r)$ choice
 
-Every MD timestep requires calculating forces — one evaluation of E(r) and its gradient. A typical simulation might run for millions of timesteps. The cost of E(r) therefore determines what simulations are feasible.
+Every MD timestep requires calculating forces — one evaluation of $E(r)$ and its gradient. A typical simulation might run for millions of timesteps. The cost of $E(r)$ therefore determines what simulations are feasible.
 
 **Classical potentials** are cheap to evaluate. Simulations of millions of atoms for nanoseconds to microseconds are routine. The limitation is accuracy: the functional form constrains what physics can be captured.
 
 **Ab initio MD (AIMD)** calculates forces from DFT at each timestep. This is accurate but expensive — practical for hundreds of atoms and picoseconds. Many dynamical processes happen on longer timescales or require larger system sizes.
 
-**Machine-learned interatomic potentials** approach DFT accuracy at near-classical cost. They are increasingly the method of choice when classical potentials aren't accurate enough but AIMD is too expensive. The caveats from Lecture I apply: they inherit limitations from their training data, and can fail outside their training domain.
+**Machine-learned interatomic potentials** approach DFT accuracy at near-classical cost. They are increasingly the method of choice when classical potentials aren't accurate enough but AIMD is too expensive. The caveats from Chapter \@ref{mlips} apply: they inherit limitations from their training data, and can fail outside their training domain.
 
 The choice is problem-dependent. For a quick estimate of dynamics in a well-characterised material, classical potentials may suffice. For quantitative comparison with experiment in a system where accuracy matters, MLIPs or AIMD may be necessary.
