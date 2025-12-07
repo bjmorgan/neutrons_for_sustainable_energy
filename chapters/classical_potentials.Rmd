@@ -24,11 +24,15 @@ There is also a weak, long-range attraction from van der Waals forces, typically
 
 Combining Coulomb, exponential repulsion, and dispersion gives a Buckingham-type potential — the workhorse for simulating ionic solids like oxides and halides.
 
-## Periodic systems and the Ewald problem
+## Periodic systems
 
-To simulate a bulk crystal rather than a finite cluster, we use periodic boundary conditions: a unit cell is treated as if it tiles infinitely in all directions. For short-range interactions, the minimum image convention applies — each atom interacts with the nearest periodic image of every other atom, and if the potential decays fast enough, it can be truncated at some cutoff.
+Most simulations aim to model bulk materials, but a computer simulation is necessarily finite — typically thousands to millions of atoms. This creates a problem: a finite cell has edges, and atoms near those edges behave differently from those in the interior. The solution is to apply periodic boundary conditions: the simulation cell tiles infinitely in all directions, so an atom near one boundary sees atoms from the opposite side as nearest neighbours. The result is a system with no surfaces — only bulk.
 
-For the Coulomb term, simple truncation doesn't work. The sum over periodic images is conditionally convergent — the answer depends on how you truncate, which is unphysical. The solution is Ewald summation. Each point charge is screened with a compensating Gaussian distribution. The screened charges are short-ranged and sum quickly in real space; the smooth Gaussian distributions sum quickly in reciprocal space. A correction is then applied for the self-interaction of each charge with its own screening cloud. Both sums are absolutely convergent, and the result is well-defined. The reciprocal-space machinery will be familiar from diffraction.
+Periodicity introduces its own complication. Each atom now interacts not just with other atoms in its cell, but with all their periodic images — infinitely many copies stretching in every direction. The total energy becomes an infinite sum.
+
+For short-range interactions, this infinite sum is manageable. The exponential repulsion and dispersion terms decay rapidly with distance, so contributions beyond a nanometre or so are negligible. But which atoms count as "nearby" in a periodic system? Consider atom A interacting with atom B. There is a copy of B in every periodic image — infinitely many, at different distances from A. For a short-range interaction, only the nearest copy of B is close enough to matter. This is the minimum image convention: for each pair of atoms, consider only the nearest periodic image. Combined with a cutoff distance beyond which interactions are ignored entirely, and provided this cutoff is less than half the cell length, the infinite sum reduces to a finite and well-defined calculation.
+
+The Coulomb interaction poses a harder problem. It decays as $1/r$ — too slowly to truncate. Cutting off the sum at any finite distance gives results that depend on where you cut, which is unphysical; the sum over periodic images is only conditionally convergent. Ewald summation resolves this by splitting the interaction into two parts. Each point charge is screened with a compensating Gaussian distribution. The screened charges interact only at short range and sum quickly in real space. The smooth Gaussian distributions sum quickly in reciprocal space. A correction removes the spurious self-interaction of each charge with its own screening cloud. The result is two absolutely convergent sums that together give the correct electrostatic energy. The reciprocal-space treatment will be familiar from diffraction.
 
 ## When pair potentials aren't enough
 
