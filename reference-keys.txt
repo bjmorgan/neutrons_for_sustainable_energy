@@ -6,7 +6,7 @@ classical-potentials
 why-start-here
 the-simplest-model-pair-potentials
 building-a-potential-from-physics
-periodic-systems-and-the-ewald-problem
+periodic-systems
 when-pair-potentials-arent-enough
 the-parameterisation-problem
 strengths-and-limitations
