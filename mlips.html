@@ -4,20 +4,20 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Machine-learned interatomic potentials | Neutrons for Sustainable Energy Lecture Notes</title>
-  <meta name="description" content="These are notes to accompany the Computaional Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
+  <title>4 Machine-learned interatomic potentials | Computational Techniques for Sustainable Energy Materials</title>
+  <meta name="description" content="Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Machine-learned interatomic potentials | Neutrons for Sustainable Energy Lecture Notes" />
+  <meta property="og:title" content="4 Machine-learned interatomic potentials | Computational Techniques for Sustainable Energy Materials" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="These are notes to accompany the Computaional Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
-  <meta name="github-repo" content="rstudio/bookdown-demo" />
+  <meta property="og:description" content="Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
+  <meta name="github-repo" content="bjmorgan/neutrons_for_sustainable_energy" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Machine-learned interatomic potentials | Neutrons for Sustainable Energy Lecture Notes" />
+  <meta name="twitter:title" content="4 Machine-learned interatomic potentials | Computational Techniques for Sustainable Energy Materials" />
   
-  <meta name="twitter:description" content="These are notes to accompany the Computaional Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
+  <meta name="twitter:description" content="Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   
 
 <meta name="author" content="Benjamin J. Morgan" />
@@ -82,12 +82,11 @@
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#shared-observables"><i class="fa fa-check"></i>Shared observables</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#scope"><i class="fa fa-check"></i>Scope</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#energy-materials"><i class="fa fa-check"></i>Energy materials</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#learning-objectives"><i class="fa fa-check"></i>Learning objectives</a></li>
 </ul></li>
-<li class="part"><span><b>I Calculating E(r)</b></span></li>
+<li class="part"><span><b>I Calculating <span class="math inline">\(E(r)\)</span></b></span></li>
 <li class="chapter" data-level="1" data-path="the-potential-energy-surface.html"><a href="the-potential-energy-surface.html"><i class="fa fa-check"></i><b>1</b> The potential energy surface</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="the-potential-energy-surface.html"><a href="the-potential-energy-surface.html#building-the-concept"><i class="fa fa-check"></i><b>1.1</b> Building the concept</a></li>
+<li class="chapter" data-level="1.1" data-path="the-potential-energy-surface.html"><a href="the-potential-energy-surface.html#configuration-and-energy"><i class="fa fa-check"></i><b>1.1</b> Configuration and energy</a></li>
 <li class="chapter" data-level="1.2" data-path="the-potential-energy-surface.html"><a href="the-potential-energy-surface.html#features-of-the-pes"><i class="fa fa-check"></i><b>1.2</b> Features of the PES</a></li>
 <li class="chapter" data-level="1.3" data-path="the-potential-energy-surface.html"><a href="the-potential-energy-surface.html#two-questions"><i class="fa fa-check"></i><b>1.3</b> Two questions</a></li>
 </ul></li>
@@ -112,14 +111,14 @@
 <li class="chapter" data-level="3.7" data-path="density-functional-theory.html"><a href="density-functional-theory.html#exchange-correlation-functionals"><i class="fa fa-check"></i><b>3.7</b> Exchange-correlation functionals</a></li>
 <li class="chapter" data-level="3.8" data-path="density-functional-theory.html"><a href="density-functional-theory.html#strengths-and-limitations-1"><i class="fa fa-check"></i><b>3.8</b> Strengths and limitations</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html"><i class="fa fa-check"></i><b>4</b> Machine-learned interatomic potentials</a>
+<li class="chapter" data-level="4" data-path="mlips.html"><a href="mlips.html"><i class="fa fa-check"></i><b>4</b> Machine-learned interatomic potentials</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html#motivation"><i class="fa fa-check"></i><b>4.1</b> Motivation</a></li>
-<li class="chapter" data-level="4.2" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html#the-idea"><i class="fa fa-check"></i><b>4.2</b> The idea</a></li>
-<li class="chapter" data-level="4.3" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html#local-atomic-environments"><i class="fa fa-check"></i><b>4.3</b> Local atomic environments</a></li>
-<li class="chapter" data-level="4.4" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html#the-landscape"><i class="fa fa-check"></i><b>4.4</b> The landscape</a></li>
-<li class="chapter" data-level="4.5" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html#strengths-and-limitations-2"><i class="fa fa-check"></i><b>4.5</b> Strengths and limitations</a></li>
-<li class="chapter" data-level="4.6" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html#when-to-use"><i class="fa fa-check"></i><b>4.6</b> When to use</a></li>
+<li class="chapter" data-level="4.1" data-path="mlips.html"><a href="mlips.html#motivation"><i class="fa fa-check"></i><b>4.1</b> Motivation</a></li>
+<li class="chapter" data-level="4.2" data-path="mlips.html"><a href="mlips.html#the-idea"><i class="fa fa-check"></i><b>4.2</b> The idea</a></li>
+<li class="chapter" data-level="4.3" data-path="mlips.html"><a href="mlips.html#local-atomic-environments"><i class="fa fa-check"></i><b>4.3</b> Local atomic environments</a></li>
+<li class="chapter" data-level="4.4" data-path="mlips.html"><a href="mlips.html#the-landscape"><i class="fa fa-check"></i><b>4.4</b> The landscape</a></li>
+<li class="chapter" data-level="4.5" data-path="mlips.html"><a href="mlips.html#strengths-and-limitations-2"><i class="fa fa-check"></i><b>4.5</b> Strengths and limitations</a></li>
+<li class="chapter" data-level="4.6" data-path="mlips.html"><a href="mlips.html#when-to-use"><i class="fa fa-check"></i><b>4.6</b> When to use</a></li>
 </ul></li>
 <li class="part"><span><b>II Structure and Dynamics</b></span></li>
 <li class="chapter" data-level="5" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html"><i class="fa fa-check"></i><b>5</b> Finding minima: geometry optimisation</a>
@@ -149,7 +148,7 @@
 <li class="chapter" data-level="7.5" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#ensembles-and-what-they-mean"><i class="fa fa-check"></i><b>7.5</b> Ensembles and what they mean</a></li>
 <li class="chapter" data-level="7.6" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#thermostats-and-barostats"><i class="fa fa-check"></i><b>7.6</b> Thermostats and barostats</a></li>
 <li class="chapter" data-level="7.7" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#what-you-get-1"><i class="fa fa-check"></i><b>7.7</b> What you get</a></li>
-<li class="chapter" data-level="7.8" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#the-er-choice"><i class="fa fa-check"></i><b>7.8</b> The E(r) choice</a></li>
+<li class="chapter" data-level="7.8" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#the-er-choice"><i class="fa fa-check"></i><b>7.8</b> The <span class="math inline">\(E(r)\)</span> choice</a></li>
 </ul></li>
 <li class="part"><span><b>III Configurational Disorder</b></span></li>
 <li class="chapter" data-level="8" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html"><i class="fa fa-check"></i><b>8</b> Monte Carlo sampling</a>
@@ -213,7 +212,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Neutrons for Sustainable Energy Lecture Notes</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Computational Techniques for Sustainable Energy Materials</a>
           </h1>
         </div>
 
@@ -221,28 +220,28 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="machine-learned-interatomic-potentials" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">4</span> Machine-learned interatomic potentials<a href="machine-learned-interatomic-potentials.html#machine-learned-interatomic-potentials" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="mlips" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> Machine-learned interatomic potentials<a href="mlips.html#mlips" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="motivation" class="section level2 hasAnchor" number="4.1">
-<h2><span class="header-section-number">4.1</span> Motivation<a href="machine-learned-interatomic-potentials.html#motivation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">4.1</span> Motivation<a href="mlips.html#motivation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We’ve now seen two approaches to calculating <span class="math inline">\(E(r)\)</span>. Classical potentials are fast and scale well, but require choosing a functional form and fitting parameters — the accuracy is bounded by these choices. DFT is transferable and doesn’t assume a functional form, but the computational cost limits us to hundreds of atoms and short timescales.</p>
-<p>Machine-learned interatomic potentials sit between these. Like classical potentials, they’re parameterised models fitted to data. But unlike classical potentials, they don’t assume a functional form for the interactions — the model learns the shape of E(r) from training data. And the training data typically comes from DFT, so the model inherits DFT’s accuracy for systems similar to those it was trained on.</p>
+<p>Machine-learned interatomic potentials sit between these. Like classical potentials, they’re parameterised models fitted to data. But unlike classical potentials, they don’t assume a functional form for the interactions — the model learns the shape of <span class="math inline">\(E(r)\)</span> from training data. And the training data typically comes from DFT, so the model inherits DFT’s accuracy for systems similar to those it was trained on.</p>
 </div>
 <div id="the-idea" class="section level2 hasAnchor" number="4.2">
-<h2><span class="header-section-number">4.2</span> The idea<a href="machine-learned-interatomic-potentials.html#the-idea" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">4.2</span> The idea<a href="mlips.html#the-idea" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The principle is supervised learning. We generate a dataset of atomic configurations with their DFT energies and forces. We then train a model — typically a neural network or similar — to predict <span class="math inline">\(E(r)\)</span> from atomic positions. Once trained, evaluating the model is much cheaper than running DFT, so we can use it for large systems and long simulations.</p>
 <p>The model learns a mapping: atomic positions → energy. But how should this mapping be structured?</p>
 </div>
 <div id="local-atomic-environments" class="section level2 hasAnchor" number="4.3">
-<h2><span class="header-section-number">4.3</span> Local atomic environments<a href="machine-learned-interatomic-potentials.html#local-atomic-environments" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">4.3</span> Local atomic environments<a href="mlips.html#local-atomic-environments" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Most MLIPs decompose the total energy into contributions from each atom:</p>
 <p><span class="math display">\[E = \sum_i \varepsilon_i\]</span></p>
-<p>where <span class="math inline">\(\varepsilon_i\)</span> depends on the local environment around atom i — the species and positions of nearby atoms within some cutoff. The model learns a mapping from local environment to atomic energy contribution.</p>
+<p>where <span class="math inline">\(\varepsilon_i\)</span> depends on the local environment around atom <span class="math inline">\(i\)</span> — the species and positions of nearby atoms within some cutoff. The model learns a mapping from local environment to atomic energy contribution.</p>
 <p>This locality assumption is physically motivated: in most materials, an atom’s energy contribution depends primarily on its immediate surroundings. It also makes the model size-transferable — a model trained on small cells can be applied to larger systems.</p>
 <p>There is considerable research into how local environments should be represented (descriptors, symmetry functions) and what model architectures work best (neural networks, Gaussian processes, equivariant networks). These details are beyond our scope. The key point is that MLIPs are flexible models with many parameters, fitted to reproduce DFT energies and forces.</p>
 </div>
 <div id="the-landscape" class="section level2 hasAnchor" number="4.4">
-<h2><span class="header-section-number">4.4</span> The landscape<a href="machine-learned-interatomic-potentials.html#the-landscape" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">4.4</span> The landscape<a href="mlips.html#the-landscape" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The MLIP field is evolving rapidly. Broadly, you’ll encounter three approaches.</p>
 <p>Purpose-trained potentials are models developed specifically for a particular system — a battery cathode material, a solid electrolyte, a class of alloys. The training data is generated for that system, covering the configurations relevant to the intended application. This typically gives the best accuracy, because the model is focused on what matters. But it requires substantial effort: generating training data means running many DFT calculations, which is expensive. Training the model and validating it carefully adds further work. This is analogous to developing a classical potential, but without assuming a functional form.</p>
 <p>Foundation models take a different approach. These are pre-trained on massive datasets spanning much of the periodic table and many structure types, then released for general use. Training such a model requires enormous computational resources — this is work done by large research groups or companies (Google, Meta, Microsoft) with access to that scale of compute. The result is a model that provides reasonable accuracy out of the box for many systems, without needing to generate training data or train anything yourself. Examples include MACE-MP, CHGNet, SevenNet, and others. Because foundation models have seen diverse training data, they tend to be more transferable across different chemistries. The tradeoff is that accuracy for any specific system may be lower than a purpose-trained model would achieve.</p>
@@ -250,14 +249,14 @@
 <p>Which approach was used affects how much you should trust the results. A purpose-trained potential with careful validation is more reliable than a foundation model applied to a system far from its training data.</p>
 </div>
 <div id="strengths-and-limitations-2" class="section level2 hasAnchor" number="4.5">
-<h2><span class="header-section-number">4.5</span> Strengths and limitations<a href="machine-learned-interatomic-potentials.html#strengths-and-limitations-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>MLIPs learn the shape of E(r) from data, rather than assuming a functional form. This avoids the limitations of classical potentials, where accuracy is bounded by the mathematical form you write down. Once trained, evaluation is fast — approaching classical potential speeds for some architectures. And the approach is systematically improvable: more training data generally means a better model. If the potential fails in some region of configuration space, you can add more data there and retrain. Foundation models have also made the approach more accessible — you can get reasonable results without training anything yourself.</p>
+<h2><span class="header-section-number">4.5</span> Strengths and limitations<a href="mlips.html#strengths-and-limitations-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>MLIPs learn the shape of <span class="math inline">\(E(r)\)</span> from data, rather than assuming a functional form. This avoids the limitations of classical potentials, where accuracy is bounded by the mathematical form you write down. Once trained, evaluation is fast — approaching classical potential speeds for some architectures. And the approach is systematically improvable: more training data generally means a better model. If the potential fails in some region of configuration space, you can add more data there and retrain. Foundation models have also made the approach more accessible — you can get reasonable results without training anything yourself.</p>
 <p>The limitations are significant. The model can only be as good as its training data. Errors in the DFT calculations propagate to the potential, and the model inherits the limitations of whichever functional was used — if PBE gets something wrong, so will the MLIP trained on PBE data.</p>
 <p>More fundamentally, extrapolation is dangerous. MLIPs interpolate well within their training domain but can fail badly outside it. Unlike DFT, which will give you some answer for any configuration, an MLIP may give confident but wrong predictions for configurations far from training data. This failure can be silent — the model doesn’t know it’s extrapolating.</p>
 <p>MLIPs are also less interpretable than classical potentials. A Buckingham potential has parameters you can understand — charges, repulsion coefficients. An MLIP has thousands of internal parameters with no direct physical meaning. When something goes wrong, it’s harder to diagnose why. This places a validation burden on the user: you need to check that the potential is accurate for the configurations you care about.</p>
 </div>
 <div id="when-to-use" class="section level2 hasAnchor" number="4.6">
-<h2><span class="header-section-number">4.6</span> When to use<a href="machine-learned-interatomic-potentials.html#when-to-use" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">4.6</span> When to use<a href="mlips.html#when-to-use" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>MLIPs are increasingly the default choice when you need larger systems or longer timescales than DFT allows, when classical potentials don’t exist for your system or aren’t accurate enough, and when you’re willing to validate carefully. They’re the wrong choice when DFT is affordable for your problem (simpler, no training overhead), when you’re studying configurations far from any available training data, or when you need guaranteed reliability with no possibility of silent failure.</p>
 <p>The field is moving fast. What’s state-of-the-art now may be superseded within a year. For your purposes as consumers of computational work: ask what potential was used, what it was trained on, and how it was validated for the system being studied.</p>
 

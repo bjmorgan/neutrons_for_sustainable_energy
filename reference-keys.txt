@@ -1,5 +1,5 @@
 the-potential-energy-surface
-building-the-concept
+configuration-and-energy
 features-of-the-pes
 two-questions
 classical-potentials
@@ -19,7 +19,7 @@ the-kohn-sham-equations
 still-exactin-principle
 exchange-correlation-functionals
 strengths-and-limitations-1
-machine-learned-interatomic-potentials
+mlips
 motivation
 the-idea
 local-atomic-environments
