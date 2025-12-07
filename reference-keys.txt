@@ -26,9 +26,8 @@ local-atomic-environments
 the-landscape
 strengths-and-limitations-2
 when-to-use
-summary-and-what-comes-next
-introduction-1
 finding-minima-geometry-optimisation
+introduction-1
 why-compute-a-structure
 structures-and-minima
 steepest-descent
@@ -50,8 +49,8 @@ ensembles-and-what-they-mean
 thermostats-and-barostats
 what-you-get-1
 the-er-choice
-beyond-molecular-dynamics
 monte-carlo-sampling
+beyond-molecular-dynamics
 the-goal-ensemble-averages
 why-not-sample-uniformly
 markov-chain-monte-carlo
@@ -80,7 +79,7 @@ the-physical-origin-anion-polarisation
 what-this-example-illustrates
 four-themes
 what-now
-appendix-derivation-of-the-dynamical-matrix-for-periodic-systems
+derivation-of-the-dynamical-matrix-for-periodic-systems
 setup-and-notation
 translational-symmetry
 plane-wave-ansatz

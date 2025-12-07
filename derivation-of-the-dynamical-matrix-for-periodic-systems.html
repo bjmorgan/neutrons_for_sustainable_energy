@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9 Cluster expansion | Neutrons for Sustainable Energy Lecture Notes</title>
+  <title>A Derivation of the dynamical matrix for periodic systems | Neutrons for Sustainable Energy Lecture Notes</title>
   <meta name="description" content="These are notes to accompany the Computaional Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9 Cluster expansion | Neutrons for Sustainable Energy Lecture Notes" />
+  <meta property="og:title" content="A Derivation of the dynamical matrix for periodic systems | Neutrons for Sustainable Energy Lecture Notes" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="These are notes to accompany the Computaional Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9 Cluster expansion | Neutrons for Sustainable Energy Lecture Notes" />
+  <meta name="twitter:title" content="A Derivation of the dynamical matrix for periodic systems | Neutrons for Sustainable Energy Lecture Notes" />
   
   <meta name="twitter:description" content="These are notes to accompany the Computaional Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="monte-carlo-sampling.html"/>
-<link rel="next" href="short-range-order-and-pdf.html"/>
+<link rel="prev" href="conclusion.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -221,43 +221,65 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="cluster-expansion" class="section level1 hasAnchor" number="9">
-<h1><span class="header-section-number">9</span> Cluster expansion<a href="cluster-expansion.html#cluster-expansion" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="the-problem" class="section level2 hasAnchor" number="9.1">
-<h2><span class="header-section-number">9.1</span> The problem<a href="cluster-expansion.html#the-problem" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Some questions in materials science concern configurational disorder on a lattice: which atoms sit on which sites? In a mixed-metal oxide, how are the cations distributed? In an alloy, do the components cluster or order? These are questions about a discrete configurational space — the lattice sites are fixed, only the occupancies vary. Monte Carlo sampling handles this naturally: propose a swap of two atoms, accept or reject based on energy change, repeat.</p>
-<p>The challenge is evaluating the energy. A typical MC simulation involves millions of proposed moves, each requiring ΔE to be calculated. To make matters worse, atoms do not sit exactly on ideal lattice positions — they relax slightly depending on the local chemical environment. To calculate ΔE properly, each proposed configuration requires a geometry optimisation. The computational cost is not just millions of energy evaluations, but millions of geometry optimisations. With DFT, this is completely impractical. With classical potentials, it is possible but computationally demanding and slow.</p>
-<p>Cluster expansions sidestep this entirely. The idea is to construct an effective Hamiltonian that depends only on site occupancies — not on continuous atomic positions. This Hamiltonian is parameterised by fitting to the energies of relaxed structures calculated with a more accurate method, typically DFT. Because the training data comes from fully relaxed configurations, the relaxation energy is already incorporated into the fitted coefficients. During MC sampling, no geometry optimisation is needed — evaluating the energy for any configuration is computationally trivial, enabling hundreds of MC steps per second with near-DFT accuracy.</p>
+<div id="derivation-of-the-dynamical-matrix-for-periodic-systems" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">A</span> Derivation of the dynamical matrix for periodic systems<a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html#derivation-of-the-dynamical-matrix-for-periodic-systems" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This appendix provides the full derivation of how translational symmetry reduces the phonon problem from a 3<i>N</i> × 3<i>N</i> eigenvalue problem (for <i>N</i> atoms in the crystal) to a 3<i>n</i> × 3<i>n</i> problem (for <i>n</i> atoms in the primitive cell) at each wavevector <span class="math inline">\(\mathbf{q}\)</span>.</p>
+<div id="setup-and-notation" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">A.1</span> Setup and notation<a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html#setup-and-notation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Consider a periodic crystal with primitive lattice vectors. Let <span class="math inline">\(\mathbf{R}\)</span>ₗ denote the position of unit cell <span class="math inline">\(l\)</span>, and let atom <span class="math inline">\(i\)</span> within the cell sit at position <span class="math inline">\(\mathbf{R}_l + \boldsymbol{\tau}_i\)</span>, where <span class="math inline">\(\boldsymbol{\tau_i}\)</span> is the position of atom <span class="math inline">\(i\)</span> within the primitive cell.</p>
+<p>The displacement of atom <span class="math inline">\(i\)</span> in cell <span class="math inline">\(l\)</span> from its equilibrium position is <span class="math inline">\(\mathbf{u}_i(l)\)</span>. The equation of motion is:</p>
+<p><span class="math display">\[m_i \frac{d^2 \mathbf{u}_i(l)}{dt^2} = -\sum_{l&#39;} \sum_j \Phi_{ij}(l, l&#39;) \, \mathbf{u}_j(l&#39;)\]</span></p>
+<p>where <span class="math inline">\(\Phi_{ij}(l, l&#39;)\)</span> is the force constant matrix coupling atom <span class="math inline">\(i\)</span> in cell <span class="math inline">\(l\)</span> to atom <span class="math inline">\(j\)</span> in cell <span class="math inline">\(l&#39;\)</span>. This is a 3 × 3 matrix (coupling <i>x</i>, <i>y</i>, <i>z</i> components), but we suppress the Cartesian indices for clarity.</p>
 </div>
-<div id="the-idea-1" class="section level2 hasAnchor" number="9.2">
-<h2><span class="header-section-number">9.2</span> The idea<a href="cluster-expansion.html#the-idea-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>How is the effective Hamiltonian constructed? For a binary system (A and B atoms on fixed sites), the configuration can be represented using occupation variables: assign σ<sub>i</sub> = +1 if site i has atom A, σ<sub>i</sub> = −1 if site i has atom B. The full configuration is then specified by the set of all σ<sub>i</sub>.</p>
-<p>The cluster expansion writes the energy as a function of these occupation variables:</p>
-<p><span class="math display">\[E(\{\sigma\}) = J_0 + \sum_i J_i \sigma_i + \sum_{i&lt;j} J_{ij} \sigma_i \sigma_j + \sum_{i&lt;j&lt;k} J_{ijk} \sigma_i \sigma_j \sigma_k + \ldots\]</span></p>
-<p>The first term J<sub>0</sub> is a constant (the reference energy). The second sum runs over single sites — but for a stoichiometric system, the number of A and B atoms is fixed, so Σσ<sub>i</sub> is constant and this term just shifts the reference. The third sum runs over pairs of sites; J<sub>ij</sub> captures how the energy depends on whether sites i and j have the same or different atoms. Higher-order terms capture three-body, four-body, and larger cluster interactions.</p>
+<div id="translational-symmetry" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">A.2</span> Translational symmetry<a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html#translational-symmetry" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The key property is translational invariance: the force constants depend only on the separation between cells, not on which cell we started from:</p>
+<p><span class="math display">\[\Phi_{ij}(l, l&#39;) = \Phi_{ij}(\mathbf{R}_l - \mathbf{R}_{l&#39;}) = \Phi_{ij}(\mathbf{R}_{l-l&#39;})\]</span></p>
+<p>We can write this more simply by defining <span class="math inline">\(\mathbf{R} = \mathbf{R}_l− \mathbf{R}_{l^\prime}\)</span>, so <span class="math inline">\(\Psi_{ij}(\mathbf{R})\)</span> is the force constant coupling atom <span class="math inline">\(j\)</span> at the origin to atom <span class="math inline">\(i\)</span> in the cell at <span class="math inline">\(\mathbf{R}\)</span>.</p>
 </div>
-<div id="symmetry-and-truncation" class="section level2 hasAnchor" number="9.3">
-<h2><span class="header-section-number">9.3</span> Symmetry and truncation<a href="cluster-expansion.html#symmetry-and-truncation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>For a periodic crystal, symmetry constrains the expansion. All pairs related by symmetry have the same coefficient: nearest-neighbour pairs share one J value, second-nearest-neighbour pairs share another, and so on. Similarly for triplets and larger clusters. Symmetry groups the clusters into types, reducing the number of independent parameters from one per cluster to one per symmetry-distinct cluster type.</p>
-<p>The expansion becomes:</p>
-<p><span class="math display">\[E = J_0 + \sum_\alpha J_\alpha \, m_\alpha \, \langle \Pi_\alpha \rangle\]</span></p>
-<p>where α labels cluster types, m<sub>α</sub> is the multiplicity (how many clusters of that type per site), and ⟨Π<sub>α</sub>⟩ is the average value of the product of occupation variables over all clusters of type α.</p>
-<p>An infinite cluster expansion — including all cluster types — is provably exact; it can represent any function of the site occupancies. In practice, the expansion is truncated by selecting which cluster types to include. This is done by limiting both the cluster size (e.g., up to triplets or quartets) and the cluster radius (e.g., pairs only up to third-nearest neighbours).</p>
+<div id="plane-wave-ansatz" class="section level2 hasAnchor" number="12.3">
+<h2><span class="header-section-number">A.3</span> Plane-wave ansatz<a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html#plane-wave-ansatz" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We seek solutions where all atoms oscillate at the same frequency <span class="math inline">\(\omega\)</span>. Based on the discussion in the main text, translational symmetry constrains the allowed phase relationships to plane waves. We therefore assume:</p>
+<p><span class="math display">\[\mathbf{u}_i(l) = \mathbf{e}_\mathrm{i} \exp(i\mathbf{q} \cdot \mathbf{R}_l) \exp(-\mathrm{i}\omega t)\]</span></p>
+<p>where <span class="math inline">\(\mathbf{e}_i\)</span> is the displacement amplitude (a complex vector) for atom <span class="math inline">\(i\)</span> within the unit cell, and <span class="math inline">\(\mathbf{q}\)</span> is the wavevector. The time dependence <span class="math inline">\(\exp(-\mathrm{i}\omega t)\)</span> gives the harmonic oscillation; the spatial dependence <span class="math inline">\(\exp(\mathrm{i}\mathbf{q}\cdot\mathbf{R}_l)\)</span> encodes the phase variation from cell to cell.</p>
 </div>
-<div id="fitting-the-expansion" class="section level2 hasAnchor" number="9.4">
-<h2><span class="header-section-number">9.4</span> Fitting the expansion<a href="cluster-expansion.html#fitting-the-expansion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The coefficients {J<sub>α</sub>} are unknown. They are determined by fitting to DFT calculations: a set of training configurations is generated, covering different arrangements of atoms on the lattice, and the DFT energy of each is calculated. The cluster expansion coefficients are then fitted to reproduce these energies. Because the energy is linear in the coefficients J<sub>α</sub>, this is a linear least-squares problem.</p>
-<p>The training set typically includes 50–200 configurations, each requiring a DFT calculation. This is expensive upfront, but pays off when the fitted expansion enables millions of energy evaluations that would be impossible with direct DFT.</p>
+<div id="substitution-into-equations-of-motion" class="section level2 hasAnchor" number="12.4">
+<h2><span class="header-section-number">A.4</span> Substitution into equations of motion<a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html#substitution-into-equations-of-motion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Substituting the plane-wave form into the equation of motion:</p>
+<p><span class="math display">\[-m_i \omega^2 \mathbf{e}_i \exp(i\mathbf{q} \cdot \mathbf{R}_l) = -\sum_{l&#39;} \sum_j \Phi_{ij}(\mathbf{R}_l - \mathbf{R}_{l&#39;}) \, \mathbf{e}_j \exp(\mathrm{i}\mathbf{q} \cdot \mathbf{R}_{l&#39;})\]</span></p>
+<p>where we have cancelled the common <span class="math inline">\(\exp(−\mathrm{i}\omega t)\)</span> factor from both sides.</p>
+<p>Now we use translational invariance. Define <span class="math inline">\(\mathbf{R} = \mathbf{R}_l - \mathbf{R}_{l^\prime}\)</span>, so <span class="math inline">\(\mathbf{R}_{l^\prime} = \mathbf{R}_l - \mathbf{R}\)</span>. The sum over <span class="math inline">\(l&#39;\)</span> becomes a sum over <span class="math inline">\(\mathbf{R}\)</span>:</p>
+<p><span class="math display">\[-m_i \omega^2 \mathbf{e}_i \exp(\mathrm{i}\mathbf{q} \cdot \mathbf{R}_l) = -\sum_{\mathbf{R}} \sum_j \Phi_{ij}(\mathbf{R}) \, \mathbf{e}_j \exp(\mathrm{i}\mathbf{q} \cdot (\mathbf{R}_l - \mathbf{R}))\]</span></p>
+<p>The <span class="math inline">\(\exp(\mathrm{i}\mathbf{q}\cdot\mathbf{R}_l)\)</span> factor appears on both sides:</p>
+<p><span class="math display">\[-m_i \omega^2 \mathbf{e}_i \exp(\mathrm{i}\mathbf{q} \cdot \mathbf{R}_l) = -\sum_{\mathbf{R}} \sum_j \Phi_{ij}(\mathbf{R}) \, \mathbf{e}_j \exp(i\mathbf{q} \cdot \mathbf{R}_l) \exp(-\mathrm{i}\mathbf{q} \cdot \mathbf{R})\]</span></p>
+<p>Dividing both sides by <span class="math inline">\(\exp(\mathrm{i}\mathbf{q}\cdot\mathbf{R}_l)\)</span>:</p>
+<p><span class="math display">\[m_i \omega^2 \mathbf{e}_i = \sum_{\mathbf{R}} \sum_j \Phi_{ij}(\mathbf{R}) \exp(-\mathrm{i}\mathbf{q} \cdot \mathbf{R}) \, \mathbf{e}_j\]</span></p>
 </div>
-<div id="what-you-get-3" class="section level2 hasAnchor" number="9.5">
-<h2><span class="header-section-number">9.5</span> What you get<a href="cluster-expansion.html#what-you-get-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>A fitted cluster expansion evaluates E(σ) for any configuration as a sum over clusters — a fraction of a second, rather than the minutes to hours required for DFT. This makes extensive MC sampling possible: millions of steps at effectively DFT accuracy. We can map out phase diagrams, find order-disorder transition temperatures, and characterise the distribution of configurations at any temperature. Ground state searching becomes tractable — systematically enumerating configurations or using optimisation algorithms to find the lowest-energy orderings. Thermodynamic properties such as heat capacities, ordering enthalpies, and entropies follow from MC sampling.</p>
+<div id="the-dynamical-matrix" class="section level2 hasAnchor" number="12.5">
+<h2><span class="header-section-number">A.5</span> The dynamical matrix<a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html#the-dynamical-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Define the <span class="math inline">\(\mathbf{q}\)</span>-dependent force constant matrix:</p>
+<p><span class="math display">\[C_{ij}(\mathbf{q}) = \sum_{\mathbf{R}} \Phi_{ij}(\mathbf{R}) \exp(-\mathrm{i}\mathbf{q} \cdot \mathbf{R})\]</span></p>
+<p>This is the Fourier transform of the real-space force constants. The equation of motion becomes:</p>
+<p><span class="math display">\[m_i \omega^2 \mathbf{e}_i = \sum_j C_{ij}(\mathbf{q}) \, \mathbf{e}_j\]</span></p>
+<p>To put this in standard eigenvalue form, we define mass-weighted displacements <span class="math inline">\(\mathbf{\tilde{e}}_i = \sqrt m_i \mathbf{e}_i\)</span> and the dynamical matrix:</p>
+<p><span class="math display">\[D_{ij}(\mathbf{q}) = \frac{C_{ij}(\mathbf{q})}{\sqrt{m_i m_j}}\]</span></p>
+<p>The equation becomes:</p>
+<p><span class="math display">\[\omega^2 \tilde{\mathbf{e}}_i = \sum_j D_{ij}(\mathbf{q}) \, \tilde{\mathbf{e}}_j\]</span></p>
+<p>or in matrix form:</p>
+<p><span class="math display">\[\omega^2 \tilde{\mathbf{e}} = \mathbf{D}(\mathbf{q}) \tilde{\mathbf{e}}\]</span></p>
+<p>This is a standard eigenvalue problem. The eigenvalues are <span class="math inline">\(\omega^2\)</span> and the eigenvectors <span class="math inline">\(\mathbf{\tilde{e}}_i\)</span> give the (mass-weighted) displacement patterns within the unit cell.</p>
 </div>
-<div id="limitations-1" class="section level2 hasAnchor" number="9.6">
-<h2><span class="header-section-number">9.6</span> Limitations<a href="cluster-expansion.html#limitations-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Cluster expansions require that every relaxed structure can be mapped back to exactly one on-lattice configuration. The atoms in the training structures are fully relaxed — they sit at their true equilibrium positions, not ideal lattice sites — but each structure must correspond unambiguously to a particular set of site occupancies. This works well when relaxations are small, but breaks down if atoms move so far from their nominal sites that the mapping becomes ambiguous.</p>
-<p>The expansion assumes the energy can be written as a sum over clusters. This works well for many systems but may fail when long-range interactions (beyond the clusters included) are important, or when the electronic structure changes qualitatively with ordering.</p>
-<p>The quality depends entirely on the training data and the choice of clusters. A cluster expansion is a fit to DFT — it inherits the accuracy of the underlying DFT calculations and can only interpolate, not extrapolate. If the training set doesn’t include configurations similar to what you’re asking about, the expansion may give wrong answers.</p>
+<div id="the-key-result" class="section level2 hasAnchor" number="12.6">
+<h2><span class="header-section-number">A.6</span> The key result<a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html#the-key-result" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The dynamical matrix <span class="math inline">\(D(\mathbf{q})\)</span> has dimensions 3n × 3n, where n is the number of atoms in the primitive cell. At each wavevector <span class="math inline">\(\mathbf{q}\)</span>, we diagonalise this matrix to obtain 3n eigenvalues <span class="math inline">\(\omega^2(\mathbf{q})\)</span> and eigenvectors.</p>
+<p>The full displacement pattern across the crystal is reconstructed by multiplying the unit-cell eigenvector by the phase factor:</p>
+<p><span class="math display">\[\mathbf{u}_i(l) = \frac{\mathbf{e}_i}{\sqrt{m_i}} \exp(i\mathbf{q} \cdot \mathbf{R}_l) \exp(-i\omega t)\]</span></p>
+<p>Different values of <span class="math inline">\(\mathbf{q}\)</span> give different phase relationships between unit cells, but the mathematical structure of the eigenvalue problem is the same at each <span class="math inline">\(\mathbf{q}\)</span>. This is why we can compute phonon dispersion by solving many small problems rather than one impossibly large one.</p>
+</div>
+<div id="connection-to-experiment" class="section level2 hasAnchor" number="12.7">
+<h2><span class="header-section-number">A.7</span> Connection to experiment<a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html#connection-to-experiment" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The phonon dispersion relation <span class="math inline">\(\omega(\mathbf{q})\)</span> can be measured by inelastic neutron scattering on single crystals, where the scattering condition relates the momentum transfer to <span class="math inline">\(\mathbf{q}\)</span>. For powder samples, the measurement averages over all <span class="math inline">\(\mathbf{q}\)</span>, giving the phonon density of states.</p>
+<p>Computationally, we calculate <span class="math inline">\(D(\mathbf{q})\)</span> on a grid of <span class="math inline">\(\mathbf{q}\)</span>-points in the Brillouin zone, diagonalise at each point, and either plot the dispersion along high-symmetry paths or integrate to obtain the density of states.</p>
 
 </div>
 </div>
@@ -266,8 +288,8 @@
           </div>
         </div>
       </div>
-<a href="monte-carlo-sampling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="short-range-order-and-pdf.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="conclusion.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -298,7 +320,7 @@ gitbook.start({
     "size": 2
   },
   "edit": {
-    "link": "https://github.com/bjmorgan/neutrons_for_sustainable_energy/main/chapters/cluster_expansion.Rmd",
+    "link": "https://github.com/bjmorgan/neutrons_for_sustainable_energy/main/appendices/phonon_derivation.Rmd",
     "text": "Edit"
   },
   "history": {

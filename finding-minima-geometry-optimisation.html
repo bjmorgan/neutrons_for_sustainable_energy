@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6 Finding minima: geometry optimisation | Neutrons for Sustainable Energy Lecture Notes</title>
+  <title>5 Finding minima: geometry optimisation | Neutrons for Sustainable Energy Lecture Notes</title>
   <meta name="description" content="These are notes to accompany the Computaional Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6 Finding minima: geometry optimisation | Neutrons for Sustainable Energy Lecture Notes" />
+  <meta property="og:title" content="5 Finding minima: geometry optimisation | Neutrons for Sustainable Energy Lecture Notes" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="These are notes to accompany the Computaional Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6 Finding minima: geometry optimisation | Neutrons for Sustainable Energy Lecture Notes" />
+  <meta name="twitter:title" content="5 Finding minima: geometry optimisation | Neutrons for Sustainable Energy Lecture Notes" />
   
   <meta name="twitter:description" content="These are notes to accompany the Computaional Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   
@@ -23,14 +23,14 @@
 <meta name="author" content="Benjamin J. Morgan" />
 
 
-<meta name="date" content="2025-12-06" />
+<meta name="date" content="2025-12-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="introduction-1.html"/>
+<link rel="prev" href="machine-learned-interatomic-potentials.html"/>
 <link rel="next" href="phonon-calculations.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -84,6 +84,7 @@
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#energy-materials"><i class="fa fa-check"></i>Energy materials</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#learning-objectives"><i class="fa fa-check"></i>Learning objectives</a></li>
 </ul></li>
+<li class="part"><span><b>I Calculating E(r)</b></span></li>
 <li class="chapter" data-level="1" data-path="the-potential-energy-surface.html"><a href="the-potential-energy-surface.html"><i class="fa fa-check"></i><b>1</b> The potential energy surface</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="the-potential-energy-surface.html"><a href="the-potential-energy-surface.html#building-the-concept"><i class="fa fa-check"></i><b>1.1</b> Building the concept</a></li>
@@ -119,88 +120,89 @@
 <li class="chapter" data-level="4.4" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html#the-landscape"><i class="fa fa-check"></i><b>4.4</b> The landscape</a></li>
 <li class="chapter" data-level="4.5" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html#strengths-and-limitations-2"><i class="fa fa-check"></i><b>4.5</b> Strengths and limitations</a></li>
 <li class="chapter" data-level="4.6" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html#when-to-use"><i class="fa fa-check"></i><b>4.6</b> When to use</a></li>
-<li class="chapter" data-level="4.7" data-path="machine-learned-interatomic-potentials.html"><a href="machine-learned-interatomic-potentials.html#summary-and-what-comes-next"><i class="fa fa-check"></i><b>4.7</b> Summary and what comes next</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="introduction-1.html"><a href="introduction-1.html"><i class="fa fa-check"></i><b>5</b> Introduction</a></li>
-<li class="chapter" data-level="6" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html"><i class="fa fa-check"></i><b>6</b> Finding minima: geometry optimisation</a>
+<li class="part"><span><b>II Structure and Dynamics</b></span></li>
+<li class="chapter" data-level="5" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html"><i class="fa fa-check"></i><b>5</b> Finding minima: geometry optimisation</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#why-compute-a-structure"><i class="fa fa-check"></i><b>6.1</b> Why compute a structure?</a></li>
-<li class="chapter" data-level="6.2" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#structures-and-minima"><i class="fa fa-check"></i><b>6.2</b> Structures and minima</a></li>
-<li class="chapter" data-level="6.3" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#steepest-descent"><i class="fa fa-check"></i><b>6.3</b> Steepest descent</a></li>
-<li class="chapter" data-level="6.4" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#doing-better-with-curvature"><i class="fa fa-check"></i><b>6.4</b> Doing better with curvature</a></li>
-<li class="chapter" data-level="6.5" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#local-and-global-minima"><i class="fa fa-check"></i><b>6.5</b> Local and global minima</a></li>
+<li class="chapter" data-level="5.1" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#introduction-1"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#why-compute-a-structure"><i class="fa fa-check"></i><b>5.2</b> Why compute a structure?</a></li>
+<li class="chapter" data-level="5.3" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#structures-and-minima"><i class="fa fa-check"></i><b>5.3</b> Structures and minima</a></li>
+<li class="chapter" data-level="5.4" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#steepest-descent"><i class="fa fa-check"></i><b>5.4</b> Steepest descent</a></li>
+<li class="chapter" data-level="5.5" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#doing-better-with-curvature"><i class="fa fa-check"></i><b>5.5</b> Doing better with curvature</a></li>
+<li class="chapter" data-level="5.6" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#local-and-global-minima"><i class="fa fa-check"></i><b>5.6</b> Local and global minima</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="phonon-calculations.html"><a href="phonon-calculations.html"><i class="fa fa-check"></i><b>7</b> Phonon calculations</a>
+<li class="chapter" data-level="6" data-path="phonon-calculations.html"><a href="phonon-calculations.html"><i class="fa fa-check"></i><b>6</b> Phonon calculations</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="phonon-calculations.html"><a href="phonon-calculations.html#vibrations-around-equilibrium"><i class="fa fa-check"></i><b>7.1</b> Vibrations around equilibrium</a></li>
-<li class="chapter" data-level="7.2" data-path="phonon-calculations.html"><a href="phonon-calculations.html#the-harmonic-approximation"><i class="fa fa-check"></i><b>7.2</b> The harmonic approximation</a></li>
-<li class="chapter" data-level="7.3" data-path="phonon-calculations.html"><a href="phonon-calculations.html#periodic-systems-and-phonon-dispersion"><i class="fa fa-check"></i><b>7.3</b> Periodic systems and phonon dispersion</a></li>
-<li class="chapter" data-level="7.4" data-path="phonon-calculations.html"><a href="phonon-calculations.html#calculating-phonons-in-practice"><i class="fa fa-check"></i><b>7.4</b> Calculating phonons in practice</a></li>
-<li class="chapter" data-level="7.5" data-path="phonon-calculations.html"><a href="phonon-calculations.html#what-you-get"><i class="fa fa-check"></i><b>7.5</b> What you get</a></li>
-<li class="chapter" data-level="7.6" data-path="phonon-calculations.html"><a href="phonon-calculations.html#limitations"><i class="fa fa-check"></i><b>7.6</b> Limitations</a></li>
+<li class="chapter" data-level="6.1" data-path="phonon-calculations.html"><a href="phonon-calculations.html#vibrations-around-equilibrium"><i class="fa fa-check"></i><b>6.1</b> Vibrations around equilibrium</a></li>
+<li class="chapter" data-level="6.2" data-path="phonon-calculations.html"><a href="phonon-calculations.html#the-harmonic-approximation"><i class="fa fa-check"></i><b>6.2</b> The harmonic approximation</a></li>
+<li class="chapter" data-level="6.3" data-path="phonon-calculations.html"><a href="phonon-calculations.html#periodic-systems-and-phonon-dispersion"><i class="fa fa-check"></i><b>6.3</b> Periodic systems and phonon dispersion</a></li>
+<li class="chapter" data-level="6.4" data-path="phonon-calculations.html"><a href="phonon-calculations.html#calculating-phonons-in-practice"><i class="fa fa-check"></i><b>6.4</b> Calculating phonons in practice</a></li>
+<li class="chapter" data-level="6.5" data-path="phonon-calculations.html"><a href="phonon-calculations.html#what-you-get"><i class="fa fa-check"></i><b>6.5</b> What you get</a></li>
+<li class="chapter" data-level="6.6" data-path="phonon-calculations.html"><a href="phonon-calculations.html#limitations"><i class="fa fa-check"></i><b>6.6</b> Limitations</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html"><i class="fa fa-check"></i><b>8</b> Molecular dynamics: principles</a>
+<li class="chapter" data-level="7" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html"><i class="fa fa-check"></i><b>7</b> Molecular dynamics: principles</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#from-local-curvature-to-global-exploration"><i class="fa fa-check"></i><b>8.1</b> From local curvature to global exploration</a></li>
-<li class="chapter" data-level="8.2" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#equations-of-motion"><i class="fa fa-check"></i><b>8.2</b> Equations of motion</a></li>
-<li class="chapter" data-level="8.3" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#numerical-integration"><i class="fa fa-check"></i><b>8.3</b> Numerical integration</a></li>
-<li class="chapter" data-level="8.4" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#phase-space-and-trajectories"><i class="fa fa-check"></i><b>8.4</b> Phase space and trajectories</a></li>
-<li class="chapter" data-level="8.5" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#ensembles-and-what-they-mean"><i class="fa fa-check"></i><b>8.5</b> Ensembles and what they mean</a></li>
-<li class="chapter" data-level="8.6" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#thermostats-and-barostats"><i class="fa fa-check"></i><b>8.6</b> Thermostats and barostats</a></li>
-<li class="chapter" data-level="8.7" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#what-you-get-1"><i class="fa fa-check"></i><b>8.7</b> What you get</a></li>
-<li class="chapter" data-level="8.8" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#the-er-choice"><i class="fa fa-check"></i><b>8.8</b> The E(r) choice</a></li>
+<li class="chapter" data-level="7.1" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#from-local-curvature-to-global-exploration"><i class="fa fa-check"></i><b>7.1</b> From local curvature to global exploration</a></li>
+<li class="chapter" data-level="7.2" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#equations-of-motion"><i class="fa fa-check"></i><b>7.2</b> Equations of motion</a></li>
+<li class="chapter" data-level="7.3" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#numerical-integration"><i class="fa fa-check"></i><b>7.3</b> Numerical integration</a></li>
+<li class="chapter" data-level="7.4" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#phase-space-and-trajectories"><i class="fa fa-check"></i><b>7.4</b> Phase space and trajectories</a></li>
+<li class="chapter" data-level="7.5" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#ensembles-and-what-they-mean"><i class="fa fa-check"></i><b>7.5</b> Ensembles and what they mean</a></li>
+<li class="chapter" data-level="7.6" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#thermostats-and-barostats"><i class="fa fa-check"></i><b>7.6</b> Thermostats and barostats</a></li>
+<li class="chapter" data-level="7.7" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#what-you-get-1"><i class="fa fa-check"></i><b>7.7</b> What you get</a></li>
+<li class="chapter" data-level="7.8" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#the-er-choice"><i class="fa fa-check"></i><b>7.8</b> The E(r) choice</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="beyond-molecular-dynamics.html"><a href="beyond-molecular-dynamics.html"><i class="fa fa-check"></i><b>9</b> Beyond molecular dynamics</a></li>
-<li class="chapter" data-level="10" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html"><i class="fa fa-check"></i><b>10</b> Monte Carlo sampling</a>
+<li class="part"><span><b>III Configurational Disorder</b></span></li>
+<li class="chapter" data-level="8" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html"><i class="fa fa-check"></i><b>8</b> Monte Carlo sampling</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-goal-ensemble-averages"><i class="fa fa-check"></i><b>10.1</b> The goal: ensemble averages</a></li>
-<li class="chapter" data-level="10.2" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#why-not-sample-uniformly"><i class="fa fa-check"></i><b>10.2</b> Why not sample uniformly?</a></li>
-<li class="chapter" data-level="10.3" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#markov-chain-monte-carlo"><i class="fa fa-check"></i><b>10.3</b> Markov chain Monte Carlo</a></li>
-<li class="chapter" data-level="10.4" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-metropolis-algorithm"><i class="fa fa-check"></i><b>10.4</b> The Metropolis algorithm</a></li>
-<li class="chapter" data-level="10.5" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#what-you-get-2"><i class="fa fa-check"></i><b>10.5</b> What you get</a></li>
-<li class="chapter" data-level="10.6" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#what-you-dont-get"><i class="fa fa-check"></i><b>10.6</b> What you don’t get</a></li>
-<li class="chapter" data-level="10.7" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#neutron-connection"><i class="fa fa-check"></i><b>10.7</b> Neutron connection</a></li>
+<li class="chapter" data-level="8.1" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#beyond-molecular-dynamics"><i class="fa fa-check"></i><b>8.1</b> Beyond molecular dynamics</a></li>
+<li class="chapter" data-level="8.2" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-goal-ensemble-averages"><i class="fa fa-check"></i><b>8.2</b> The goal: ensemble averages</a></li>
+<li class="chapter" data-level="8.3" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#why-not-sample-uniformly"><i class="fa fa-check"></i><b>8.3</b> Why not sample uniformly?</a></li>
+<li class="chapter" data-level="8.4" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#markov-chain-monte-carlo"><i class="fa fa-check"></i><b>8.4</b> Markov chain Monte Carlo</a></li>
+<li class="chapter" data-level="8.5" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-metropolis-algorithm"><i class="fa fa-check"></i><b>8.5</b> The Metropolis algorithm</a></li>
+<li class="chapter" data-level="8.6" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#what-you-get-2"><i class="fa fa-check"></i><b>8.6</b> What you get</a></li>
+<li class="chapter" data-level="8.7" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#what-you-dont-get"><i class="fa fa-check"></i><b>8.7</b> What you don’t get</a></li>
+<li class="chapter" data-level="8.8" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#neutron-connection"><i class="fa fa-check"></i><b>8.8</b> Neutron connection</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="cluster-expansion.html"><a href="cluster-expansion.html"><i class="fa fa-check"></i><b>11</b> Cluster expansion</a>
+<li class="chapter" data-level="9" data-path="cluster-expansion.html"><a href="cluster-expansion.html"><i class="fa fa-check"></i><b>9</b> Cluster expansion</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-problem"><i class="fa fa-check"></i><b>11.1</b> The problem</a></li>
-<li class="chapter" data-level="11.2" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-idea-1"><i class="fa fa-check"></i><b>11.2</b> The idea</a></li>
-<li class="chapter" data-level="11.3" data-path="cluster-expansion.html"><a href="cluster-expansion.html#symmetry-and-truncation"><i class="fa fa-check"></i><b>11.3</b> Symmetry and truncation</a></li>
-<li class="chapter" data-level="11.4" data-path="cluster-expansion.html"><a href="cluster-expansion.html#fitting-the-expansion"><i class="fa fa-check"></i><b>11.4</b> Fitting the expansion</a></li>
-<li class="chapter" data-level="11.5" data-path="cluster-expansion.html"><a href="cluster-expansion.html#what-you-get-3"><i class="fa fa-check"></i><b>11.5</b> What you get</a></li>
-<li class="chapter" data-level="11.6" data-path="cluster-expansion.html"><a href="cluster-expansion.html#limitations-1"><i class="fa fa-check"></i><b>11.6</b> Limitations</a></li>
+<li class="chapter" data-level="9.1" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-problem"><i class="fa fa-check"></i><b>9.1</b> The problem</a></li>
+<li class="chapter" data-level="9.2" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-idea-1"><i class="fa fa-check"></i><b>9.2</b> The idea</a></li>
+<li class="chapter" data-level="9.3" data-path="cluster-expansion.html"><a href="cluster-expansion.html#symmetry-and-truncation"><i class="fa fa-check"></i><b>9.3</b> Symmetry and truncation</a></li>
+<li class="chapter" data-level="9.4" data-path="cluster-expansion.html"><a href="cluster-expansion.html#fitting-the-expansion"><i class="fa fa-check"></i><b>9.4</b> Fitting the expansion</a></li>
+<li class="chapter" data-level="9.5" data-path="cluster-expansion.html"><a href="cluster-expansion.html#what-you-get-3"><i class="fa fa-check"></i><b>9.5</b> What you get</a></li>
+<li class="chapter" data-level="9.6" data-path="cluster-expansion.html"><a href="cluster-expansion.html#limitations-1"><i class="fa fa-check"></i><b>9.6</b> Limitations</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html"><i class="fa fa-check"></i><b>12</b> Short-range order and PDF</a>
+<li class="chapter" data-level="10" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html"><i class="fa fa-check"></i><b>10</b> Short-range order and PDF</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#long-range-order-vs-short-range-order"><i class="fa fa-check"></i><b>12.1</b> Long-range order vs short-range order</a></li>
-<li class="chapter" data-level="12.2" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#what-bragg-diffraction-misses"><i class="fa fa-check"></i><b>12.2</b> What Bragg diffraction misses</a></li>
-<li class="chapter" data-level="12.3" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#pdf-captures-local-structure"><i class="fa fa-check"></i><b>12.3</b> PDF captures local structure</a></li>
-<li class="chapter" data-level="12.4" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#the-computational-approach"><i class="fa fa-check"></i><b>12.4</b> The computational approach</a></li>
+<li class="chapter" data-level="10.1" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#long-range-order-vs-short-range-order"><i class="fa fa-check"></i><b>10.1</b> Long-range order vs short-range order</a></li>
+<li class="chapter" data-level="10.2" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#what-bragg-diffraction-misses"><i class="fa fa-check"></i><b>10.2</b> What Bragg diffraction misses</a></li>
+<li class="chapter" data-level="10.3" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#pdf-captures-local-structure"><i class="fa fa-check"></i><b>10.3</b> PDF captures local structure</a></li>
+<li class="chapter" data-level="10.4" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#the-computational-approach"><i class="fa fa-check"></i><b>10.4</b> The computational approach</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html"><i class="fa fa-check"></i><b>13</b> Case study: short-range order in Li<sub>2</sub>FeSO</a>
+<li class="chapter" data-level="11" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html"><i class="fa fa-check"></i><b>11</b> Case study: short-range order in Li<sub>2</sub>FeSO</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-puzzle"><i class="fa fa-check"></i><b>13.1</b> The puzzle</a></li>
-<li class="chapter" data-level="13.2" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-computational-approach-1"><i class="fa fa-check"></i><b>13.2</b> The computational approach</a></li>
-<li class="chapter" data-level="13.3" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-result-preferential-short-range-order"><i class="fa fa-check"></i><b>13.3</b> The result: preferential short-range order</a></li>
-<li class="chapter" data-level="13.4" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#validation-against-experiment"><i class="fa fa-check"></i><b>13.4</b> Validation against experiment</a></li>
-<li class="chapter" data-level="13.5" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-physical-origin-anion-polarisation"><i class="fa fa-check"></i><b>13.5</b> The physical origin: anion polarisation</a></li>
-<li class="chapter" data-level="13.6" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#what-this-example-illustrates"><i class="fa fa-check"></i><b>13.6</b> What this example illustrates</a></li>
+<li class="chapter" data-level="11.1" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-puzzle"><i class="fa fa-check"></i><b>11.1</b> The puzzle</a></li>
+<li class="chapter" data-level="11.2" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-computational-approach-1"><i class="fa fa-check"></i><b>11.2</b> The computational approach</a></li>
+<li class="chapter" data-level="11.3" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-result-preferential-short-range-order"><i class="fa fa-check"></i><b>11.3</b> The result: preferential short-range order</a></li>
+<li class="chapter" data-level="11.4" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#validation-against-experiment"><i class="fa fa-check"></i><b>11.4</b> Validation against experiment</a></li>
+<li class="chapter" data-level="11.5" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-physical-origin-anion-polarisation"><i class="fa fa-check"></i><b>11.5</b> The physical origin: anion polarisation</a></li>
+<li class="chapter" data-level="11.6" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#what-this-example-illustrates"><i class="fa fa-check"></i><b>11.6</b> What this example illustrates</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="wrap-up.html"><a href="wrap-up.html"><i class="fa fa-check"></i>Wrap-up</a>
+<li class="chapter" data-level="" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i>Conclusion</a>
 <ul>
-<li class="chapter" data-level="13.7" data-path="wrap-up.html"><a href="wrap-up.html#four-themes"><i class="fa fa-check"></i><b>13.7</b> Four themes</a></li>
-<li class="chapter" data-level="13.8" data-path="wrap-up.html"><a href="wrap-up.html#what-now"><i class="fa fa-check"></i><b>13.8</b> What now?</a></li>
+<li class="chapter" data-level="11.7" data-path="conclusion.html"><a href="conclusion.html#four-themes"><i class="fa fa-check"></i><b>11.7</b> Four themes</a></li>
+<li class="chapter" data-level="11.8" data-path="conclusion.html"><a href="conclusion.html#what-now"><i class="fa fa-check"></i><b>11.8</b> What now?</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html"><i class="fa fa-check"></i><b>A</b> Appendix: Derivation of the dynamical matrix for periodic systems</a>
+<li class="chapter" data-level="A" data-path="derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html"><i class="fa fa-check"></i><b>A</b> Derivation of the dynamical matrix for periodic systems</a>
 <ul>
-<li class="chapter" data-level="A.1" data-path="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html#setup-and-notation"><i class="fa fa-check"></i><b>A.1</b> Setup and notation</a></li>
-<li class="chapter" data-level="A.2" data-path="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html#translational-symmetry"><i class="fa fa-check"></i><b>A.2</b> Translational symmetry</a></li>
-<li class="chapter" data-level="A.3" data-path="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html#plane-wave-ansatz"><i class="fa fa-check"></i><b>A.3</b> Plane-wave ansatz</a></li>
-<li class="chapter" data-level="A.4" data-path="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html#substitution-into-equations-of-motion"><i class="fa fa-check"></i><b>A.4</b> Substitution into equations of motion</a></li>
-<li class="chapter" data-level="A.5" data-path="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html#the-dynamical-matrix"><i class="fa fa-check"></i><b>A.5</b> The dynamical matrix</a></li>
-<li class="chapter" data-level="A.6" data-path="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html#the-key-result"><i class="fa fa-check"></i><b>A.6</b> The key result</a></li>
-<li class="chapter" data-level="A.7" data-path="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="appendix-derivation-of-the-dynamical-matrix-for-periodic-systems.html#connection-to-experiment"><i class="fa fa-check"></i><b>A.7</b> Connection to experiment</a></li>
+<li class="chapter" data-level="A.1" data-path="derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html#setup-and-notation"><i class="fa fa-check"></i><b>A.1</b> Setup and notation</a></li>
+<li class="chapter" data-level="A.2" data-path="derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html#translational-symmetry"><i class="fa fa-check"></i><b>A.2</b> Translational symmetry</a></li>
+<li class="chapter" data-level="A.3" data-path="derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html#plane-wave-ansatz"><i class="fa fa-check"></i><b>A.3</b> Plane-wave ansatz</a></li>
+<li class="chapter" data-level="A.4" data-path="derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html#substitution-into-equations-of-motion"><i class="fa fa-check"></i><b>A.4</b> Substitution into equations of motion</a></li>
+<li class="chapter" data-level="A.5" data-path="derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html#the-dynamical-matrix"><i class="fa fa-check"></i><b>A.5</b> The dynamical matrix</a></li>
+<li class="chapter" data-level="A.6" data-path="derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html#the-key-result"><i class="fa fa-check"></i><b>A.6</b> The key result</a></li>
+<li class="chapter" data-level="A.7" data-path="derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html#connection-to-experiment"><i class="fa fa-check"></i><b>A.7</b> Connection to experiment</a></li>
 </ul></li>
 </ul>
 
@@ -219,10 +221,17 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="finding-minima-geometry-optimisation" class="section level1 hasAnchor" number="6">
-<h1><span class="header-section-number">6</span> Finding minima: geometry optimisation<a href="finding-minima-geometry-optimisation.html#finding-minima-geometry-optimisation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="why-compute-a-structure" class="section level2 hasAnchor" number="6.1">
-<h2><span class="header-section-number">6.1</span> Why compute a structure?<a href="finding-minima-geometry-optimisation.html#why-compute-a-structure" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="finding-minima-geometry-optimisation" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">5</span> Finding minima: geometry optimisation<a href="finding-minima-geometry-optimisation.html#finding-minima-geometry-optimisation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="introduction-1" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Introduction<a href="finding-minima-geometry-optimisation.html#introduction-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The previous chapters introduced the potential energy surface — the mapping from atomic configuration to energy. For any arrangement of atoms, there is an associated energy, and the features of this surface encode the physics we care about. Minima correspond to stable structures. Curvature at a minimum determines how atoms vibrate around equilibrium. Barriers between minima control the rates of transitions — diffusion, phase transformations, chemical reactions.</p>
+<p>We then covered three approaches to calculating <span class="math inline">\(E(r)\)</span>: classical potentials, which are fast but bounded by their functional form; density functional theory, which is transferable but expensive; and machine-learned interatomic potentials, which learn from DFT data and can approach DFT accuracy at near-classical cost. These methods differ in their tradeoffs, but any of them can be combined with the techniques we’ll cover today.</p>
+<p>The goal now is to answer scientific questions. What structure is stable at a given composition? How do atoms vibrate, and what frequencies characterise that motion? How do atoms move at finite temperature — do they diffuse, and by what mechanism? These questions connect directly to what you measure: stable structures to diffraction, vibrations to inelastic neutron scattering, diffusive motion to quasielastic scattering.</p>
+<p>This lecture covers methods that use <span class="math inline">\(E(r)\)</span> to interrogate the potential energy surface. Geometry optimisation locates minima — finding the stable structures. Phonon calculations characterise the curvature at those minima — predicting vibrational frequencies. Molecular dynamics simulates atomic motion at finite temperature, capturing behaviour that goes beyond the harmonic picture. Each of these methods works with any of the <span class="math inline">\(E(r)\)</span> approaches from Part I.</p>
+</div>
+<div id="why-compute-a-structure" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Why compute a structure?<a href="finding-minima-geometry-optimisation.html#why-compute-a-structure" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Geometry optimisation locates minima on the potential energy surface — finding stable structures. But diffraction already tells us where atoms are. Why compute structures at all?</p>
 <p>Sometimes the goal is direct comparison: validating a structural model from diffraction analysis. If the optimised structure matches the experimental one, both the calculation and the diffraction analysis are supported. If they disagree, something needs investigation — perhaps the experimental model is incomplete, perhaps the computational method is inadequate for this system, perhaps the disagreement points to something interesting.</p>
 <p>More often, computation provides complementary information. Diffraction tells you <em>what</em> structure forms; computation tells you <em>why</em>. By calculating the energies of competing structures, we can understand polymorph stability, site preferences for dopants, or the driving forces behind structural distortions. We can also calculate energies for structures that <em>don’t</em> form — understanding what’s metastable, what’s unstable, and why.</p>
@@ -230,21 +239,21 @@
 <p>Local distortions and short-range order present a different challenge. Bragg diffraction reports only the average structure, so local correlations are invisible. Computation can capture these by optimising large supercells with different local arrangements.</p>
 <p>Finally, there is prediction. Computational screening can assess the stability of hypothetical materials before synthesis — testing whether a proposed composition would be thermodynamically stable, and if so, what structure it would adopt. This is increasingly important for materials discovery.</p>
 </div>
-<div id="structures-and-minima" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> Structures and minima<a href="finding-minima-geometry-optimisation.html#structures-and-minima" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="structures-and-minima" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Structures and minima<a href="finding-minima-geometry-optimisation.html#structures-and-minima" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When we say a material has a particular “structure”, we typically mean the positions determined by diffraction — the time-averaged positions of atoms at the measurement temperature. Computationally, a structure corresponds to a basin on the potential energy surface — a region of configuration space that drains to a particular minimum. Different basins correspond to different structures: polymorphs of the same composition, different orderings of atoms on sites, different local arrangements. A real material’s PES has many such basins.</p>
 <p>The simplest description of a basin is the position of its minimum — the 0 K atomic positions, where atoms sit with no thermal motion. In the harmonic approximation, these are also the mean positions at finite temperature; with anharmonicity they can differ, thermal expansion being the most familiar example.</p>
 <p>The procedure for finding such minima is called geometry optimisation. The force on an atom is the negative gradient of energy:</p>
 <p><span class="math display">\[\mathbf{F}_i = -\frac{\partial E}{\partial \mathbf{r}_i}\]</span></p>
 <p>At a minimum, all forces are zero. Geometry optimisation adjusts atomic positions (and usually cell parameters) until this condition is satisfied.</p>
 </div>
-<div id="steepest-descent" class="section level2 hasAnchor" number="6.3">
-<h2><span class="header-section-number">6.3</span> Steepest descent<a href="finding-minima-geometry-optimisation.html#steepest-descent" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="steepest-descent" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Steepest descent<a href="finding-minima-geometry-optimisation.html#steepest-descent" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The simplest approach is steepest descent: calculate the forces on all atoms and move each atom in the direction of its force. Since forces point downhill on the potential energy surface, this reduces the energy. Recalculate forces, move again, iterate.</p>
 <p>Steepest descent tells you which direction to move, but not how far. Too small a step and convergence is slow; too large and you overshoot, oscillate, or diverge. Various approaches exist — fixed step sizes, line searches to find the minimum along each descent direction, adaptive schemes that adjust based on whether the energy decreased — but none is universally optimal. The algorithm also tends to zigzag in narrow valleys of the energy surface, where the steepest direction points across the valley rather than along it towards the minimum.</p>
 </div>
-<div id="doing-better-with-curvature" class="section level2 hasAnchor" number="6.4">
-<h2><span class="header-section-number">6.4</span> Doing better with curvature<a href="finding-minima-geometry-optimisation.html#doing-better-with-curvature" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="doing-better-with-curvature" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Doing better with curvature<a href="finding-minima-geometry-optimisation.html#doing-better-with-curvature" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Newton-Raphson can do better by using more information. Consider first a one-dimensional case: we have <span class="math inline">\(E(x)\)</span> and want to find the minimum. Near any point <span class="math inline">\(x_0\)</span>, we can approximate the energy as a Taylor expansion:</p>
 <p><span class="math display">\[E(x) \approx E(x_0) + E&#39;(x_0)(x - x_0) + \frac{1}{2}E&#39;&#39;(x_0)(x - x_0)^2\]</span></p>
 <p>This expansion is truncated at second order — we assume the energy surface is approximately quadratic near our current point. This is the harmonic approximation, and its validity depends on where we are on the surface. Near a minimum, where the surface is smooth and bowl-shaped, the quadratic approximation is accurate. Far from a minimum, where the surface may have more complex shape, the approximation can be poor.</p>
@@ -261,10 +270,11 @@
 <p>The same iterative logic applies: predict the minimum position, move there, repeat until converged.</p>
 <p>Newton-Raphson performs well when the starting guess is close to a minimum, where the harmonic approximation is reasonable. Far from a minimum, where the harmonic approximation breaks down, the algorithm may converge slowly, take erratic steps, or fail to find a minimum at all. In practice, optimisation codes often use methods that are more robust across the whole energy surface — conjugate gradient methods, or quasi-Newton methods (such as BFGS) that build up an approximate Hessian from the gradient information accumulated over successive steps. These handle the early stages of optimisation more reliably, while still converging rapidly near a minimum where the harmonic approximation holds.</p>
 </div>
-<div id="local-and-global-minima" class="section level2 hasAnchor" number="6.5">
-<h2><span class="header-section-number">6.5</span> Local and global minima<a href="finding-minima-geometry-optimisation.html#local-and-global-minima" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="local-and-global-minima" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> Local and global minima<a href="finding-minima-geometry-optimisation.html#local-and-global-minima" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Geometry optimisation finds a <em>local</em> minimum — the one nearest your starting point. A real potential energy surface has many local minima, corresponding to different polymorphs, different site orderings, different local arrangements of atoms. Which minimum you find depends on where you start. This is usually fine: you’re testing a specific structural hypothesis, not searching for the global minimum. If you want to compare polymorphs, you optimise each one separately and compare their energies.</p>
 <p>Finding the global minimum without knowing where to start — structure prediction — is a harder problem, but not one we need to solve for most purposes. When it is needed, the approach is conceptually simple: generate many starting points and optimise each one. Methods differ in how they generate those starting points — random structures with sensible constraints, evolutionary algorithms that breed new candidates from successful ones, or perturbations from known minima — but at the core, they all rely on the same local optimisation we’ve just discussed.</p>
+
 </div>
 </div>
             </section>
@@ -272,7 +282,7 @@
           </div>
         </div>
       </div>
-<a href="introduction-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="machine-learned-interatomic-potentials.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="phonon-calculations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -304,7 +314,7 @@ gitbook.start({
     "size": 2
   },
   "edit": {
-    "link": "https://github.com/bjmorgan/neutrons_for_sustainable_energy/main/lecture_2/lecture2.Rmd",
+    "link": "https://github.com/bjmorgan/neutrons_for_sustainable_energy/main/chapters/geometry_optimisation.Rmd",
     "text": "Edit"
   },
   "history": {
