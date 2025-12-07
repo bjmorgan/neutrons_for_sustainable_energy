@@ -50,5 +50,5 @@ MLIPs are also less interpretable than classical potentials. A Buckingham potent
 
 MLIPs are increasingly the default choice when you need larger systems or longer timescales than DFT allows, when classical potentials don't exist for your system or aren't accurate enough, and when you're willing to validate carefully. They're the wrong choice when DFT is affordable for your problem (simpler, no training overhead), when you're studying configurations far from any available training data, or when you need guaranteed reliability with no possibility of silent failure.
 
-The field is moving fast. What's state-of-the-art now may be superseded within a year. For your purposes as consumers of computational work: ask what potential was used, what it was trained on, and how it was validated for the system being studied.
+The field is moving fast. What's state-of-the-art now may be superseded within a year. When evaluating computational work that uses MLIPs, the key questions are: what potential was used, what was it trained on, and how was it validated for the system being studied?
 

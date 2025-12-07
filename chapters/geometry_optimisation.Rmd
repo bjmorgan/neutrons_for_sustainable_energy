@@ -1,16 +1,8 @@
 # Finding minima: geometry optimisation
 
-## Introduction
-
-The previous chapters introduced the potential energy surface — the mapping from atomic configuration to energy. For any arrangement of atoms, there is an associated energy, and the features of this surface encode the physics we care about. Minima correspond to stable structures. Curvature at a minimum determines how atoms vibrate around equilibrium. Barriers between minima control the rates of transitions — diffusion, phase transformations, chemical reactions.
-
-We then covered three approaches to calculating $E(r)$: classical potentials, which are fast but bounded by their functional form; density functional theory, which is transferable but expensive; and machine-learned interatomic potentials, which learn from DFT data and can approach DFT accuracy at near-classical cost. These methods differ in their tradeoffs, but any of them can be combined with the techniques we'll cover today.
-
-The goal now is to answer scientific questions. What structure is stable at a given composition? How do atoms vibrate, and what frequencies characterise that motion? How do atoms move at finite temperature — do they diffuse, and by what mechanism? These questions connect directly to what you measure: stable structures to diffraction, vibrations to inelastic neutron scattering, diffusive motion to quasielastic scattering.
-
-This Part covers methods that use $E(r)$ to interrogate the potential energy surface. Geometry optimisation locates minima — finding the stable structures. Phonon calculations characterise the curvature at those minima — predicting vibrational frequencies. Molecular dynamics simulates atomic motion at finite temperature, capturing behaviour that goes beyond the harmonic picture. Each of these methods works with any of the $E(r)$ approaches from Part I.
-
 ## Why compute a structure?
+
+Part I covered methods for calculating $E(r)$. We now turn to what we do with that ability — starting with finding stable structures.
 
 Geometry optimisation locates minima on the potential energy surface — finding stable structures. But diffraction already tells us where atoms are. Why compute structures at all?
 
