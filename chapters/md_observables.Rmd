@@ -62,6 +62,8 @@ This works because oscillatory motion at frequency $\omega$ contributes oscillat
 
 The result includes all anharmonic effects — the atoms move on the full potential energy surface, not a quadratic approximation to it. For strongly anharmonic systems, the MD-derived density of states may differ substantially from harmonic phonon calculations. Comparison with INS then tests whether the simulation captures the real anharmonicity.
 
+For systems with multiple atom types, partial densities of states can be computed by restricting the velocity autocorrelation to specific species — lithium vibrations, oxygen vibrations, and so on. Simulation provides these decompositions directly. Experimentally, separating contributions is harder, though isotope substitution can help: replacing hydrogen with deuterium shifts the frequencies associated with those atoms, allowing their contribution to be identified. The partials reveal which species are responsible for features in the total spectrum — a peak at a particular frequency might come from light, fast-moving lithium ions or from heavier framework atoms, and the decomposition tells you which.
+
 ## Diffusion and mean squared displacement
 
 Many energy materials involve ionic transport — lithium in batteries, protons in fuel cells, oxygen in solid oxide cells. MD simulates this transport directly.
