@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>10 Short-range order and PDF | Computational Techniques for Sustainable Energy Materials</title>
+  <title>11 Short-range order and PDF | Computational Techniques for Sustainable Energy Materials</title>
   <meta name="description" content="Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="10 Short-range order and PDF | Computational Techniques for Sustainable Energy Materials" />
+  <meta property="og:title" content="11 Short-range order and PDF | Computational Techniques for Sustainable Energy Materials" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   <meta name="github-repo" content="bjmorgan/neutrons_for_sustainable_energy" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="10 Short-range order and PDF | Computational Techniques for Sustainable Energy Materials" />
+  <meta name="twitter:title" content="11 Short-range order and PDF | Computational Techniques for Sustainable Energy Materials" />
   
   <meta name="twitter:description" content="Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Benjamin J. Morgan" />
 
 
-<meta name="date" content="2025-12-07" />
+<meta name="date" content="2025-12-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -125,14 +125,14 @@
 <li class="chapter" data-level="5.4" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#doing-better-with-curvature"><i class="fa fa-check"></i><b>5.4</b> Doing better with curvature</a></li>
 <li class="chapter" data-level="5.5" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#local-and-global-minima"><i class="fa fa-check"></i><b>5.5</b> Local and global minima</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="phonon-calculations.html"><a href="phonon-calculations.html"><i class="fa fa-check"></i><b>6</b> Phonon calculations</a>
+<li class="chapter" data-level="6" data-path="phonons.html"><a href="phonons.html"><i class="fa fa-check"></i><b>6</b> Phonon calculations</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="phonon-calculations.html"><a href="phonon-calculations.html#vibrations-around-equilibrium"><i class="fa fa-check"></i><b>6.1</b> Vibrations around equilibrium</a></li>
-<li class="chapter" data-level="6.2" data-path="phonon-calculations.html"><a href="phonon-calculations.html#the-harmonic-approximation"><i class="fa fa-check"></i><b>6.2</b> The harmonic approximation</a></li>
-<li class="chapter" data-level="6.3" data-path="phonon-calculations.html"><a href="phonon-calculations.html#periodic-systems-and-phonon-dispersion"><i class="fa fa-check"></i><b>6.3</b> Periodic systems and phonon dispersion</a></li>
-<li class="chapter" data-level="6.4" data-path="phonon-calculations.html"><a href="phonon-calculations.html#calculating-phonons-in-practice"><i class="fa fa-check"></i><b>6.4</b> Calculating phonons in practice</a></li>
-<li class="chapter" data-level="6.5" data-path="phonon-calculations.html"><a href="phonon-calculations.html#what-you-get"><i class="fa fa-check"></i><b>6.5</b> What you get</a></li>
-<li class="chapter" data-level="6.6" data-path="phonon-calculations.html"><a href="phonon-calculations.html#limitations"><i class="fa fa-check"></i><b>6.6</b> Limitations</a></li>
+<li class="chapter" data-level="6.1" data-path="phonons.html"><a href="phonons.html#vibrations-around-equilibrium"><i class="fa fa-check"></i><b>6.1</b> Vibrations around equilibrium</a></li>
+<li class="chapter" data-level="6.2" data-path="phonons.html"><a href="phonons.html#the-harmonic-approximation"><i class="fa fa-check"></i><b>6.2</b> The harmonic approximation</a></li>
+<li class="chapter" data-level="6.3" data-path="phonons.html"><a href="phonons.html#periodic-systems-and-phonon-dispersion"><i class="fa fa-check"></i><b>6.3</b> Periodic systems and phonon dispersion</a></li>
+<li class="chapter" data-level="6.4" data-path="phonons.html"><a href="phonons.html#calculating-phonons-in-practice"><i class="fa fa-check"></i><b>6.4</b> Calculating phonons in practice</a></li>
+<li class="chapter" data-level="6.5" data-path="phonons.html"><a href="phonons.html#what-you-get"><i class="fa fa-check"></i><b>6.5</b> What you get</a></li>
+<li class="chapter" data-level="6.6" data-path="phonons.html"><a href="phonons.html#limitations"><i class="fa fa-check"></i><b>6.6</b> Limitations</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html"><i class="fa fa-check"></i><b>7</b> Molecular dynamics: principles</a>
 <ul>
@@ -145,47 +145,58 @@
 <li class="chapter" data-level="7.7" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#what-you-get-1"><i class="fa fa-check"></i><b>7.7</b> What you get</a></li>
 <li class="chapter" data-level="7.8" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#the-er-choice"><i class="fa fa-check"></i><b>7.8</b> The <span class="math inline">\(E(r)\)</span> choice</a></li>
 </ul></li>
+<li class="chapter" data-level="8" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html"><i class="fa fa-check"></i><b>8</b> Molecular dynamics: observables and neutron connections</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#from-trajectories-to-observables"><i class="fa fa-check"></i><b>8.1</b> From trajectories to observables</a></li>
+<li class="chapter" data-level="8.2" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#vibrational-density-of-states"><i class="fa fa-check"></i><b>8.2</b> Vibrational density of states</a></li>
+<li class="chapter" data-level="8.3" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#ensemble-averaged-structure"><i class="fa fa-check"></i><b>8.3</b> Ensemble-averaged structure</a></li>
+<li class="chapter" data-level="8.4" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#pair-distribution-functions"><i class="fa fa-check"></i><b>8.4</b> Pair distribution functions</a></li>
+<li class="chapter" data-level="8.5" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#diffusion-and-mean-squared-displacement"><i class="fa fa-check"></i><b>8.5</b> Diffusion and mean squared displacement</a></li>
+<li class="chapter" data-level="8.6" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#mechanisms-and-the-van-hove-correlation-function"><i class="fa fa-check"></i><b>8.6</b> Mechanisms and the Van Hove correlation function</a></li>
+<li class="chapter" data-level="8.7" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#connection-to-sq-ω"><i class="fa fa-check"></i><b>8.7</b> Connection to S(Q, ω)</a></li>
+<li class="chapter" data-level="8.8" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#the-computationalexperimental-loop"><i class="fa fa-check"></i><b>8.8</b> The computational–experimental loop</a></li>
+</ul></li>
 <li class="part"><span><b>III Configurational Disorder</b></span></li>
-<li class="chapter" data-level="8" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html"><i class="fa fa-check"></i><b>8</b> Monte Carlo sampling</a>
+<li class="chapter" data-level="9" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html"><i class="fa fa-check"></i><b>9</b> Monte Carlo sampling</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#beyond-molecular-dynamics"><i class="fa fa-check"></i><b>8.1</b> Beyond molecular dynamics</a></li>
-<li class="chapter" data-level="8.2" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-goal-ensemble-averages"><i class="fa fa-check"></i><b>8.2</b> The goal: ensemble averages</a></li>
-<li class="chapter" data-level="8.3" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#why-not-sample-uniformly"><i class="fa fa-check"></i><b>8.3</b> Why not sample uniformly?</a></li>
-<li class="chapter" data-level="8.4" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#markov-chain-monte-carlo"><i class="fa fa-check"></i><b>8.4</b> Markov chain Monte Carlo</a></li>
-<li class="chapter" data-level="8.5" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-metropolis-algorithm"><i class="fa fa-check"></i><b>8.5</b> The Metropolis algorithm</a></li>
-<li class="chapter" data-level="8.6" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#what-you-get-2"><i class="fa fa-check"></i><b>8.6</b> What you get</a></li>
-<li class="chapter" data-level="8.7" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#what-you-dont-get"><i class="fa fa-check"></i><b>8.7</b> What you don’t get</a></li>
-<li class="chapter" data-level="8.8" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#neutron-connection"><i class="fa fa-check"></i><b>8.8</b> Neutron connection</a></li>
+<li class="chapter" data-level="9.1" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#beyond-molecular-dynamics"><i class="fa fa-check"></i><b>9.1</b> Beyond molecular dynamics</a></li>
+<li class="chapter" data-level="9.2" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-goal-ensemble-averages"><i class="fa fa-check"></i><b>9.2</b> The goal: ensemble averages</a></li>
+<li class="chapter" data-level="9.3" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#why-not-sample-uniformly"><i class="fa fa-check"></i><b>9.3</b> Why not sample uniformly?</a></li>
+<li class="chapter" data-level="9.4" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#markov-chain-monte-carlo"><i class="fa fa-check"></i><b>9.4</b> Markov chain Monte Carlo</a></li>
+<li class="chapter" data-level="9.5" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-metropolis-algorithm"><i class="fa fa-check"></i><b>9.5</b> The Metropolis algorithm</a></li>
+<li class="chapter" data-level="9.6" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#what-you-get-2"><i class="fa fa-check"></i><b>9.6</b> What you get</a></li>
+<li class="chapter" data-level="9.7" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#what-you-dont-get"><i class="fa fa-check"></i><b>9.7</b> What you don’t get</a></li>
+<li class="chapter" data-level="9.8" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#neutron-connection"><i class="fa fa-check"></i><b>9.8</b> Neutron connection</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="cluster-expansion.html"><a href="cluster-expansion.html"><i class="fa fa-check"></i><b>9</b> Cluster expansion</a>
+<li class="chapter" data-level="10" data-path="cluster-expansion.html"><a href="cluster-expansion.html"><i class="fa fa-check"></i><b>10</b> Cluster expansion</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-problem"><i class="fa fa-check"></i><b>9.1</b> The problem</a></li>
-<li class="chapter" data-level="9.2" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-idea"><i class="fa fa-check"></i><b>9.2</b> The idea</a></li>
-<li class="chapter" data-level="9.3" data-path="cluster-expansion.html"><a href="cluster-expansion.html#symmetry-and-truncation"><i class="fa fa-check"></i><b>9.3</b> Symmetry and truncation</a></li>
-<li class="chapter" data-level="9.4" data-path="cluster-expansion.html"><a href="cluster-expansion.html#fitting-the-expansion"><i class="fa fa-check"></i><b>9.4</b> Fitting the expansion</a></li>
-<li class="chapter" data-level="9.5" data-path="cluster-expansion.html"><a href="cluster-expansion.html#what-you-get-3"><i class="fa fa-check"></i><b>9.5</b> What you get</a></li>
-<li class="chapter" data-level="9.6" data-path="cluster-expansion.html"><a href="cluster-expansion.html#limitations-1"><i class="fa fa-check"></i><b>9.6</b> Limitations</a></li>
+<li class="chapter" data-level="10.1" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-problem"><i class="fa fa-check"></i><b>10.1</b> The problem</a></li>
+<li class="chapter" data-level="10.2" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-idea"><i class="fa fa-check"></i><b>10.2</b> The idea</a></li>
+<li class="chapter" data-level="10.3" data-path="cluster-expansion.html"><a href="cluster-expansion.html#symmetry-and-truncation"><i class="fa fa-check"></i><b>10.3</b> Symmetry and truncation</a></li>
+<li class="chapter" data-level="10.4" data-path="cluster-expansion.html"><a href="cluster-expansion.html#fitting-the-expansion"><i class="fa fa-check"></i><b>10.4</b> Fitting the expansion</a></li>
+<li class="chapter" data-level="10.5" data-path="cluster-expansion.html"><a href="cluster-expansion.html#what-you-get-3"><i class="fa fa-check"></i><b>10.5</b> What you get</a></li>
+<li class="chapter" data-level="10.6" data-path="cluster-expansion.html"><a href="cluster-expansion.html#limitations-1"><i class="fa fa-check"></i><b>10.6</b> Limitations</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html"><i class="fa fa-check"></i><b>10</b> Short-range order and PDF</a>
+<li class="chapter" data-level="11" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html"><i class="fa fa-check"></i><b>11</b> Short-range order and PDF</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#long-range-order-vs-short-range-order"><i class="fa fa-check"></i><b>10.1</b> Long-range order vs short-range order</a></li>
-<li class="chapter" data-level="10.2" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#what-bragg-diffraction-misses"><i class="fa fa-check"></i><b>10.2</b> What Bragg diffraction misses</a></li>
-<li class="chapter" data-level="10.3" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#pdf-captures-local-structure"><i class="fa fa-check"></i><b>10.3</b> PDF captures local structure</a></li>
-<li class="chapter" data-level="10.4" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#the-computational-approach"><i class="fa fa-check"></i><b>10.4</b> The computational approach</a></li>
+<li class="chapter" data-level="11.1" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#long-range-order-vs-short-range-order"><i class="fa fa-check"></i><b>11.1</b> Long-range order vs short-range order</a></li>
+<li class="chapter" data-level="11.2" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#what-bragg-diffraction-misses"><i class="fa fa-check"></i><b>11.2</b> What Bragg diffraction misses</a></li>
+<li class="chapter" data-level="11.3" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#pdf-captures-local-structure"><i class="fa fa-check"></i><b>11.3</b> PDF captures local structure</a></li>
+<li class="chapter" data-level="11.4" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#the-computational-approach"><i class="fa fa-check"></i><b>11.4</b> The computational approach</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html"><i class="fa fa-check"></i><b>11</b> Case study: short-range order in Li<sub>2</sub>FeSO</a>
+<li class="chapter" data-level="12" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html"><i class="fa fa-check"></i><b>12</b> Case study: short-range order in Li<sub>2</sub>FeSO</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-puzzle"><i class="fa fa-check"></i><b>11.1</b> The puzzle</a></li>
-<li class="chapter" data-level="11.2" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-computational-approach-1"><i class="fa fa-check"></i><b>11.2</b> The computational approach</a></li>
-<li class="chapter" data-level="11.3" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-result-preferential-short-range-order"><i class="fa fa-check"></i><b>11.3</b> The result: preferential short-range order</a></li>
-<li class="chapter" data-level="11.4" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#validation-against-experiment"><i class="fa fa-check"></i><b>11.4</b> Validation against experiment</a></li>
-<li class="chapter" data-level="11.5" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-physical-origin-anion-polarisation"><i class="fa fa-check"></i><b>11.5</b> The physical origin: anion polarisation</a></li>
-<li class="chapter" data-level="11.6" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#what-this-example-illustrates"><i class="fa fa-check"></i><b>11.6</b> What this example illustrates</a></li>
+<li class="chapter" data-level="12.1" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-puzzle"><i class="fa fa-check"></i><b>12.1</b> The puzzle</a></li>
+<li class="chapter" data-level="12.2" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-computational-approach-1"><i class="fa fa-check"></i><b>12.2</b> The computational approach</a></li>
+<li class="chapter" data-level="12.3" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-result-preferential-short-range-order"><i class="fa fa-check"></i><b>12.3</b> The result: preferential short-range order</a></li>
+<li class="chapter" data-level="12.4" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#validation-against-experiment"><i class="fa fa-check"></i><b>12.4</b> Validation against experiment</a></li>
+<li class="chapter" data-level="12.5" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-physical-origin-anion-polarisation"><i class="fa fa-check"></i><b>12.5</b> The physical origin: anion polarisation</a></li>
+<li class="chapter" data-level="12.6" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#what-this-example-illustrates"><i class="fa fa-check"></i><b>12.6</b> What this example illustrates</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i>Conclusion</a>
 <ul>
-<li class="chapter" data-level="11.7" data-path="conclusion.html"><a href="conclusion.html#four-themes"><i class="fa fa-check"></i><b>11.7</b> Four themes</a></li>
-<li class="chapter" data-level="11.8" data-path="conclusion.html"><a href="conclusion.html#what-now"><i class="fa fa-check"></i><b>11.8</b> What now?</a></li>
+<li class="chapter" data-level="12.7" data-path="conclusion.html"><a href="conclusion.html#four-themes"><i class="fa fa-check"></i><b>12.7</b> Four themes</a></li>
+<li class="chapter" data-level="12.8" data-path="conclusion.html"><a href="conclusion.html#what-now"><i class="fa fa-check"></i><b>12.8</b> What now?</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html"><i class="fa fa-check"></i><b>A</b> Derivation of the dynamical matrix for periodic systems</a>
@@ -215,29 +226,29 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="short-range-order-and-pdf" class="section level1 hasAnchor" number="10">
-<h1><span class="header-section-number">10</span> Short-range order and PDF<a href="short-range-order-and-pdf.html#short-range-order-and-pdf" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="long-range-order-vs-short-range-order" class="section level2 hasAnchor" number="10.1">
-<h2><span class="header-section-number">10.1</span> Long-range order vs short-range order<a href="short-range-order-and-pdf.html#long-range-order-vs-short-range-order" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="short-range-order-and-pdf" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">11</span> Short-range order and PDF<a href="short-range-order-and-pdf.html#short-range-order-and-pdf" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="long-range-order-vs-short-range-order" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> Long-range order vs short-range order<a href="short-range-order-and-pdf.html#long-range-order-vs-short-range-order" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Between fully ordered and maximally disordered (maximum entropy) lies an intermediate regime: the system is disordered in the sense that there is no long-range periodic pattern, but local correlations exist. This is short-range order.</p>
 <p>Consider a binary alloy A<sub>0.5</sub>B<sub>0.5</sub> on a BCC lattice. At low temperature, it might order into a CsCl-type structure: all A atoms on one sublattice, all B on the other. This is long-range order (LRO) — correlations extend throughout the crystal, producing a periodic pattern. Bragg diffraction sees this clearly: the ordering produces superlattice reflections at positions forbidden by the disordered structure.</p>
 <p>At high temperature, entropy wins and the alloy disorders: A and B atoms distributed over sites with no correlations between them. No long-range pattern, no superlattice reflections. This is maximum entropy — the arrangement is completely uncorrelated.</p>
 <p>But there is an intermediate regime. Even without long-range order, local correlations may exist — short-range order (SRO). Perhaps A atoms preferentially have B neighbours, or tend to avoid other A atoms, but only over the first few coordination shells. Beyond that, correlations decay and the arrangement becomes uncorrelated. There’s no periodic pattern, but there is local structure.</p>
 </div>
-<div id="what-bragg-diffraction-misses" class="section level2 hasAnchor" number="10.2">
-<h2><span class="header-section-number">10.2</span> What Bragg diffraction misses<a href="short-range-order-and-pdf.html#what-bragg-diffraction-misses" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="what-bragg-diffraction-misses" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> What Bragg diffraction misses<a href="short-range-order-and-pdf.html#what-bragg-diffraction-misses" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Bragg diffraction is sensitive to the average, periodic structure. For a disordered alloy without LRO, the pattern shows only the underlying lattice with average scattering length. The local correlations show up as diffuse scattering between Bragg peaks — broad features that are often ignored or hard to analyse quantitatively.</p>
 <p>Consider what diffraction tells you about site occupancies. If a site is 50% A and 50% B on average, that’s what the measurement reports — regardless of whether A and B are randomly distributed or have strong local correlations. Two structures with the same average occupancy but different SRO give the same Bragg intensities.</p>
 <p>This is a fundamental limitation: Bragg diffraction reports the spatially averaged structure. Local correlations that don’t produce a periodic pattern are invisible to it.</p>
 </div>
-<div id="pdf-captures-local-structure" class="section level2 hasAnchor" number="10.3">
-<h2><span class="header-section-number">10.3</span> PDF captures local structure<a href="short-range-order-and-pdf.html#pdf-captures-local-structure" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="pdf-captures-local-structure" class="section level2 hasAnchor" number="11.3">
+<h2><span class="header-section-number">11.3</span> PDF captures local structure<a href="short-range-order-and-pdf.html#pdf-captures-local-structure" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Total scattering includes both Bragg and diffuse contributions. The Fourier transform of the total scattering gives the pair distribution function G(r), which measures the probability of finding atoms at separation r. Unlike Bragg diffraction, which sees only the average periodic structure, PDF is sensitive to local correlations.</p>
 <p>For a single-element material, g(r) has peaks at the neighbour distances — first shell, second shell, and so on. For a multi-component material, partial pair distribution functions g<sub>αβ</sub>(r) can be defined: the probability of finding a β atom at distance r from an α atom. These partials encode information about local ordering. If A atoms preferentially have B neighbours, the A-B partial shows enhanced correlations at the nearest-neighbour distance compared to an uncorrelated distribution. If A atoms cluster together, the A-A partial is enhanced instead.</p>
 <p>When short-range order is present, it shows up in the PDF: the short-range region is not well described by the model fitted to Bragg data. But while PDF can reveal that local structure differs from the long-range average, understanding what is actually happening is harder. The measured PDF sums over all partials, weighted by scattering lengths and concentrations — separating the contributions requires additional information. Even if correlations can be quantified, this does not explain them: we may learn that A prefers B neighbours, but not why. And many different local arrangements can produce similar g(r), so determining the structure from PDF alone requires additional constraints or physical insight.</p>
 </div>
-<div id="the-computational-approach" class="section level2 hasAnchor" number="10.4">
-<h2><span class="header-section-number">10.4</span> The computational approach<a href="short-range-order-and-pdf.html#the-computational-approach" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-computational-approach" class="section level2 hasAnchor" number="11.4">
+<h2><span class="header-section-number">11.4</span> The computational approach<a href="short-range-order-and-pdf.html#the-computational-approach" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This is where cluster expansion and Monte Carlo methods help. CE+MC samples configurations at thermal equilibrium, weighted by their Boltzmann probabilities. This is not just generating plausible structures — it’s sampling from the correct statistical distribution.</p>
 <p>From these equilibrium configurations we can calculate ensemble-averaged properties: the probability that an A atom has a B neighbour, how correlations decay with distance, which local arrangements are favoured and which are suppressed.</p>
 <p>Comparing with experimental PDF requires an additional step. The CE operates on-lattice, but real atoms relax from ideal positions. To generate a predicted g(r), we select representative configurations from the MC sampling, relax each using DFT (or another accurate method), and average g(r) over these relaxed structures. This ensemble-averaged g(r) can then be compared directly with experiment.</p>

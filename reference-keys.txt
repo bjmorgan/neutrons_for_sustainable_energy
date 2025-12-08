@@ -28,7 +28,7 @@ structures-and-minima
 steepest-descent
 doing-better-with-curvature
 local-and-global-minima
-phonon-calculations
+phonons
 vibrations-around-equilibrium
 the-harmonic-approximation
 periodic-systems-and-phonon-dispersion
@@ -44,6 +44,15 @@ ensembles-and-what-they-mean
 thermostats-and-barostats
 what-you-get-1
 the-er-choice
+molecular-dynamics-observables-and-neutron-connections
+from-trajectories-to-observables
+vibrational-density-of-states
+ensemble-averaged-structure
+pair-distribution-functions
+diffusion-and-mean-squared-displacement
+mechanisms-and-the-van-hove-correlation-function
+connection-to-sq-ω
+the-computationalexperimental-loop
 monte-carlo-sampling
 beyond-molecular-dynamics
 the-goal-ensemble-averages

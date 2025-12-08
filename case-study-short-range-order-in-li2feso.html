@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>11 Case study: short-range order in Li2FeSO | Computational Techniques for Sustainable Energy Materials</title>
+  <title>12 Case study: short-range order in Li2FeSO | Computational Techniques for Sustainable Energy Materials</title>
   <meta name="description" content="Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="11 Case study: short-range order in Li2FeSO | Computational Techniques for Sustainable Energy Materials" />
+  <meta property="og:title" content="12 Case study: short-range order in Li2FeSO | Computational Techniques for Sustainable Energy Materials" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   <meta name="github-repo" content="bjmorgan/neutrons_for_sustainable_energy" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="11 Case study: short-range order in Li2FeSO | Computational Techniques for Sustainable Energy Materials" />
+  <meta name="twitter:title" content="12 Case study: short-range order in Li2FeSO | Computational Techniques for Sustainable Energy Materials" />
   
   <meta name="twitter:description" content="Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Benjamin J. Morgan" />
 
 
-<meta name="date" content="2025-12-07" />
+<meta name="date" content="2025-12-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -125,14 +125,14 @@
 <li class="chapter" data-level="5.4" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#doing-better-with-curvature"><i class="fa fa-check"></i><b>5.4</b> Doing better with curvature</a></li>
 <li class="chapter" data-level="5.5" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#local-and-global-minima"><i class="fa fa-check"></i><b>5.5</b> Local and global minima</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="phonon-calculations.html"><a href="phonon-calculations.html"><i class="fa fa-check"></i><b>6</b> Phonon calculations</a>
+<li class="chapter" data-level="6" data-path="phonons.html"><a href="phonons.html"><i class="fa fa-check"></i><b>6</b> Phonon calculations</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="phonon-calculations.html"><a href="phonon-calculations.html#vibrations-around-equilibrium"><i class="fa fa-check"></i><b>6.1</b> Vibrations around equilibrium</a></li>
-<li class="chapter" data-level="6.2" data-path="phonon-calculations.html"><a href="phonon-calculations.html#the-harmonic-approximation"><i class="fa fa-check"></i><b>6.2</b> The harmonic approximation</a></li>
-<li class="chapter" data-level="6.3" data-path="phonon-calculations.html"><a href="phonon-calculations.html#periodic-systems-and-phonon-dispersion"><i class="fa fa-check"></i><b>6.3</b> Periodic systems and phonon dispersion</a></li>
-<li class="chapter" data-level="6.4" data-path="phonon-calculations.html"><a href="phonon-calculations.html#calculating-phonons-in-practice"><i class="fa fa-check"></i><b>6.4</b> Calculating phonons in practice</a></li>
-<li class="chapter" data-level="6.5" data-path="phonon-calculations.html"><a href="phonon-calculations.html#what-you-get"><i class="fa fa-check"></i><b>6.5</b> What you get</a></li>
-<li class="chapter" data-level="6.6" data-path="phonon-calculations.html"><a href="phonon-calculations.html#limitations"><i class="fa fa-check"></i><b>6.6</b> Limitations</a></li>
+<li class="chapter" data-level="6.1" data-path="phonons.html"><a href="phonons.html#vibrations-around-equilibrium"><i class="fa fa-check"></i><b>6.1</b> Vibrations around equilibrium</a></li>
+<li class="chapter" data-level="6.2" data-path="phonons.html"><a href="phonons.html#the-harmonic-approximation"><i class="fa fa-check"></i><b>6.2</b> The harmonic approximation</a></li>
+<li class="chapter" data-level="6.3" data-path="phonons.html"><a href="phonons.html#periodic-systems-and-phonon-dispersion"><i class="fa fa-check"></i><b>6.3</b> Periodic systems and phonon dispersion</a></li>
+<li class="chapter" data-level="6.4" data-path="phonons.html"><a href="phonons.html#calculating-phonons-in-practice"><i class="fa fa-check"></i><b>6.4</b> Calculating phonons in practice</a></li>
+<li class="chapter" data-level="6.5" data-path="phonons.html"><a href="phonons.html#what-you-get"><i class="fa fa-check"></i><b>6.5</b> What you get</a></li>
+<li class="chapter" data-level="6.6" data-path="phonons.html"><a href="phonons.html#limitations"><i class="fa fa-check"></i><b>6.6</b> Limitations</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html"><i class="fa fa-check"></i><b>7</b> Molecular dynamics: principles</a>
 <ul>
@@ -145,47 +145,58 @@
 <li class="chapter" data-level="7.7" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#what-you-get-1"><i class="fa fa-check"></i><b>7.7</b> What you get</a></li>
 <li class="chapter" data-level="7.8" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#the-er-choice"><i class="fa fa-check"></i><b>7.8</b> The <span class="math inline">\(E(r)\)</span> choice</a></li>
 </ul></li>
+<li class="chapter" data-level="8" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html"><i class="fa fa-check"></i><b>8</b> Molecular dynamics: observables and neutron connections</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#from-trajectories-to-observables"><i class="fa fa-check"></i><b>8.1</b> From trajectories to observables</a></li>
+<li class="chapter" data-level="8.2" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#vibrational-density-of-states"><i class="fa fa-check"></i><b>8.2</b> Vibrational density of states</a></li>
+<li class="chapter" data-level="8.3" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#ensemble-averaged-structure"><i class="fa fa-check"></i><b>8.3</b> Ensemble-averaged structure</a></li>
+<li class="chapter" data-level="8.4" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#pair-distribution-functions"><i class="fa fa-check"></i><b>8.4</b> Pair distribution functions</a></li>
+<li class="chapter" data-level="8.5" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#diffusion-and-mean-squared-displacement"><i class="fa fa-check"></i><b>8.5</b> Diffusion and mean squared displacement</a></li>
+<li class="chapter" data-level="8.6" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#mechanisms-and-the-van-hove-correlation-function"><i class="fa fa-check"></i><b>8.6</b> Mechanisms and the Van Hove correlation function</a></li>
+<li class="chapter" data-level="8.7" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#connection-to-sq-ω"><i class="fa fa-check"></i><b>8.7</b> Connection to S(Q, ω)</a></li>
+<li class="chapter" data-level="8.8" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#the-computationalexperimental-loop"><i class="fa fa-check"></i><b>8.8</b> The computational–experimental loop</a></li>
+</ul></li>
 <li class="part"><span><b>III Configurational Disorder</b></span></li>
-<li class="chapter" data-level="8" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html"><i class="fa fa-check"></i><b>8</b> Monte Carlo sampling</a>
+<li class="chapter" data-level="9" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html"><i class="fa fa-check"></i><b>9</b> Monte Carlo sampling</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#beyond-molecular-dynamics"><i class="fa fa-check"></i><b>8.1</b> Beyond molecular dynamics</a></li>
-<li class="chapter" data-level="8.2" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-goal-ensemble-averages"><i class="fa fa-check"></i><b>8.2</b> The goal: ensemble averages</a></li>
-<li class="chapter" data-level="8.3" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#why-not-sample-uniformly"><i class="fa fa-check"></i><b>8.3</b> Why not sample uniformly?</a></li>
-<li class="chapter" data-level="8.4" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#markov-chain-monte-carlo"><i class="fa fa-check"></i><b>8.4</b> Markov chain Monte Carlo</a></li>
-<li class="chapter" data-level="8.5" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-metropolis-algorithm"><i class="fa fa-check"></i><b>8.5</b> The Metropolis algorithm</a></li>
-<li class="chapter" data-level="8.6" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#what-you-get-2"><i class="fa fa-check"></i><b>8.6</b> What you get</a></li>
-<li class="chapter" data-level="8.7" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#what-you-dont-get"><i class="fa fa-check"></i><b>8.7</b> What you don’t get</a></li>
-<li class="chapter" data-level="8.8" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#neutron-connection"><i class="fa fa-check"></i><b>8.8</b> Neutron connection</a></li>
+<li class="chapter" data-level="9.1" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#beyond-molecular-dynamics"><i class="fa fa-check"></i><b>9.1</b> Beyond molecular dynamics</a></li>
+<li class="chapter" data-level="9.2" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-goal-ensemble-averages"><i class="fa fa-check"></i><b>9.2</b> The goal: ensemble averages</a></li>
+<li class="chapter" data-level="9.3" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#why-not-sample-uniformly"><i class="fa fa-check"></i><b>9.3</b> Why not sample uniformly?</a></li>
+<li class="chapter" data-level="9.4" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#markov-chain-monte-carlo"><i class="fa fa-check"></i><b>9.4</b> Markov chain Monte Carlo</a></li>
+<li class="chapter" data-level="9.5" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-metropolis-algorithm"><i class="fa fa-check"></i><b>9.5</b> The Metropolis algorithm</a></li>
+<li class="chapter" data-level="9.6" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#what-you-get-2"><i class="fa fa-check"></i><b>9.6</b> What you get</a></li>
+<li class="chapter" data-level="9.7" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#what-you-dont-get"><i class="fa fa-check"></i><b>9.7</b> What you don’t get</a></li>
+<li class="chapter" data-level="9.8" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#neutron-connection"><i class="fa fa-check"></i><b>9.8</b> Neutron connection</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="cluster-expansion.html"><a href="cluster-expansion.html"><i class="fa fa-check"></i><b>9</b> Cluster expansion</a>
+<li class="chapter" data-level="10" data-path="cluster-expansion.html"><a href="cluster-expansion.html"><i class="fa fa-check"></i><b>10</b> Cluster expansion</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-problem"><i class="fa fa-check"></i><b>9.1</b> The problem</a></li>
-<li class="chapter" data-level="9.2" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-idea"><i class="fa fa-check"></i><b>9.2</b> The idea</a></li>
-<li class="chapter" data-level="9.3" data-path="cluster-expansion.html"><a href="cluster-expansion.html#symmetry-and-truncation"><i class="fa fa-check"></i><b>9.3</b> Symmetry and truncation</a></li>
-<li class="chapter" data-level="9.4" data-path="cluster-expansion.html"><a href="cluster-expansion.html#fitting-the-expansion"><i class="fa fa-check"></i><b>9.4</b> Fitting the expansion</a></li>
-<li class="chapter" data-level="9.5" data-path="cluster-expansion.html"><a href="cluster-expansion.html#what-you-get-3"><i class="fa fa-check"></i><b>9.5</b> What you get</a></li>
-<li class="chapter" data-level="9.6" data-path="cluster-expansion.html"><a href="cluster-expansion.html#limitations-1"><i class="fa fa-check"></i><b>9.6</b> Limitations</a></li>
+<li class="chapter" data-level="10.1" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-problem"><i class="fa fa-check"></i><b>10.1</b> The problem</a></li>
+<li class="chapter" data-level="10.2" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-idea"><i class="fa fa-check"></i><b>10.2</b> The idea</a></li>
+<li class="chapter" data-level="10.3" data-path="cluster-expansion.html"><a href="cluster-expansion.html#symmetry-and-truncation"><i class="fa fa-check"></i><b>10.3</b> Symmetry and truncation</a></li>
+<li class="chapter" data-level="10.4" data-path="cluster-expansion.html"><a href="cluster-expansion.html#fitting-the-expansion"><i class="fa fa-check"></i><b>10.4</b> Fitting the expansion</a></li>
+<li class="chapter" data-level="10.5" data-path="cluster-expansion.html"><a href="cluster-expansion.html#what-you-get-3"><i class="fa fa-check"></i><b>10.5</b> What you get</a></li>
+<li class="chapter" data-level="10.6" data-path="cluster-expansion.html"><a href="cluster-expansion.html#limitations-1"><i class="fa fa-check"></i><b>10.6</b> Limitations</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html"><i class="fa fa-check"></i><b>10</b> Short-range order and PDF</a>
+<li class="chapter" data-level="11" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html"><i class="fa fa-check"></i><b>11</b> Short-range order and PDF</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#long-range-order-vs-short-range-order"><i class="fa fa-check"></i><b>10.1</b> Long-range order vs short-range order</a></li>
-<li class="chapter" data-level="10.2" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#what-bragg-diffraction-misses"><i class="fa fa-check"></i><b>10.2</b> What Bragg diffraction misses</a></li>
-<li class="chapter" data-level="10.3" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#pdf-captures-local-structure"><i class="fa fa-check"></i><b>10.3</b> PDF captures local structure</a></li>
-<li class="chapter" data-level="10.4" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#the-computational-approach"><i class="fa fa-check"></i><b>10.4</b> The computational approach</a></li>
+<li class="chapter" data-level="11.1" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#long-range-order-vs-short-range-order"><i class="fa fa-check"></i><b>11.1</b> Long-range order vs short-range order</a></li>
+<li class="chapter" data-level="11.2" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#what-bragg-diffraction-misses"><i class="fa fa-check"></i><b>11.2</b> What Bragg diffraction misses</a></li>
+<li class="chapter" data-level="11.3" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#pdf-captures-local-structure"><i class="fa fa-check"></i><b>11.3</b> PDF captures local structure</a></li>
+<li class="chapter" data-level="11.4" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#the-computational-approach"><i class="fa fa-check"></i><b>11.4</b> The computational approach</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html"><i class="fa fa-check"></i><b>11</b> Case study: short-range order in Li<sub>2</sub>FeSO</a>
+<li class="chapter" data-level="12" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html"><i class="fa fa-check"></i><b>12</b> Case study: short-range order in Li<sub>2</sub>FeSO</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-puzzle"><i class="fa fa-check"></i><b>11.1</b> The puzzle</a></li>
-<li class="chapter" data-level="11.2" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-computational-approach-1"><i class="fa fa-check"></i><b>11.2</b> The computational approach</a></li>
-<li class="chapter" data-level="11.3" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-result-preferential-short-range-order"><i class="fa fa-check"></i><b>11.3</b> The result: preferential short-range order</a></li>
-<li class="chapter" data-level="11.4" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#validation-against-experiment"><i class="fa fa-check"></i><b>11.4</b> Validation against experiment</a></li>
-<li class="chapter" data-level="11.5" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-physical-origin-anion-polarisation"><i class="fa fa-check"></i><b>11.5</b> The physical origin: anion polarisation</a></li>
-<li class="chapter" data-level="11.6" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#what-this-example-illustrates"><i class="fa fa-check"></i><b>11.6</b> What this example illustrates</a></li>
+<li class="chapter" data-level="12.1" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-puzzle"><i class="fa fa-check"></i><b>12.1</b> The puzzle</a></li>
+<li class="chapter" data-level="12.2" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-computational-approach-1"><i class="fa fa-check"></i><b>12.2</b> The computational approach</a></li>
+<li class="chapter" data-level="12.3" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-result-preferential-short-range-order"><i class="fa fa-check"></i><b>12.3</b> The result: preferential short-range order</a></li>
+<li class="chapter" data-level="12.4" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#validation-against-experiment"><i class="fa fa-check"></i><b>12.4</b> Validation against experiment</a></li>
+<li class="chapter" data-level="12.5" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-physical-origin-anion-polarisation"><i class="fa fa-check"></i><b>12.5</b> The physical origin: anion polarisation</a></li>
+<li class="chapter" data-level="12.6" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#what-this-example-illustrates"><i class="fa fa-check"></i><b>12.6</b> What this example illustrates</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i>Conclusion</a>
 <ul>
-<li class="chapter" data-level="11.7" data-path="conclusion.html"><a href="conclusion.html#four-themes"><i class="fa fa-check"></i><b>11.7</b> Four themes</a></li>
-<li class="chapter" data-level="11.8" data-path="conclusion.html"><a href="conclusion.html#what-now"><i class="fa fa-check"></i><b>11.8</b> What now?</a></li>
+<li class="chapter" data-level="12.7" data-path="conclusion.html"><a href="conclusion.html#four-themes"><i class="fa fa-check"></i><b>12.7</b> Four themes</a></li>
+<li class="chapter" data-level="12.8" data-path="conclusion.html"><a href="conclusion.html#what-now"><i class="fa fa-check"></i><b>12.8</b> What now?</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html"><i class="fa fa-check"></i><b>A</b> Derivation of the dynamical matrix for periodic systems</a>
@@ -215,26 +226,26 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="case-study-short-range-order-in-li2feso" class="section level1 hasAnchor" number="11">
-<h1><span class="header-section-number">11</span> Case study: short-range order in Li<sub>2</sub>FeSO<a href="case-study-short-range-order-in-li2feso.html#case-study-short-range-order-in-li2feso" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="case-study-short-range-order-in-li2feso" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">12</span> Case study: short-range order in Li<sub>2</sub>FeSO<a href="case-study-short-range-order-in-li2feso.html#case-study-short-range-order-in-li2feso" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>This chapter presents a case study illustrating the computational workflow developed in the preceding chapters. The example — cation ordering in the antiperovskite cathode material Li<sub>2</sub>FeSO — demonstrates how cluster expansion, Monte Carlo sampling, and pair distribution function analysis combine to characterise short-range order that Bragg diffraction cannot detect. Full details are available in <a href="https://doi.org/10.1039/D2TA10037A">Coles <em>et al.</em>, <em>Journal of Materials Chemistry A</em> (2023)</a>.</p>
-<div id="the-puzzle" class="section level2 hasAnchor" number="11.1">
-<h2><span class="header-section-number">11.1</span> The puzzle<a href="case-study-short-range-order-in-li2feso.html#the-puzzle" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-puzzle" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> The puzzle<a href="case-study-short-range-order-in-li2feso.html#the-puzzle" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Li<sub>2</sub>FeSO adopts the antiperovskite structure. Sulfur occupies the 12-coordinate site, oxygen occupies the 6-coordinate octahedral site, and lithium and iron share the remaining sites in a 2:1 ratio (Fig. X). Previous diffraction studies found no superlattice reflections — no evidence of long-range cation order — leading to the assumption that Li and Fe are randomly distributed over their shared sites.</p>
 <p>[Figure: Li<sub>2</sub>FeSO antiperovskite structure showing the shared Li/Fe sites]</p>
 <p>But this assumption is puzzling on physical grounds. Fe<sup>2+</sup> and Li<sup>+</sup> have different formal charges. Simple electrostatic arguments suggest that configurations which separate the higher-charged Fe<sup>2+</sup> ions should be lower in energy than configurations that cluster them together. If an energetic preference exists, why would the cation distribution be random?</p>
 <p>The absence of long-range order does not necessarily imply the absence of short-range order. Diffraction probes the average, periodic structure; local correlations that do not produce a periodic pattern are invisible to Bragg peaks. The question is whether Li<sub>2</sub>FeSO exhibits preferential short-range cation ordering, and if so, what form it takes.</p>
 </div>
-<div id="the-computational-approach-1" class="section level2 hasAnchor" number="11.2">
-<h2><span class="header-section-number">11.2</span> The computational approach<a href="case-study-short-range-order-in-li2feso.html#the-computational-approach-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>To address this question, we calculated DFT energies for approximately 100 different Li/Fe configurations in supercells of Li<sub>2</sub>FeSO. These energies were used to fit a cluster expansion — a parameterised model that expresses the configurational energy as a function of site occupancies, as described in Chapter <a href="cluster-expansion.html#cluster-expansion">9</a>2.</p>
+<div id="the-computational-approach-1" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> The computational approach<a href="case-study-short-range-order-in-li2feso.html#the-computational-approach-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To address this question, we calculated DFT energies for approximately 100 different Li/Fe configurations in supercells of Li<sub>2</sub>FeSO. These energies were used to fit a cluster expansion — a parameterised model that expresses the configurational energy as a function of site occupancies, as described in Chapter <a href="cluster-expansion.html#cluster-expansion">10</a>2.</p>
 <p>With the cluster expansion in hand, Monte Carlo sampling becomes computationally tractable. We performed MC simulations in an 8×8×8 supercell at 1025 K, corresponding to the experimental synthesis temperature. The simulation generates an ensemble of configurations representative of thermal equilibrium at that temperature.</p>
 <p>From the MC trajectory, we can extract the probability distribution of local coordination environments. Each oxygen in the structure is surrounded by six cation sites. In a material with 2:1 Li:Fe stoichiometry, the possible oxygen coordinations range from OLi<sub>6</sub> (all lithium) to OFe<sub>6</sub> (all iron), with intermediate compositions OLi₅Fe, OLi<sub>4</sub>Fe<sub>2</sub>, OLi<sub>3</sub>Fe<sub>3</sub>, OLi<sub>2</sub>Fe<sub>4</sub>, and OLiFe<sub>5</sub>.</p>
 <p>For OLi<sub>4</sub>Fe<sub>2</sub> coordination — four lithium and two iron around the central oxygen — there are two distinct geometric arrangements. In <em>cis</em>-OLi<sub>4</sub>Fe<sub>2</sub>, the two iron atoms occupy adjacent vertices of the octahedron. In <em>trans</em>-OLi<sub>4</sub>Fe<sub>2</sub>, they occupy opposite vertices.</p>
 <p>[Figure: Schematic of cis versus trans OLi<sub>4</sub>Fe<sub>2</sub> coordination environments]</p>
 </div>
-<div id="the-result-preferential-short-range-order" class="section level2 hasAnchor" number="11.3">
-<h2><span class="header-section-number">11.3</span> The result: preferential short-range order<a href="case-study-short-range-order-in-li2feso.html#the-result-preferential-short-range-order" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-result-preferential-short-range-order" class="section level2 hasAnchor" number="12.3">
+<h2><span class="header-section-number">12.3</span> The result: preferential short-range order<a href="case-study-short-range-order-in-li2feso.html#the-result-preferential-short-range-order" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The Monte Carlo simulations predict that the cation distribution is not random.</p>
 <p>For a random arrangement of Li and Fe over the available sites, the probability of each oxygen coordination environment follows a binomial distribution. The most probable coordination would be OLi<sub>4</sub>Fe<sub>2</sub>, occurring in approximately 33% of oxygen environments.</p>
 <p>The DFT-derived cluster expansion predicts a markedly different distribution. OLi<sub>4</sub>Fe<sub>2</sub> coordination accounts for 65% of oxygen environments — roughly twice the random expectation. This enhanced preference for OLi<sub>4</sub>Fe<sub>2</sub> is consistent with Pauling’s second rule: coordination environments that achieve local electroneutrality are energetically favoured.</p>
@@ -242,23 +253,23 @@
 <p>More unexpectedly, within the OLi<sub>4</sub>Fe<sub>2</sub> environments, 81% adopt the <em>cis</em> configuration and only 19% adopt the <em>trans</em> configuration.</p>
 <p>This result contradicts simple electrostatic reasoning. If Li<sup>+</sup> and Fe<sup>2+</sup> are treated as point charges at their formal crystallographic positions, the electrostatic energy of an OLi<sub>4</sub>Fe<sub>2</sub> octahedron is minimised when the two Fe<sup>2+</sup> ions occupy opposite vertices — the <em>trans</em> configuration — maximising their separation. A point-charge model predicts preferential <em>trans</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination and, consequently, long-range cation order. The DFT-derived model predicts preferential <em>cis</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination, which produces long-range disorder.</p>
 </div>
-<div id="validation-against-experiment" class="section level2 hasAnchor" number="11.4">
-<h2><span class="header-section-number">11.4</span> Validation against experiment<a href="case-study-short-range-order-in-li2feso.html#validation-against-experiment" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="validation-against-experiment" class="section level2 hasAnchor" number="12.4">
+<h2><span class="header-section-number">12.4</span> Validation against experiment<a href="case-study-short-range-order-in-li2feso.html#validation-against-experiment" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The PDF provides a direct test of these competing structural models. From the Monte Carlo configurations, we can calculate the pair distribution function and compare it to experimental total scattering data. This particular study used X-ray total scattering, which is most sensitive to the heavier Fe and S atoms; neutron PDF on the same system would provide complementary sensitivity to the lithium correlations. The principles of the comparison — generating configurations computationally and comparing calculated g(r) to experiment — are identical regardless of the probe.</p>
 <p>Three models were tested. The DFT-derived cluster expansion model, with its preference for <em>cis</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination, gives the best agreement with experiment (<span class="math inline">\(R_\mathrm{w} = 14.0%\)</span>). A random Li/Fe distribution gives poorer agreement (<span class="math inline">\(R_\mathrm{w} = 16.5%\)</span>) — the difference is modest but systematic, reflecting the failure to capture the enhanced OLi<sub>4</sub>Fe<sub>2</sub> coordination that the DFT model predicts. Most tellingly, a point-charge ground state with 100% <em>trans</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination gives substantially worse agreement (<span class="math inline">\(R_\mathrm{w} = 35.2%\)</span>). The structure that simple electrostatics predicts is incompatible with the experimental PDF at short range.</p>
 <p>[Figure: Comparison of experimental and simulated PDFs for the three models]</p>
 <p>The PDF comparison validates the DFT-derived model. The short-range order in Li<sub>2</sub>FeSO is real, and it takes the form of preferential <em>cis</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination — not the <em>trans</em> preference that point-charge electrostatics would suggest.</p>
 </div>
-<div id="the-physical-origin-anion-polarisation" class="section level2 hasAnchor" number="11.5">
-<h2><span class="header-section-number">11.5</span> The physical origin: anion polarisation<a href="case-study-short-range-order-in-li2feso.html#the-physical-origin-anion-polarisation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-physical-origin-anion-polarisation" class="section level2 hasAnchor" number="12.5">
+<h2><span class="header-section-number">12.5</span> The physical origin: anion polarisation<a href="case-study-short-range-order-in-li2feso.html#the-physical-origin-anion-polarisation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Why does DFT favour <em>cis</em> over <em>trans</em>, when simple electrostatics predicts the opposite?</p>
 <p>The key lies in the symmetry of the anion coordination environment. In <em>trans</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination, the oxygen sits at a centre of symmetry — the distribution of cations around it is centrosymmetric. In <em>cis</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination, the oxygen sits in a non-centrosymmetric environment.</p>
 <p>Anions in non-centrosymmetric environments experience an asymmetric electric field from the surrounding cations. This field induces electronic polarisation — the anion’s electron density shifts in response. The induced dipole lowers the total electrostatic energy of the system.</p>
 <p>Point charges cannot polarise. A model that treats ions as fixed charges at crystallographic positions misses this physics entirely. It correctly captures the preference for OLi<sub>4</sub>Fe<sub>2</sub> coordination (local electroneutrality), but incorrectly predicts <em>trans</em> over <em>cis</em> because it cannot account for the stabilisation of polar coordination environments through anion polarisation.</p>
 <p>Analysis of the DFT calculations confirms this picture. In structures with <em>cis</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination, the oxygen anions exhibit significant electronic dipole moments. In structures with <em>trans</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination, the oxygen dipole moments are zero by symmetry. The polarisation energy tips the balance from <em>trans</em> to <em>cis</em>.</p>
 </div>
-<div id="what-this-example-illustrates" class="section level2 hasAnchor" number="11.6">
-<h2><span class="header-section-number">11.6</span> What this example illustrates<a href="case-study-short-range-order-in-li2feso.html#what-this-example-illustrates" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="what-this-example-illustrates" class="section level2 hasAnchor" number="12.6">
+<h2><span class="header-section-number">12.6</span> What this example illustrates<a href="case-study-short-range-order-in-li2feso.html#what-this-example-illustrates" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This case study demonstrates the interplay between experiment and computation that runs through the preceding sections. Bragg diffraction correctly reported no long-range order, but could not distinguish between a truly random cation distribution and one with short-range order that lacks long-range periodicity. The combination of DFT, cluster expansion, and Monte Carlo sampling predicted a specific form of short-range order — preferential <em>cis</em>-OLi<sub>4</sub>Fe<sub>2</sub> coordination — and the PDF comparison validated this prediction against experiment. Further analysis then revealed the physical origin of this preference: anion polarisation in non-centrosymmetric coordination environments, physics that the experiment could not directly access but that computation reveals.</p>
 <p>The relationship was bidirectional throughout. The experimental observation of “no long-range order” prompted the computational investigation. The computational result was validated against experimental PDF data. And the physical insight emerged from analysing why the DFT results differed from simple electrostatic expectations.</p>
 <p>For this material, “disordered” does not mean “random.” The distinction matters: short-range cation order in cathode materials affects lithium transport, redox behaviour, and electrochemical performance. Characterising that order required the combination of total scattering and computation that this case study illustrates.</p>

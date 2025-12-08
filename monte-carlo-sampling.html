@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>8 Monte Carlo sampling | Computational Techniques for Sustainable Energy Materials</title>
+  <title>9 Monte Carlo sampling | Computational Techniques for Sustainable Energy Materials</title>
   <meta name="description" content="Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="8 Monte Carlo sampling | Computational Techniques for Sustainable Energy Materials" />
+  <meta property="og:title" content="9 Monte Carlo sampling | Computational Techniques for Sustainable Energy Materials" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   <meta name="github-repo" content="bjmorgan/neutrons_for_sustainable_energy" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="8 Monte Carlo sampling | Computational Techniques for Sustainable Energy Materials" />
+  <meta name="twitter:title" content="9 Monte Carlo sampling | Computational Techniques for Sustainable Energy Materials" />
   
   <meta name="twitter:description" content="Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   
@@ -23,14 +23,14 @@
 <meta name="author" content="Benjamin J. Morgan" />
 
 
-<meta name="date" content="2025-12-07" />
+<meta name="date" content="2025-12-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="molecular-dynamics-principles.html"/>
+<link rel="prev" href="molecular-dynamics-observables-and-neutron-connections.html"/>
 <link rel="next" href="cluster-expansion.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -125,14 +125,14 @@
 <li class="chapter" data-level="5.4" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#doing-better-with-curvature"><i class="fa fa-check"></i><b>5.4</b> Doing better with curvature</a></li>
 <li class="chapter" data-level="5.5" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#local-and-global-minima"><i class="fa fa-check"></i><b>5.5</b> Local and global minima</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="phonon-calculations.html"><a href="phonon-calculations.html"><i class="fa fa-check"></i><b>6</b> Phonon calculations</a>
+<li class="chapter" data-level="6" data-path="phonons.html"><a href="phonons.html"><i class="fa fa-check"></i><b>6</b> Phonon calculations</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="phonon-calculations.html"><a href="phonon-calculations.html#vibrations-around-equilibrium"><i class="fa fa-check"></i><b>6.1</b> Vibrations around equilibrium</a></li>
-<li class="chapter" data-level="6.2" data-path="phonon-calculations.html"><a href="phonon-calculations.html#the-harmonic-approximation"><i class="fa fa-check"></i><b>6.2</b> The harmonic approximation</a></li>
-<li class="chapter" data-level="6.3" data-path="phonon-calculations.html"><a href="phonon-calculations.html#periodic-systems-and-phonon-dispersion"><i class="fa fa-check"></i><b>6.3</b> Periodic systems and phonon dispersion</a></li>
-<li class="chapter" data-level="6.4" data-path="phonon-calculations.html"><a href="phonon-calculations.html#calculating-phonons-in-practice"><i class="fa fa-check"></i><b>6.4</b> Calculating phonons in practice</a></li>
-<li class="chapter" data-level="6.5" data-path="phonon-calculations.html"><a href="phonon-calculations.html#what-you-get"><i class="fa fa-check"></i><b>6.5</b> What you get</a></li>
-<li class="chapter" data-level="6.6" data-path="phonon-calculations.html"><a href="phonon-calculations.html#limitations"><i class="fa fa-check"></i><b>6.6</b> Limitations</a></li>
+<li class="chapter" data-level="6.1" data-path="phonons.html"><a href="phonons.html#vibrations-around-equilibrium"><i class="fa fa-check"></i><b>6.1</b> Vibrations around equilibrium</a></li>
+<li class="chapter" data-level="6.2" data-path="phonons.html"><a href="phonons.html#the-harmonic-approximation"><i class="fa fa-check"></i><b>6.2</b> The harmonic approximation</a></li>
+<li class="chapter" data-level="6.3" data-path="phonons.html"><a href="phonons.html#periodic-systems-and-phonon-dispersion"><i class="fa fa-check"></i><b>6.3</b> Periodic systems and phonon dispersion</a></li>
+<li class="chapter" data-level="6.4" data-path="phonons.html"><a href="phonons.html#calculating-phonons-in-practice"><i class="fa fa-check"></i><b>6.4</b> Calculating phonons in practice</a></li>
+<li class="chapter" data-level="6.5" data-path="phonons.html"><a href="phonons.html#what-you-get"><i class="fa fa-check"></i><b>6.5</b> What you get</a></li>
+<li class="chapter" data-level="6.6" data-path="phonons.html"><a href="phonons.html#limitations"><i class="fa fa-check"></i><b>6.6</b> Limitations</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html"><i class="fa fa-check"></i><b>7</b> Molecular dynamics: principles</a>
 <ul>
@@ -145,47 +145,58 @@
 <li class="chapter" data-level="7.7" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#what-you-get-1"><i class="fa fa-check"></i><b>7.7</b> What you get</a></li>
 <li class="chapter" data-level="7.8" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#the-er-choice"><i class="fa fa-check"></i><b>7.8</b> The <span class="math inline">\(E(r)\)</span> choice</a></li>
 </ul></li>
+<li class="chapter" data-level="8" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html"><i class="fa fa-check"></i><b>8</b> Molecular dynamics: observables and neutron connections</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#from-trajectories-to-observables"><i class="fa fa-check"></i><b>8.1</b> From trajectories to observables</a></li>
+<li class="chapter" data-level="8.2" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#vibrational-density-of-states"><i class="fa fa-check"></i><b>8.2</b> Vibrational density of states</a></li>
+<li class="chapter" data-level="8.3" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#ensemble-averaged-structure"><i class="fa fa-check"></i><b>8.3</b> Ensemble-averaged structure</a></li>
+<li class="chapter" data-level="8.4" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#pair-distribution-functions"><i class="fa fa-check"></i><b>8.4</b> Pair distribution functions</a></li>
+<li class="chapter" data-level="8.5" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#diffusion-and-mean-squared-displacement"><i class="fa fa-check"></i><b>8.5</b> Diffusion and mean squared displacement</a></li>
+<li class="chapter" data-level="8.6" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#mechanisms-and-the-van-hove-correlation-function"><i class="fa fa-check"></i><b>8.6</b> Mechanisms and the Van Hove correlation function</a></li>
+<li class="chapter" data-level="8.7" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#connection-to-sq-ω"><i class="fa fa-check"></i><b>8.7</b> Connection to S(Q, ω)</a></li>
+<li class="chapter" data-level="8.8" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#the-computationalexperimental-loop"><i class="fa fa-check"></i><b>8.8</b> The computational–experimental loop</a></li>
+</ul></li>
 <li class="part"><span><b>III Configurational Disorder</b></span></li>
-<li class="chapter" data-level="8" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html"><i class="fa fa-check"></i><b>8</b> Monte Carlo sampling</a>
+<li class="chapter" data-level="9" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html"><i class="fa fa-check"></i><b>9</b> Monte Carlo sampling</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#beyond-molecular-dynamics"><i class="fa fa-check"></i><b>8.1</b> Beyond molecular dynamics</a></li>
-<li class="chapter" data-level="8.2" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-goal-ensemble-averages"><i class="fa fa-check"></i><b>8.2</b> The goal: ensemble averages</a></li>
-<li class="chapter" data-level="8.3" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#why-not-sample-uniformly"><i class="fa fa-check"></i><b>8.3</b> Why not sample uniformly?</a></li>
-<li class="chapter" data-level="8.4" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#markov-chain-monte-carlo"><i class="fa fa-check"></i><b>8.4</b> Markov chain Monte Carlo</a></li>
-<li class="chapter" data-level="8.5" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-metropolis-algorithm"><i class="fa fa-check"></i><b>8.5</b> The Metropolis algorithm</a></li>
-<li class="chapter" data-level="8.6" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#what-you-get-2"><i class="fa fa-check"></i><b>8.6</b> What you get</a></li>
-<li class="chapter" data-level="8.7" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#what-you-dont-get"><i class="fa fa-check"></i><b>8.7</b> What you don’t get</a></li>
-<li class="chapter" data-level="8.8" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#neutron-connection"><i class="fa fa-check"></i><b>8.8</b> Neutron connection</a></li>
+<li class="chapter" data-level="9.1" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#beyond-molecular-dynamics"><i class="fa fa-check"></i><b>9.1</b> Beyond molecular dynamics</a></li>
+<li class="chapter" data-level="9.2" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-goal-ensemble-averages"><i class="fa fa-check"></i><b>9.2</b> The goal: ensemble averages</a></li>
+<li class="chapter" data-level="9.3" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#why-not-sample-uniformly"><i class="fa fa-check"></i><b>9.3</b> Why not sample uniformly?</a></li>
+<li class="chapter" data-level="9.4" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#markov-chain-monte-carlo"><i class="fa fa-check"></i><b>9.4</b> Markov chain Monte Carlo</a></li>
+<li class="chapter" data-level="9.5" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#the-metropolis-algorithm"><i class="fa fa-check"></i><b>9.5</b> The Metropolis algorithm</a></li>
+<li class="chapter" data-level="9.6" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#what-you-get-2"><i class="fa fa-check"></i><b>9.6</b> What you get</a></li>
+<li class="chapter" data-level="9.7" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#what-you-dont-get"><i class="fa fa-check"></i><b>9.7</b> What you don’t get</a></li>
+<li class="chapter" data-level="9.8" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#neutron-connection"><i class="fa fa-check"></i><b>9.8</b> Neutron connection</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="cluster-expansion.html"><a href="cluster-expansion.html"><i class="fa fa-check"></i><b>9</b> Cluster expansion</a>
+<li class="chapter" data-level="10" data-path="cluster-expansion.html"><a href="cluster-expansion.html"><i class="fa fa-check"></i><b>10</b> Cluster expansion</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-problem"><i class="fa fa-check"></i><b>9.1</b> The problem</a></li>
-<li class="chapter" data-level="9.2" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-idea"><i class="fa fa-check"></i><b>9.2</b> The idea</a></li>
-<li class="chapter" data-level="9.3" data-path="cluster-expansion.html"><a href="cluster-expansion.html#symmetry-and-truncation"><i class="fa fa-check"></i><b>9.3</b> Symmetry and truncation</a></li>
-<li class="chapter" data-level="9.4" data-path="cluster-expansion.html"><a href="cluster-expansion.html#fitting-the-expansion"><i class="fa fa-check"></i><b>9.4</b> Fitting the expansion</a></li>
-<li class="chapter" data-level="9.5" data-path="cluster-expansion.html"><a href="cluster-expansion.html#what-you-get-3"><i class="fa fa-check"></i><b>9.5</b> What you get</a></li>
-<li class="chapter" data-level="9.6" data-path="cluster-expansion.html"><a href="cluster-expansion.html#limitations-1"><i class="fa fa-check"></i><b>9.6</b> Limitations</a></li>
+<li class="chapter" data-level="10.1" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-problem"><i class="fa fa-check"></i><b>10.1</b> The problem</a></li>
+<li class="chapter" data-level="10.2" data-path="cluster-expansion.html"><a href="cluster-expansion.html#the-idea"><i class="fa fa-check"></i><b>10.2</b> The idea</a></li>
+<li class="chapter" data-level="10.3" data-path="cluster-expansion.html"><a href="cluster-expansion.html#symmetry-and-truncation"><i class="fa fa-check"></i><b>10.3</b> Symmetry and truncation</a></li>
+<li class="chapter" data-level="10.4" data-path="cluster-expansion.html"><a href="cluster-expansion.html#fitting-the-expansion"><i class="fa fa-check"></i><b>10.4</b> Fitting the expansion</a></li>
+<li class="chapter" data-level="10.5" data-path="cluster-expansion.html"><a href="cluster-expansion.html#what-you-get-3"><i class="fa fa-check"></i><b>10.5</b> What you get</a></li>
+<li class="chapter" data-level="10.6" data-path="cluster-expansion.html"><a href="cluster-expansion.html#limitations-1"><i class="fa fa-check"></i><b>10.6</b> Limitations</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html"><i class="fa fa-check"></i><b>10</b> Short-range order and PDF</a>
+<li class="chapter" data-level="11" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html"><i class="fa fa-check"></i><b>11</b> Short-range order and PDF</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#long-range-order-vs-short-range-order"><i class="fa fa-check"></i><b>10.1</b> Long-range order vs short-range order</a></li>
-<li class="chapter" data-level="10.2" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#what-bragg-diffraction-misses"><i class="fa fa-check"></i><b>10.2</b> What Bragg diffraction misses</a></li>
-<li class="chapter" data-level="10.3" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#pdf-captures-local-structure"><i class="fa fa-check"></i><b>10.3</b> PDF captures local structure</a></li>
-<li class="chapter" data-level="10.4" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#the-computational-approach"><i class="fa fa-check"></i><b>10.4</b> The computational approach</a></li>
+<li class="chapter" data-level="11.1" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#long-range-order-vs-short-range-order"><i class="fa fa-check"></i><b>11.1</b> Long-range order vs short-range order</a></li>
+<li class="chapter" data-level="11.2" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#what-bragg-diffraction-misses"><i class="fa fa-check"></i><b>11.2</b> What Bragg diffraction misses</a></li>
+<li class="chapter" data-level="11.3" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#pdf-captures-local-structure"><i class="fa fa-check"></i><b>11.3</b> PDF captures local structure</a></li>
+<li class="chapter" data-level="11.4" data-path="short-range-order-and-pdf.html"><a href="short-range-order-and-pdf.html#the-computational-approach"><i class="fa fa-check"></i><b>11.4</b> The computational approach</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html"><i class="fa fa-check"></i><b>11</b> Case study: short-range order in Li<sub>2</sub>FeSO</a>
+<li class="chapter" data-level="12" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html"><i class="fa fa-check"></i><b>12</b> Case study: short-range order in Li<sub>2</sub>FeSO</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-puzzle"><i class="fa fa-check"></i><b>11.1</b> The puzzle</a></li>
-<li class="chapter" data-level="11.2" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-computational-approach-1"><i class="fa fa-check"></i><b>11.2</b> The computational approach</a></li>
-<li class="chapter" data-level="11.3" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-result-preferential-short-range-order"><i class="fa fa-check"></i><b>11.3</b> The result: preferential short-range order</a></li>
-<li class="chapter" data-level="11.4" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#validation-against-experiment"><i class="fa fa-check"></i><b>11.4</b> Validation against experiment</a></li>
-<li class="chapter" data-level="11.5" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-physical-origin-anion-polarisation"><i class="fa fa-check"></i><b>11.5</b> The physical origin: anion polarisation</a></li>
-<li class="chapter" data-level="11.6" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#what-this-example-illustrates"><i class="fa fa-check"></i><b>11.6</b> What this example illustrates</a></li>
+<li class="chapter" data-level="12.1" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-puzzle"><i class="fa fa-check"></i><b>12.1</b> The puzzle</a></li>
+<li class="chapter" data-level="12.2" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-computational-approach-1"><i class="fa fa-check"></i><b>12.2</b> The computational approach</a></li>
+<li class="chapter" data-level="12.3" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-result-preferential-short-range-order"><i class="fa fa-check"></i><b>12.3</b> The result: preferential short-range order</a></li>
+<li class="chapter" data-level="12.4" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#validation-against-experiment"><i class="fa fa-check"></i><b>12.4</b> Validation against experiment</a></li>
+<li class="chapter" data-level="12.5" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#the-physical-origin-anion-polarisation"><i class="fa fa-check"></i><b>12.5</b> The physical origin: anion polarisation</a></li>
+<li class="chapter" data-level="12.6" data-path="case-study-short-range-order-in-li2feso.html"><a href="case-study-short-range-order-in-li2feso.html#what-this-example-illustrates"><i class="fa fa-check"></i><b>12.6</b> What this example illustrates</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i>Conclusion</a>
 <ul>
-<li class="chapter" data-level="11.7" data-path="conclusion.html"><a href="conclusion.html#four-themes"><i class="fa fa-check"></i><b>11.7</b> Four themes</a></li>
-<li class="chapter" data-level="11.8" data-path="conclusion.html"><a href="conclusion.html#what-now"><i class="fa fa-check"></i><b>11.8</b> What now?</a></li>
+<li class="chapter" data-level="12.7" data-path="conclusion.html"><a href="conclusion.html#four-themes"><i class="fa fa-check"></i><b>12.7</b> Four themes</a></li>
+<li class="chapter" data-level="12.8" data-path="conclusion.html"><a href="conclusion.html#what-now"><i class="fa fa-check"></i><b>12.8</b> What now?</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="derivation-of-the-dynamical-matrix-for-periodic-systems.html"><a href="derivation-of-the-dynamical-matrix-for-periodic-systems.html"><i class="fa fa-check"></i><b>A</b> Derivation of the dynamical matrix for periodic systems</a>
@@ -215,31 +226,31 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="monte-carlo-sampling" class="section level1 hasAnchor" number="8">
-<h1><span class="header-section-number">8</span> Monte Carlo sampling<a href="monte-carlo-sampling.html#monte-carlo-sampling" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="beyond-molecular-dynamics" class="section level2 hasAnchor" number="8.1">
-<h2><span class="header-section-number">8.1</span> Beyond molecular dynamics<a href="monte-carlo-sampling.html#beyond-molecular-dynamics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="monte-carlo-sampling" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> Monte Carlo sampling<a href="monte-carlo-sampling.html#monte-carlo-sampling" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="beyond-molecular-dynamics" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Beyond molecular dynamics<a href="monte-carlo-sampling.html#beyond-molecular-dynamics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>MD samples configurations by following the physical dynamics of the system. At finite temperature, atoms have kinetic energy and explore the potential energy surface. For fast processes — ionic diffusion in superionic conductors, thermal vibrations — MD captures the relevant configurations.</p>
 <p>But some configurational questions involve rearrangements that are far too slow for MD. Consider cation ordering in a mixed-metal oxide, or site occupancies in an alloy. The atoms can, in principle, rearrange — but the mechanisms are slow, involving vacancy diffusion or other activated processes that happen on timescales of seconds to hours, not nanoseconds. MD will never visit these configurations; the simulation is trapped in whatever arrangement it started with.</p>
 <p>Monte Carlo sampling takes a different approach. Rather than following dynamics, we propose configurational changes directly and accept or reject them based on energetics. This lets us sample configurations that MD cannot reach.</p>
 </div>
-<div id="the-goal-ensemble-averages" class="section level2 hasAnchor" number="8.2">
-<h2><span class="header-section-number">8.2</span> The goal: ensemble averages<a href="monte-carlo-sampling.html#the-goal-ensemble-averages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-goal-ensemble-averages" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> The goal: ensemble averages<a href="monte-carlo-sampling.html#the-goal-ensemble-averages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Statistical mechanics tells us that macroscopic properties are ensemble averages. The expectation value of a property A in the canonical ensemble is:</p>
 <p><span class="math display">\[\langle A \rangle = \sum_i A_i P_i = \frac{1}{Z} \sum_i A_i \exp(-E_i / k_B T)\]</span></p>
 <p>where the sum runs over all microstates i, E<sub>i</sub> is the energy of state i, and Z is the partition function:</p>
 <p><span class="math display">\[Z = \sum_i \exp(-E_i / k_B T)\]</span></p>
 <p>In principle, this is straightforward: enumerate all states, calculate their energies and properties, weight by Boltzmann factors, sum. In practice, the number of states is astronomically large. For configurational disorder on N sites with two possible occupants per site, there are 2<sup>N</sup> configurations. Even for modest N, explicit enumeration is impossible.</p>
 </div>
-<div id="why-not-sample-uniformly" class="section level2 hasAnchor" number="8.3">
-<h2><span class="header-section-number">8.3</span> Why not sample uniformly?<a href="monte-carlo-sampling.html#why-not-sample-uniformly" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="why-not-sample-uniformly" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Why not sample uniformly?<a href="monte-carlo-sampling.html#why-not-sample-uniformly" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>One idea: sample configurations randomly and weight by their Boltzmann factors. The problem is that uniform sampling is inefficient. Most randomly chosen configurations have high energy and negligible Boltzmann weight — we waste effort sampling configurations that contribute almost nothing to the average.</p>
 <p>The solution is importance sampling: sample configurations in proportion to their Boltzmann weights. Then each sample contributes equally to the average:</p>
 <p><span class="math display">\[\langle A \rangle \approx \frac{1}{M} \sum_{m=1}^{M} A_m\]</span></p>
 <p>No explicit weights needed. The question is how to generate samples from this distribution.</p>
 </div>
-<div id="markov-chain-monte-carlo" class="section level2 hasAnchor" number="8.4">
-<h2><span class="header-section-number">8.4</span> Markov chain Monte Carlo<a href="monte-carlo-sampling.html#markov-chain-monte-carlo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="markov-chain-monte-carlo" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> Markov chain Monte Carlo<a href="monte-carlo-sampling.html#markov-chain-monte-carlo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The solution is to construct a Markov chain — a random walk through configuration space where each step depends only on the current configuration. At each step we propose a move to a new configuration and either accept or reject it. The question is: how should we choose the acceptance probabilities to ensure we sample from our target distribution?</p>
 <p>Consider two states. At equilibrium, the frequency of transitions from state 1 to state 2 must equal the frequency from 2 to 1 — otherwise probability would accumulate in one state. If we visit state 1 with probability π<sub>1</sub> and accept moves to state 2 with probability P(1→2), then balance requires:</p>
 <p><span class="math display">\[\pi_1 \, P(1 \to 2) = \pi_2 \, P(2 \to 1)\]</span></p>
@@ -251,8 +262,8 @@
 <p>This depends only on the energy difference between the two states — not on absolute energies. Since we only ever compare states pairwise, we never need to know the partition function or evaluate absolute energies.</p>
 <p>Any acceptance rule where the ratio of forward to backward acceptance probabilities equals <span class="math inline">\(\exp(-\Delta E/kT)\)</span> will sample from the Boltzmann distribution. The Metropolis criterion is one such choice.</p>
 </div>
-<div id="the-metropolis-algorithm" class="section level2 hasAnchor" number="8.5">
-<h2><span class="header-section-number">8.5</span> The Metropolis algorithm<a href="monte-carlo-sampling.html#the-metropolis-algorithm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-metropolis-algorithm" class="section level2 hasAnchor" number="9.5">
+<h2><span class="header-section-number">9.5</span> The Metropolis algorithm<a href="monte-carlo-sampling.html#the-metropolis-algorithm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The Metropolis algorithm is the standard approach. The procedure is:</p>
 <ol style="list-style-type: decimal">
 <li>Start from some configuration with energy E<sub>1</sub></li>
@@ -269,19 +280,19 @@
 <p>The acceptance rule ensures that, after many steps, the chain visits configurations with probability proportional to <span class="math inline">\(\exp(-E/kT)\)</span>.</p>
 <p>The intuition for why the algorithm works: downhill moves are always accepted, so the chain readily finds low-energy configurations. Uphill moves are sometimes accepted — the probability <span class="math inline">\(\exp(-\Delta E/kT)\)</span> decreases exponentially with the energy cost, but is never zero. This allows the chain to escape local minima and explore configuration space. Without occasional uphill moves, we would simply find the nearest local minimum — an optimisation algorithm, not a sampling algorithm. Temperature controls exploration: at high temperature, <span class="math inline">\(\exp(-\Delta E/kT)\)</span> is close to 1 for moderate ΔE, so most moves are accepted and the system explores widely; at low temperature, only small uphill moves are accepted and the system stays near low-energy configurations.</p>
 </div>
-<div id="what-you-get-2" class="section level2 hasAnchor" number="8.6">
-<h2><span class="header-section-number">8.6</span> What you get<a href="monte-carlo-sampling.html#what-you-get-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="what-you-get-2" class="section level2 hasAnchor" number="9.6">
+<h2><span class="header-section-number">9.6</span> What you get<a href="monte-carlo-sampling.html#what-you-get-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>After an initial equilibration period, the MC chain samples configurations from the target ensemble. The expectation value of any quantity A is simply the average over sampled configurations:</p>
 <p><span class="math display">\[\langle A \rangle = \frac{1}{M} \sum_{m=1}^{M} A_m\]</span></p>
 <p>No Boltzmann weights appear because the sampling already accounts for them. Thermodynamic properties follow: from fluctuations in energy we get heat capacity; from the temperature dependence of order parameters we identify phase transitions. Snapshots from the MC chain represent the distribution of configurations at thermal equilibrium, and can be analysed for structural features or compared with experiment.</p>
 </div>
-<div id="what-you-dont-get" class="section level2 hasAnchor" number="8.7">
-<h2><span class="header-section-number">8.7</span> What you don’t get<a href="monte-carlo-sampling.html#what-you-dont-get" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="what-you-dont-get" class="section level2 hasAnchor" number="9.7">
+<h2><span class="header-section-number">9.7</span> What you don’t get<a href="monte-carlo-sampling.html#what-you-dont-get" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>MC does not give dynamics. The sequence of configurations is a random walk designed to sample the equilibrium distribution, not a physical trajectory through time. There is no “MC time” that corresponds to real time. Questions about rates, diffusion coefficients, or time correlation functions cannot be answered by MC.</p>
 <p>This is the fundamental distinction: MD samples by following dynamics and gives both equilibrium and dynamic properties; MC samples configuration space directly and gives only equilibrium properties.</p>
 </div>
-<div id="neutron-connection" class="section level2 hasAnchor" number="8.8">
-<h2><span class="header-section-number">8.8</span> Neutron connection<a href="monte-carlo-sampling.html#neutron-connection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="neutron-connection" class="section level2 hasAnchor" number="9.8">
+<h2><span class="header-section-number">9.8</span> Neutron connection<a href="monte-carlo-sampling.html#neutron-connection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Neutron diffraction measures a spatial average — the scattering from many unit cells within the illuminated volume. For crystallographically disordered systems where atoms are not diffusing, this spatial average determines the measured structure.</p>
 <p>MC models this as an average over configurations. If the system is statistically homogeneous — if any region looks like any other on average — then the spatial average equals the ensemble average over configurations.</p>
 
@@ -292,7 +303,7 @@
           </div>
         </div>
       </div>
-<a href="molecular-dynamics-principles.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="molecular-dynamics-observables-and-neutron-connections.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="cluster-expansion.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

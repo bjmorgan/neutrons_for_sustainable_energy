@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7 Molecular dynamics: principles | Computational Techniques for Sustainable Energy Materials</title>
+  <title>8 Molecular dynamics: observables and neutron connections | Computational Techniques for Sustainable Energy Materials</title>
   <meta name="description" content="Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7 Molecular dynamics: principles | Computational Techniques for Sustainable Energy Materials" />
+  <meta property="og:title" content="8 Molecular dynamics: observables and neutron connections | Computational Techniques for Sustainable Energy Materials" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   <meta name="github-repo" content="bjmorgan/neutrons_for_sustainable_energy" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7 Molecular dynamics: principles | Computational Techniques for Sustainable Energy Materials" />
+  <meta name="twitter:title" content="8 Molecular dynamics: observables and neutron connections | Computational Techniques for Sustainable Energy Materials" />
   
   <meta name="twitter:description" content="Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="phonons.html"/>
-<link rel="next" href="molecular-dynamics-observables-and-neutron-connections.html"/>
+<link rel="prev" href="molecular-dynamics-principles.html"/>
+<link rel="next" href="monte-carlo-sampling.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -226,85 +226,100 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="molecular-dynamics-principles" class="section level1 hasAnchor" number="7">
-<h1><span class="header-section-number">7</span> Molecular dynamics: principles<a href="molecular-dynamics-principles.html#molecular-dynamics-principles" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="from-local-curvature-to-global-exploration" class="section level2 hasAnchor" number="7.1">
-<h2><span class="header-section-number">7.1</span> From local curvature to global exploration<a href="molecular-dynamics-principles.html#from-local-curvature-to-global-exploration" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Geometry optimisation finds minima on the potential energy surface. Phonon calculations characterise the curvature at those minima — how the energy changes for small displacements. Both assume atoms remain close to their equilibrium positions: optimisation iterates toward a minimum, and the harmonic approximation expands the energy around it.</p>
-<p>At finite temperature, this picture becomes incomplete. Atoms have kinetic energy and explore the potential energy surface. For mildly anharmonic systems, we can extend lattice dynamics with higher-order terms — but as we saw, this becomes expensive. For systems where atoms don’t remain near any single minimum — diffusing ions, phase transitions, liquids — no Taylor expansion around one point will suffice.</p>
-<p>Molecular dynamics takes a different approach. Rather than expanding <span class="math inline">\(E(r)\)</span> and truncating, we follow the actual motion of atoms over the potential energy surface. Given positions and velocities at some instant, we calculate the forces on all atoms, use these to update the velocities and positions a short time later, and repeat. The result is a trajectory: a sequence of configurations showing how the system evolves in time.</p>
+<div id="molecular-dynamics-observables-and-neutron-connections" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">8</span> Molecular dynamics: observables and neutron connections<a href="molecular-dynamics-observables-and-neutron-connections.html#molecular-dynamics-observables-and-neutron-connections" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="from-trajectories-to-observables" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> From trajectories to observables<a href="molecular-dynamics-observables-and-neutron-connections.html#from-trajectories-to-observables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A molecular dynamics trajectory is a sequence of atomic configurations over time. The raw data — positions and velocities at each timestep — must be processed to extract physically meaningful quantities. Many of the most important quantities take the form of time correlation functions: how does some property at time <span class="math inline">\(t\)</span> relate to the same property at time 0?</p>
+<p>The general form is:</p>
+<p><span class="math display">\[C_{AB}(t) = \langle A(0) B(t) \rangle\]</span></p>
+<p>where <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are dynamical variables and the angle brackets denote an average over time origins. In practice, this is computed by averaging over many starting points along the trajectory:</p>
+<p><span class="math display">\[C_{AB}(t) = \frac{1}{T-t} \int_0^{T-t} A(t&#39;) B(t&#39; + t) \, dt&#39;\]</span></p>
+<p>where <span class="math inline">\(T\)</span> is the total trajectory length. Different choices of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> give different physical information.</p>
 </div>
-<div id="equations-of-motion" class="section level2 hasAnchor" number="7.2">
-<h2><span class="header-section-number">7.2</span> Equations of motion<a href="molecular-dynamics-principles.html#equations-of-motion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The force on atom i is the negative gradient of the potential energy:</p>
-<p><span class="math display">\[\mathbf{F}_i = -\nabla_i E(\mathbf{r})\]</span></p>
-<p>Given the force, Newton’s second law gives the acceleration:</p>
-<p><span class="math display">\[m_i \frac{d^2 \mathbf{r}_i}{dt^2} = \mathbf{F}_i\]</span></p>
-<p>The motion of our system is described by two coupled differential equations:</p>
-<p><span class="math display">\[\frac{d\mathbf{r}}{dt} = \mathbf{v}\]</span></p>
-<p><span class="math display">\[\frac{d\mathbf{v}}{dt} = \mathbf{a} = \frac{\mathbf{F}}{m}\]</span></p>
-<p>If we could integrate these equations exactly, we could predict the positions and velocities at any future time. But the forces depend on positions, which change as the system evolves — for any realistic system, we cannot solve these equations analytically.</p>
+<div id="vibrational-density-of-states" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Vibrational density of states<a href="molecular-dynamics-observables-and-neutron-connections.html#vibrational-density-of-states" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For harmonic systems, the vibrational density of states comes from diagonalising the dynamical matrix, as described in Chapter <a href="phonons.html#phonons">6</a>. MD provides an alternative that does not assume harmonicity.</p>
+<p>The velocity autocorrelation function measures how atomic velocities correlate with themselves at later times:</p>
+<p><span class="math display">\[C_{vv}(t) = \langle \mathbf{v}(0) \cdot \mathbf{v}(t) \rangle\]</span></p>
+<p>At <span class="math inline">\(t = 0\)</span>, this equals <span class="math inline">\(\langle v^2 \rangle\)</span>, proportional to the temperature. As time increases, velocities lose correlation with their initial values — collisions and interactions randomise them. The rate at which this happens, and the oscillations along the way, encode information about the vibrational motion.</p>
+<p>The Fourier transform of the velocity autocorrelation function gives the vibrational density of states:</p>
+<p><span class="math display">\[g(\omega) = \int_{-\infty}^{\infty} C_{vv}(t) \, e^{-i\omega t} \, dt\]</span></p>
+<p>This works because oscillatory motion at frequency <span class="math inline">\(\omega\)</span> contributes oscillations at that frequency to the velocity autocorrelation function, which appear as a peak at <span class="math inline">\(\omega\)</span> in the Fourier transform.</p>
+<p>The result includes all anharmonic effects — the atoms move on the full potential energy surface, not a quadratic approximation to it. For strongly anharmonic systems, the MD-derived density of states may differ substantially from harmonic phonon calculations. Comparison with INS then tests whether the simulation captures the real anharmonicity.</p>
 </div>
-<div id="numerical-integration" class="section level2 hasAnchor" number="7.3">
-<h2><span class="header-section-number">7.3</span> Numerical integration<a href="molecular-dynamics-principles.html#numerical-integration" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Instead, we integrate numerically. The principle is to approximate the continuous equations over small time intervals. If we assume the acceleration is roughly constant over a short time Δt, we can write:</p>
-<p><span class="math display">\[\mathbf{v}(t + \Delta t) \approx \mathbf{v}(t) + \mathbf{a}(t) \Delta t\]</span></p>
-<p><span class="math display">\[\mathbf{r}(t + \Delta t) \approx \mathbf{r}(t) + \mathbf{v}(t) \Delta t + \frac{1}{2}\mathbf{a}(t) \Delta t^2\]</span></p>
-<p>This is Euler integration: use the current acceleration and velocity to predict the state at the next timestep, then repeat. The approximation becomes exact as Δt → 0, but practical calculations require finite timesteps.</p>
-<p>Euler integration has problems. First, it introduces systematic errors at each step — small discrepancies between the predicted trajectory and the true one. These errors accumulate over many steps, causing the total energy to drift rather than remaining constant as it should for an isolated system.</p>
-<p>Second, Euler integration is not time-reversible. Newtonian mechanics is symmetric under time reversal: if we reverse all velocities, the system should retrace its path. Euler’s method breaks this symmetry because it uses information only from the beginning of each timestep. A forward step followed by reversing velocities and stepping again does not return to the starting point.</p>
-<p>The velocity Verlet algorithm, used in most practical MD codes, avoids these problems. It updates positions using both the current and next accelerations:</p>
-<p><span class="math display">\[\mathbf{r}(t + \Delta t) = \mathbf{r}(t) + \mathbf{v}(t) \Delta t + \frac{1}{2}\mathbf{a}(t) \Delta t^2\]</span></p>
-<p><span class="math display">\[\mathbf{v}(t + \Delta t) = \mathbf{v}(t) + \frac{1}{2}[\mathbf{a}(t) + \mathbf{a}(t + \Delta t)] \Delta t\]</span></p>
-<p>The velocity update uses the average of the old and new accelerations, making the algorithm time-reversible. Energy is not conserved exactly, but fluctuates around the correct value without systematic drift.</p>
-<p>The timestep must be small enough to capture the fastest motion in the system — typically the highest-frequency vibrations — which means Δt is usually around 1 femtosecond. A nanosecond trajectory therefore requires 10⁶ timesteps, each requiring a force evaluation.</p>
+<div id="ensemble-averaged-structure" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Ensemble-averaged structure<a href="molecular-dynamics-observables-and-neutron-connections.html#ensemble-averaged-structure" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Neutron diffraction measures a time-averaged structure. Atoms vibrate; the measured positions are averages over that motion. At higher temperatures, the amplitude of vibration increases, and for some systems atoms may sample multiple local configurations.</p>
+<p>MD naturally provides this ensemble average. The time-averaged atomic positions from a trajectory correspond to what diffraction measures — both average over the thermal motion of atoms. For an ordered crystal, this gives thermally-expanded lattice parameters and anisotropic displacement parameters that can be compared directly with Rietveld refinement.</p>
+<p>For disordered systems, the comparison is more subtle. Bragg diffraction reports the average structure, which may not correspond to any single instantaneous configuration. If atoms locally displace from high-symmetry positions but do so differently in different unit cells, diffraction sees only the average. The MD trajectory contains the full distribution of local configurations.</p>
 </div>
-<div id="phase-space-and-trajectories" class="section level2 hasAnchor" number="7.4">
-<h2><span class="header-section-number">7.4</span> Phase space and trajectories<a href="molecular-dynamics-principles.html#phase-space-and-trajectories" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The state of a classical system is specified by the positions and momenta of all atoms — a point in phase space. As we integrate the equations of motion, this point traces out a trajectory through phase space.</p>
-<p>For an isolated system (no external heat bath), the total energy E = K + V is conserved — kinetic energy converts to potential and back, but the sum remains constant. The trajectory is confined to a surface of constant energy in phase space. This is the microcanonical ensemble: all accessible states have the same total energy.</p>
-<p>The temperature in such a system is related to the average kinetic energy:</p>
-<p><span class="math display">\[\langle K \rangle = \frac{3}{2} N k_B T\]</span></p>
-<p>where N is the number of atoms. This follows from the equipartition theorem: each quadratic degree of freedom contributes ½kT to the average energy, and kinetic energy is quadratic in the velocities.</p>
+<div id="pair-distribution-functions" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Pair distribution functions<a href="molecular-dynamics-observables-and-neutron-connections.html#pair-distribution-functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The pair distribution function <span class="math inline">\(g(r)\)</span> measures the probability of finding an atom at distance <span class="math inline">\(r\)</span> from another atom, relative to a uniform distribution. It is the Fourier transform of the structure factor <span class="math inline">\(S(Q)\)</span>, accessible experimentally through total scattering measurements.</p>
+<p>From an MD trajectory, <span class="math inline">\(g(r)\)</span> is computed by histogramming interatomic distances across all configurations:</p>
+<p><span class="math display">\[g(r) = \frac{V}{4\pi r^2 N^2} \left\langle \sum_{i \neq j} \delta(r - |\mathbf{r}_i - \mathbf{r}_j|) \right\rangle\]</span></p>
+<p>The average is over trajectory frames. In practice, distances are binned into shells of width <span class="math inline">\(\delta r\)</span> and normalised appropriately.</p>
+<p>This provides a direct comparison between simulation and experiment. If the simulated <span class="math inline">\(g(r)\)</span> matches the measured PDF, the simulation captures the local structure correctly. Disagreement points to problems with the <span class="math inline">\(E(\mathbf{r})\)</span> method or the structural model.</p>
+<p>For systems with multiple atom types, partial pair distribution functions <span class="math inline">\(g_{\alpha\beta}(r)\)</span> separate contributions from different pair types. Simulation provides these automatically; experimentally, isotope substitution or anomalous X-ray scattering can separate them, though this is more challenging.</p>
 </div>
-<div id="ensembles-and-what-they-mean" class="section level2 hasAnchor" number="7.5">
-<h2><span class="header-section-number">7.5</span> Ensembles and what they mean<a href="molecular-dynamics-principles.html#ensembles-and-what-they-mean" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Real experiments are usually not performed at constant energy. A sample in a furnace exchanges heat with its surroundings; it has a well-defined temperature, not a fixed total energy. Different experimental conditions correspond to different statistical ensembles.</p>
-<p>The <strong>microcanonical ensemble (NVE)</strong> has fixed particle number N, volume V, and energy E. This is what unmodified Newtonian dynamics samples. It describes an isolated system.</p>
-<p>The <strong>canonical ensemble (NVT)</strong> has fixed N, V, and temperature T. The system exchanges energy with a heat bath at temperature T. States are weighted by the Boltzmann factor exp(−E/kT): lower-energy configurations are more probable, but higher-energy configurations are accessible with probability that decreases exponentially.</p>
-<p>The <strong>isothermal-isobaric ensemble (NPT)</strong> has fixed N, pressure P, and temperature T. The system exchanges both energy and volume with its surroundings. This corresponds to most laboratory conditions — a sample at ambient pressure and controlled temperature.</p>
-<p>Which ensemble we simulate determines what statistical distribution we sample. This matters for calculating thermodynamic properties and for comparing with experiment.</p>
+<div id="diffusion-and-mean-squared-displacement" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Diffusion and mean squared displacement<a href="molecular-dynamics-observables-and-neutron-connections.html#diffusion-and-mean-squared-displacement" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Many energy materials involve ionic transport — lithium in batteries, protons in fuel cells, oxygen in solid oxide cells. MD simulates this transport directly.</p>
+<p>The mean squared displacement (MSD) measures how far atoms move from their initial positions:</p>
+<p><span class="math display">\[\text{MSD}(t) = \langle |\mathbf{r}(t) - \mathbf{r}(0)|^2 \rangle\]</span></p>
+<p>where the average is over all atoms of the species of interest and over time origins.</p>
+<p>For atoms vibrating around fixed sites, the MSD oscillates and remains bounded — atoms do not go anywhere on average. For diffusing species, the MSD grows with time. At long times, diffusive motion gives:</p>
+<p><span class="math display">\[\text{MSD}(t) \rightarrow 6Dt\]</span></p>
+<p>where <span class="math inline">\(D\)</span> is the diffusion coefficient and the factor of 6 comes from three-dimensional motion (2 for each dimension). Plotting MSD against time and fitting the slope gives <span class="math inline">\(D\)</span> directly.</p>
+<p>This can be decomposed by species: in a lithium-ion conductor, lithium motion (which should show diffusion) can be tracked separately from the framework atoms (which should show only vibration). The simulation reveals not just that diffusion occurs, but which atoms are diffusing.</p>
 </div>
-<div id="thermostats-and-barostats" class="section level2 hasAnchor" number="7.6">
-<h2><span class="header-section-number">7.6</span> Thermostats and barostats<a href="molecular-dynamics-principles.html#thermostats-and-barostats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>To simulate NVT or NPT, we need to modify the equations of motion so that the trajectory samples the correct statistical distribution. A thermostat couples the system to a heat bath; a barostat couples it to a pressure reservoir.</p>
-<p>The details of how thermostats work are technical, but the key point is conceptual: a good thermostat is designed so that, over a long trajectory, configurations are visited with the correct Boltzmann weights. The time-average of any property over the trajectory then equals the ensemble average — the thermodynamic expectation value.</p>
-<p>This is the ergodic hypothesis in practice: for a sufficiently long trajectory, the time spent in each region of phase space is proportional to its statistical weight. We can therefore compute ensemble averages — the quantities that connect to thermodynamics and to time-averaged experimental measurements — from a single long trajectory.</p>
+<div id="mechanisms-and-the-van-hove-correlation-function" class="section level2 hasAnchor" number="8.6">
+<h2><span class="header-section-number">8.6</span> Mechanisms and the Van Hove correlation function<a href="molecular-dynamics-observables-and-neutron-connections.html#mechanisms-and-the-van-hove-correlation-function" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The MSD gives a diffusion coefficient — a single number characterising the rate. But the trajectory contains the actual atomic motion, from which mechanisms can be identified. For simple systems, visualising trajectories may suffice: an atom hops from one site to another, and the pathway can be identified and events counted. For more complex systems — correlated motion of multiple atoms, competing mechanisms, transient intermediates — more sophisticated analysis is needed. The information is in the trajectory; the challenge is extracting it.</p>
+<p>The Van Hove correlation function <span class="math inline">\(G(\mathbf{r}, t)\)</span> provides a systematic approach. It generalises the pair distribution function to include time dependence, measuring the probability of finding an atom at position <span class="math inline">\(\mathbf{r}\)</span> at time <span class="math inline">\(t\)</span>, given that an atom (the same one, or a different one) was at the origin at time 0.</p>
+<p>The <strong>self part</strong> <span class="math inline">\(G_s(\mathbf{r}, t)\)</span> tracks where the <em>same</em> atom has moved to:</p>
+<p><span class="math display">\[G_s(\mathbf{r}, t) = \frac{1}{N} \left\langle \sum_i \delta(\mathbf{r} - [\mathbf{r}_i(t) - \mathbf{r}_i(0)]) \right\rangle\]</span></p>
+<p>At <span class="math inline">\(t = 0\)</span>, this is a delta function at the origin — each atom is where it started. As time evolves, <span class="math inline">\(G_s(\mathbf{r}, t)\)</span> broadens as atoms move. For vibrating atoms, it broadens but remains centred near the origin. For diffusing atoms, it broadens and the width grows with time.</p>
+<p><span class="math inline">\(G_s(\mathbf{r}, t)\)</span> provides direct mechanistic insight. For jump diffusion, discrete peaks appear at neighbouring site distances that grow with time. For continuous diffusion, there is smooth broadening. For confined motion, the distribution broadens but remains bounded. The real-space, real-time picture shows how atoms actually move.</p>
+<p>The <strong>distinct part</strong> <span class="math inline">\(G_d(\mathbf{r}, t)\)</span> tracks where <em>different</em> atoms are:</p>
+<p><span class="math display">\[G_d(\mathbf{r}, t) = \frac{1}{N} \left\langle \sum_{i \neq j} \delta(\mathbf{r} - [\mathbf{r}_j(t) - \mathbf{r}_i(0)]) \right\rangle\]</span></p>
+<p>At <span class="math inline">\(t = 0\)</span>, this equals <span class="math inline">\(g(r) - 1\)</span> (the pair distribution function). As time evolves, it reflects how the structure around each atom changes.</p>
 </div>
-<div id="what-you-get-1" class="section level2 hasAnchor" number="7.7">
-<h2><span class="header-section-number">7.7</span> What you get<a href="molecular-dynamics-principles.html#what-you-get-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>A molecular dynamics simulation produces a trajectory: atomic positions (and velocities) at each timestep. From this trajectory, we can calculate:</p>
-<p><strong>Equilibrium properties</strong> — averages over the trajectory. The mean potential energy, the average structure, the distribution of atomic positions. These are ensemble averages, directly comparable to time-averaged experimental measurements.</p>
-<p><strong>Dynamic properties</strong> — how the system evolves in time. How do atomic positions correlate between different times? How quickly do correlations decay? These time correlation functions contain information about dynamics that equilibrium measurements cannot access.</p>
-<p><strong>Transport properties</strong> — diffusion coefficients, viscosities, thermal conductivities. These emerge from how quickly the system loses memory of its initial state.</p>
+<div id="connection-to-sq-ω" class="section level2 hasAnchor" number="8.7">
+<h2><span class="header-section-number">8.7</span> Connection to S(Q, ω)<a href="molecular-dynamics-observables-and-neutron-connections.html#connection-to-sq-ω" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Inelastic neutron scattering measures <span class="math inline">\(S(\mathbf{Q}, \omega)\)</span>, the dynamic structure factor. This is related to the Van Hove functions by a space-time Fourier transform:</p>
+<p><span class="math display">\[S(\mathbf{Q}, \omega) = \int \int G(\mathbf{r}, t) \, e^{i(\mathbf{Q} \cdot \mathbf{r} - \omega t)} \, d\mathbf{r} \, dt\]</span></p>
+<p>The self and distinct parts of <span class="math inline">\(G(\mathbf{r}, t)\)</span> contribute differently to the measured scattering. For nuclei with large incoherent scattering cross-sections — hydrogen being the prime example — the scattering is dominated by the self part, reflecting single-particle motion. For coherent scatterers, the distinct part contributes, and the scattering reflects collective dynamics and structural correlations.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p><span class="math inline">\(S(\mathbf{Q}, \omega)\)</span> is in reciprocal space and frequency domain — the mechanistic information is encoded but not directly visible. Extracting mechanisms from experimental <span class="math inline">\(S(\mathbf{Q}, \omega)\)</span> requires fitting models: simple Fickian diffusion gives a Lorentzian whose width increases as <span class="math inline">\(Q^2\)</span>; jump diffusion (Chudley-Elliott model) gives a width that saturates at large <span class="math inline">\(Q\)</span>; confined motion gives elastic components plus broadened quasielastic scattering. The model parameters reveal something about the mechanism, but a functional form must be assumed to extract them.</p>
+<p>MD reverses this logic. The simulation provides <span class="math inline">\(G(\mathbf{r}, t)\)</span> directly — the real-space picture where mechanisms are visible. The Fourier transform to <span class="math inline">\(S(\mathbf{Q}, \omega)\)</span> then provides the comparison with experiment: does the simulation, which shows a particular mechanism, reproduce the measured scattering?</p>
 </div>
-<div id="the-er-choice" class="section level2 hasAnchor" number="7.8">
-<h2><span class="header-section-number">7.8</span> The <span class="math inline">\(E(r)\)</span> choice<a href="molecular-dynamics-principles.html#the-er-choice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Every MD timestep requires calculating forces — one evaluation of <span class="math inline">\(E(r)\)</span> and its gradient. A typical simulation might run for millions of timesteps. The cost of <span class="math inline">\(E(r)\)</span> therefore determines what simulations are feasible.</p>
-<p><strong>Classical potentials</strong> are cheap to evaluate. Simulations of millions of atoms for nanoseconds to microseconds are routine. The limitation is accuracy: the functional form constrains what physics can be captured.</p>
-<p><strong>Ab initio MD (AIMD)</strong> calculates forces from DFT at each timestep. This is accurate but expensive — practical for hundreds of atoms and picoseconds. Many dynamical processes happen on longer timescales or require larger system sizes.</p>
-<p><strong>Machine-learned interatomic potentials</strong> approach DFT accuracy at near-classical cost. They are increasingly the method of choice when classical potentials aren’t accurate enough but AIMD is too expensive. The caveats discussed in Chapter @ref{mlips} apply: MLIPs inherit limitations from their training data, and can fail outside their training domain.</p>
-<p>The choice is problem-dependent. For a quick estimate of dynamics in a well-characterised material, classical potentials may suffice. For quantitative comparison with experiment in a system where accuracy matters, MLIPs or AIMD may be necessary.</p>
+<div id="the-computationalexperimental-loop" class="section level2 hasAnchor" number="8.8">
+<h2><span class="header-section-number">8.8</span> The computational–experimental loop<a href="molecular-dynamics-observables-and-neutron-connections.html#the-computationalexperimental-loop" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The connection between MD and neutron scattering runs both ways.</p>
+<p>Computation provides microscopic detail. From trajectories, <span class="math inline">\(G(\mathbf{r}, t)\)</span> reveals how atoms move — mechanisms are visible directly. Calculating <span class="math inline">\(S(\mathbf{Q}, \omega)\)</span> from the simulation then allows comparison with experiment. Agreement means the microscopic picture from simulation is consistent with the measured dynamics.</p>
+<p>Disagreement raises questions. The <span class="math inline">\(E(\mathbf{r})\)</span> method may be inadequate — the potential may not capture the relevant physics. But simulations typically model idealised structures: perfect stoichiometry, no impurities, no grain boundaries, infinite crystals via periodic boundary conditions. Real samples have defects, secondary phases, surface effects, non-stoichiometry. Disagreement might mean the simulation is wrong, or it might mean the sample differs from its idealised description. Computation can reveal what ideal behaviour should look like, highlighting where real samples deviate.</p>
+<p>Experiment provides constraints and raises questions. Unexpected QENS broadening, a lineshape that does not fit standard models, dynamics that differ from predictions — these prompt computational investigation. What mechanism would produce this scattering? The most productive work often involves iteration: measurement raises a question, simulation proposes an answer, comparison tests the proposal.</p>
 
 </div>
+</div>
+
+
+
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>The relationship between self/distinct correlation functions and incoherent/coherent scattering involves the coherent and incoherent scattering lengths of the nuclei. The self correlation function contributes to incoherent scattering weighted by <span class="math inline">\(b_\text{inc}^2\)</span>, while both self and distinct parts contribute to coherent scattering weighted by <span class="math inline">\(b_\text{coh}^2\)</span>. For a full treatment, see Squires, <em>Introduction to the Theory of Thermal Neutron Scattering</em>.<a href="molecular-dynamics-observables-and-neutron-connections.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="phonons.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="molecular-dynamics-observables-and-neutron-connections.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="molecular-dynamics-principles.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="monte-carlo-sampling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -335,7 +350,7 @@ gitbook.start({
     "size": 2
   },
   "edit": {
-    "link": "https://github.com/bjmorgan/neutrons_for_sustainable_energy/main/chapters/molecular_dynamics.Rmd",
+    "link": "https://github.com/bjmorgan/neutrons_for_sustainable_energy/main/chapters/md_observables.Rmd",
     "text": "Edit"
   },
   "history": {
