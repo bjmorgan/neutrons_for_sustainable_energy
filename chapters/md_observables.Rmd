@@ -84,7 +84,11 @@ This can be decomposed by species. In a lithium-ion conductor, lithium motion (w
 
 ## The Van Hove correlation function
 
-The quantities above separate spatial and temporal information: $g(r)$ captures where atoms are relative to each other; MSD and velocity autocorrelation capture how things change in time. The Van Hove correlation function combines both, measuring spatial correlations as a function of time.
+The trajectory contains more than just a diffusion coefficient. Every atomic position at every timestep is recorded — in principle, the complete mechanistic picture is there. For simple diffusion mechanisms, this can be extracted directly by tracking individual atoms through the trajectory. Does a lithium ion hop between discrete sites, or does it follow a continuous path? Does it wait at one site for a long time then jump quickly, or does it move gradually? Are jumps correlated — does one ion moving trigger another to move? These questions can be answered by visualising trajectories and by statistical analysis of jump events.
+
+For more complex mechanisms, the analysis becomes harder. If many atoms move cooperatively, or if the motion involves subtle rearrangements of the surrounding structure, identifying what is happening requires more sophisticated analysis. But the information is present in the trajectory — the challenge is extracting it.
+
+The Van Hove correlation function provides a systematic way to do this. The quantities discussed earlier separate spatial and temporal information: $g(r)$ captures where atoms are relative to each other; MSD and velocity autocorrelation capture how things change in time. The Van Hove function combines both, measuring spatial correlations as a function of time.
 
 The **self part** $G_s(\mathbf{r}, t)$ asks: given that an atom was at some position at time 0, what is the probability of finding *that same atom* at displacement $\mathbf{r}$ from its initial position after time $t$?
 
