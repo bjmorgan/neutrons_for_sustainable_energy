@@ -41,6 +41,7 @@ molecular-dynamics-principles
 from-local-curvature-to-global-exploration
 equations-of-motion
 numerical-integration
+velocity-verlet
 phase-space-and-trajectories
 ensembles-and-what-they-mean
 thermostats-and-barostats

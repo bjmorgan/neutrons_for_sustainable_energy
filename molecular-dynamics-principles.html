@@ -141,11 +141,12 @@
 <li class="chapter" data-level="7.1" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#from-local-curvature-to-global-exploration"><i class="fa fa-check"></i><b>7.1</b> From local curvature to global exploration</a></li>
 <li class="chapter" data-level="7.2" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#equations-of-motion"><i class="fa fa-check"></i><b>7.2</b> Equations of motion</a></li>
 <li class="chapter" data-level="7.3" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#numerical-integration"><i class="fa fa-check"></i><b>7.3</b> Numerical integration</a></li>
-<li class="chapter" data-level="7.4" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#phase-space-and-trajectories"><i class="fa fa-check"></i><b>7.4</b> Phase space and trajectories</a></li>
-<li class="chapter" data-level="7.5" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#ensembles-and-what-they-mean"><i class="fa fa-check"></i><b>7.5</b> Ensembles and what they mean</a></li>
-<li class="chapter" data-level="7.6" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#thermostats-and-barostats"><i class="fa fa-check"></i><b>7.6</b> Thermostats and barostats</a></li>
-<li class="chapter" data-level="7.7" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#what-you-get-1"><i class="fa fa-check"></i><b>7.7</b> What you get</a></li>
-<li class="chapter" data-level="7.8" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#the-er-choice"><i class="fa fa-check"></i><b>7.8</b> The <span class="math inline">\(E(r)\)</span> choice</a></li>
+<li class="chapter" data-level="7.4" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#velocity-verlet"><i class="fa fa-check"></i><b>7.4</b> Velocity Verlet</a></li>
+<li class="chapter" data-level="7.5" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#phase-space-and-trajectories"><i class="fa fa-check"></i><b>7.5</b> Phase space and trajectories</a></li>
+<li class="chapter" data-level="7.6" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#ensembles-and-what-they-mean"><i class="fa fa-check"></i><b>7.6</b> Ensembles and what they mean</a></li>
+<li class="chapter" data-level="7.7" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#thermostats-and-barostats"><i class="fa fa-check"></i><b>7.7</b> Thermostats and barostats</a></li>
+<li class="chapter" data-level="7.8" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#what-you-get-1"><i class="fa fa-check"></i><b>7.8</b> What you get</a></li>
+<li class="chapter" data-level="7.9" data-path="molecular-dynamics-principles.html"><a href="molecular-dynamics-principles.html#the-er-choice"><i class="fa fa-check"></i><b>7.9</b> The <span class="math inline">\(E(r)\)</span> choice</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="md-observables.html"><a href="md-observables.html"><i class="fa fa-check"></i><b>8</b> Molecular dynamics: observables and neutron connections</a>
 <ul>
@@ -233,65 +234,82 @@
 <div id="from-local-curvature-to-global-exploration" class="section level2 hasAnchor" number="7.1">
 <h2><span class="header-section-number">7.1</span> From local curvature to global exploration<a href="molecular-dynamics-principles.html#from-local-curvature-to-global-exploration" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Geometry optimisation finds minima on the potential energy surface. Phonon calculations characterise the curvature at those minima — how the energy changes for small displacements. Both assume atoms remain close to their equilibrium positions: optimisation iterates toward a minimum, and the harmonic approximation expands the energy around it.</p>
-<p>At finite temperature, this picture becomes incomplete. Atoms have kinetic energy and explore the potential energy surface. For mildly anharmonic systems, we can extend lattice dynamics with higher-order terms — but as we saw, this becomes expensive. For systems where atoms don’t remain near any single minimum — diffusing ions, phase transitions, liquids — no Taylor expansion around one point will suffice.</p>
-<p>Molecular dynamics takes a different approach. Rather than expanding <span class="math inline">\(E(r)\)</span> and truncating, we follow the actual motion of atoms over the potential energy surface. Given positions and velocities at some instant, we calculate the forces on all atoms, use these to update the velocities and positions a short time later, and repeat. The result is a trajectory: a sequence of configurations showing how the system evolves in time.</p>
+<p>At finite temperature, this picture becomes incomplete. Atoms have kinetic energy and explore the potential energy surface. For mildly anharmonic systems, we can extend lattice dynamics with higher-order terms — but this becomes expensive. For systems where atoms don’t remain near any single minimum — diffusing ions, phase transitions, liquids — no expansion around one point will suffice.</p>
+<p>Molecular dynamics takes a different approach. Rather than expanding <span class="math inline">\(E(\mathbf{r})\)</span> and truncating, we follow the actual motion of atoms over the potential energy surface. Given positions and velocities at some instant, we calculate the forces on all atoms, use these to update the velocities and positions a short time later, and repeat. The result is a trajectory: a sequence of configurations showing how the system evolves in time.</p>
 </div>
 <div id="equations-of-motion" class="section level2 hasAnchor" number="7.2">
 <h2><span class="header-section-number">7.2</span> Equations of motion<a href="molecular-dynamics-principles.html#equations-of-motion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The force on atom i is the negative gradient of the potential energy:</p>
+<p>The force on atom <span class="math inline">\(i\)</span> is the negative gradient of the potential energy:</p>
 <p><span class="math display">\[\mathbf{F}_i = -\nabla_i E(\mathbf{r})\]</span></p>
 <p>Given the force, Newton’s second law gives the acceleration:</p>
-<p><span class="math display">\[m_i \frac{d^2 \mathbf{r}_i}{dt^2} = \mathbf{F}_i\]</span></p>
-<p>The motion of our system is described by two coupled differential equations:</p>
-<p><span class="math display">\[\frac{d\mathbf{r}}{dt} = \mathbf{v}\]</span></p>
-<p><span class="math display">\[\frac{d\mathbf{v}}{dt} = \mathbf{a} = \frac{\mathbf{F}}{m}\]</span></p>
-<p>If we could integrate these equations exactly, we could predict the positions and velocities at any future time. But the forces depend on positions, which change as the system evolves — for any realistic system, we cannot solve these equations analytically.</p>
+<p><span class="math display">\[m_i \frac{\mathrm{d}^2 \mathbf{r}_i}{\mathrm{d}t^2} = \mathbf{F}_i\]</span></p>
+<p>We can split this into two first-order equations:</p>
+<p><span class="math display">\[\frac{\mathrm{d}\mathbf{v}}{\mathrm{d}t} = \mathbf{a} = \frac{\mathbf{F}}{m}\]</span></p>
+<p><span class="math display">\[\frac{\mathrm{d}\mathbf{r}}{\mathrm{d}t} = \mathbf{v}\]</span></p>
+<p>Written in integral form, these become:</p>
+<p><span class="math display">\[\mathbf{v}(t) = \mathbf{v}(0) + \int_0^t \mathbf{a}(t&#39;) \, \mathrm{d}t&#39;\]</span></p>
+<p><span class="math display">\[\mathbf{r}(t) = \mathbf{r}(0) + \int_0^t \mathbf{v}(t&#39;) \, \mathrm{d}t&#39;\]</span></p>
+<p>If we knew how the acceleration varied with time, we could evaluate these integrals and predict the trajectory exactly. But the acceleration depends on the positions, which depend on the velocities, which depend on the accelerations — the problem is self-referential. For any realistic system, we cannot solve these equations analytically.</p>
 </div>
 <div id="numerical-integration" class="section level2 hasAnchor" number="7.3">
 <h2><span class="header-section-number">7.3</span> Numerical integration<a href="molecular-dynamics-principles.html#numerical-integration" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Instead, we integrate numerically. The principle is to approximate the continuous equations over small time intervals. If we assume the acceleration is roughly constant over a short time Δt, we can write:</p>
-<p><span class="math display">\[\mathbf{v}(t + \Delta t) \approx \mathbf{v}(t) + \mathbf{a}(t) \Delta t\]</span></p>
-<p><span class="math display">\[\mathbf{r}(t + \Delta t) \approx \mathbf{r}(t) + \mathbf{v}(t) \Delta t + \frac{1}{2}\mathbf{a}(t) \Delta t^2\]</span></p>
-<p>This is Euler integration: use the current acceleration and velocity to predict the state at the next timestep, then repeat. The approximation becomes exact as Δt → 0, but practical calculations require finite timesteps.</p>
-<p>Euler integration has problems. First, it introduces systematic errors at each step — small discrepancies between the predicted trajectory and the true one. These errors accumulate over many steps, causing the total energy to drift rather than remaining constant as it should for an isolated system.</p>
-<p>Second, Euler integration is not time-reversible. Newtonian mechanics is symmetric under time reversal: if we reverse all velocities, the system should retrace its path. Euler’s method breaks this symmetry because it uses information only from the beginning of each timestep. A forward step followed by reversing velocities and stepping again does not return to the starting point.</p>
-<p>The velocity Verlet algorithm, used in most practical MD codes, avoids these problems. It updates positions using both the current and next accelerations:</p>
-<p><span class="math display">\[\mathbf{r}(t + \Delta t) = \mathbf{r}(t) + \mathbf{v}(t) \Delta t + \frac{1}{2}\mathbf{a}(t) \Delta t^2\]</span></p>
-<p><span class="math display">\[\mathbf{v}(t + \Delta t) = \mathbf{v}(t) + \frac{1}{2}[\mathbf{a}(t) + \mathbf{a}(t + \Delta t)] \Delta t\]</span></p>
-<p>The velocity update uses the average of the old and new accelerations, making the algorithm time-reversible. Energy is not conserved exactly, but fluctuates around the correct value without systematic drift.</p>
-<p>The timestep must be small enough to capture the fastest motion in the system — typically the highest-frequency vibrations — which means Δt is usually around 1 femtosecond. A nanosecond trajectory therefore requires 10⁶ timesteps, each requiring a force evaluation.</p>
+<p>Instead, we integrate numerically by advancing the system in small time steps. The simplest approach is to assume the acceleration is roughly constant over a short interval <span class="math inline">\(\Delta t\)</span>. The velocity integral then becomes straightforward:</p>
+<p><span class="math display">\[\mathbf{v}(\Delta t) = \mathbf{v}(0) + \int_0^{\Delta t} \mathbf{a}(0) \, \mathrm{d}t&#39; = \mathbf{v}(0) + \mathbf{a}(0) \Delta t\]</span></p>
+<p>For the position, we need to integrate the velocity — but now the velocity is changing during the interval. Substituting <span class="math inline">\(\mathbf{v}(t&#39;) = \mathbf{v}(0) + \mathbf{a}(0) t&#39;\)</span> into the position integral:</p>
+<p><span class="math display">\[\mathbf{r}(\Delta t) = \mathbf{r}(0) + \int_0^{\Delta t} \left[\mathbf{v}(0) + \mathbf{a}(0) t&#39;\right] \mathrm{d}t&#39; = \mathbf{r}(0) + \mathbf{v}(0) \Delta t + \frac{1}{2}\mathbf{a}(0) \Delta t^2\]</span></p>
+<p>These are the familiar kinematic equations for motion under constant acceleration. At each timestep, we calculate the forces, update positions and velocities, then repeat. The approximation becomes exact as <span class="math inline">\(\Delta t \to 0\)</span>, but practical calculations require finite timesteps.</p>
+<p>This simple approach has problems. The assumption of constant acceleration introduces errors at each step — small discrepancies between the predicted trajectory and the true one. These errors accumulate over many steps, causing the total energy to drift rather than remaining constant as it should for an isolated system.</p>
+<p>There is also a more subtle problem. Newtonian mechanics is symmetric under time reversal: if we reverse all velocities, the system should retrace its path. But using only the acceleration at the start of each timestep breaks this symmetry — a forward step followed by reversing velocities and stepping again does not return exactly to the starting point.</p>
 </div>
-<div id="phase-space-and-trajectories" class="section level2 hasAnchor" number="7.4">
-<h2><span class="header-section-number">7.4</span> Phase space and trajectories<a href="molecular-dynamics-principles.html#phase-space-and-trajectories" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="velocity-verlet" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Velocity Verlet<a href="molecular-dynamics-principles.html#velocity-verlet" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The velocity Verlet algorithm partially addresses these problems by treating the two halves of each timestep symmetrically.</p>
+<p>The idea is to split the velocity update into two half-steps. In the first half, we advance the velocity from <span class="math inline">\(t\)</span> to <span class="math inline">\(t + \frac{\Delta t}{2}\)</span> using the acceleration at time <span class="math inline">\(t\)</span>:</p>
+<p><span class="math display">\[\mathbf{v}(t + \frac{\Delta t}{2}) = \mathbf{v}(t) + \frac{1}{2}\mathbf{a}(t)\Delta t\]</span></p>
+<p>Then we update positions using this half-step velocity:</p>
+<p><span class="math display">\[\mathbf{r}(t + \Delta t) = \mathbf{r}(t) + \mathbf{v}(t + \frac{\Delta t}{2}) \Delta t\]</span></p>
+<p>With the new positions, we calculate the forces to get <span class="math inline">\(\mathbf{a}(t + \Delta t)\)</span>. Finally, we complete the velocity update using this new acceleration:</p>
+<p><span class="math display">\[\mathbf{v}(t + \Delta t) = \mathbf{v}(t + \frac{\Delta t}{2}) + \frac{1}{2}\mathbf{a}(t + \Delta t)\Delta t\]</span></p>
+<p>The two half-steps are mirror images of each other: the first uses the acceleration at the start, the second uses the acceleration at the end. This symmetry is what makes the algorithm time-reversible.</p>
+<p>In practice, these steps can be combined. Substituting the half-step velocity into the position update gives:</p>
+<p><span class="math display">\[\mathbf{r}(t + \Delta t) = \mathbf{r}(t) + \mathbf{v}(t) \Delta t + \frac{1}{2}\mathbf{a}(t) \Delta t^2\]</span></p>
+<p>And combining the two velocity half-steps:</p>
+<p><span class="math display">\[\mathbf{v}(t + \Delta t) = \mathbf{v}(t) + \frac{1}{2}[\mathbf{a}(t) + \mathbf{a}(t + \Delta t)] \Delta t\]</span></p>
+<p>The position equation is unchanged from the simple scheme. The velocity update now uses the average of the old and new accelerations — the trapezoidal rule rather than a rectangle.</p>
+<p>Discretisation errors remain — the trajectory is still approximate. But the symmetry makes velocity Verlet time-reversible: run the system forward one step, reverse all velocities, run another step, and you return exactly to where you started. This eliminates systematic energy drift. Energy still fluctuates due to discretisation, but the fluctuations remain bounded rather than accumulating over time. In practice, this means we can run longer simulations without them becoming unphysical.</p>
+<p>The timestep must still be small enough to capture the fastest motion in the system — typically the highest-frequency vibrations — which means <span class="math inline">\(\Delta t\)</span> is usually around 1 femtosecond. A nanosecond trajectory therefore requires <span class="math inline">\(10^6\)</span> timesteps, each requiring a force evaluation.</p>
+</div>
+<div id="phase-space-and-trajectories" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> Phase space and trajectories<a href="molecular-dynamics-principles.html#phase-space-and-trajectories" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The state of a classical system is specified by the positions and momenta of all atoms — a point in phase space. As we integrate the equations of motion, this point traces out a trajectory through phase space.</p>
 <p>For an isolated system (no external heat bath), the total energy E = K + V is conserved — kinetic energy converts to potential and back, but the sum remains constant. The trajectory is confined to a surface of constant energy in phase space. This is the microcanonical ensemble: all accessible states have the same total energy.</p>
 <p>The temperature in such a system is related to the average kinetic energy:</p>
 <p><span class="math display">\[\langle K \rangle = \frac{3}{2} N k_B T\]</span></p>
 <p>where N is the number of atoms. This follows from the equipartition theorem: each quadratic degree of freedom contributes ½kT to the average energy, and kinetic energy is quadratic in the velocities.</p>
 </div>
-<div id="ensembles-and-what-they-mean" class="section level2 hasAnchor" number="7.5">
-<h2><span class="header-section-number">7.5</span> Ensembles and what they mean<a href="molecular-dynamics-principles.html#ensembles-and-what-they-mean" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="ensembles-and-what-they-mean" class="section level2 hasAnchor" number="7.6">
+<h2><span class="header-section-number">7.6</span> Ensembles and what they mean<a href="molecular-dynamics-principles.html#ensembles-and-what-they-mean" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Real experiments are usually not performed at constant energy. A sample in a furnace exchanges heat with its surroundings; it has a well-defined temperature, not a fixed total energy. Different experimental conditions correspond to different statistical ensembles.</p>
 <p>The <strong>microcanonical ensemble (NVE)</strong> has fixed particle number N, volume V, and energy E. This is what unmodified Newtonian dynamics samples. It describes an isolated system.</p>
 <p>The <strong>canonical ensemble (NVT)</strong> has fixed N, V, and temperature T. The system exchanges energy with a heat bath at temperature T. States are weighted by the Boltzmann factor exp(−E/kT): lower-energy configurations are more probable, but higher-energy configurations are accessible with probability that decreases exponentially.</p>
 <p>The <strong>isothermal-isobaric ensemble (NPT)</strong> has fixed N, pressure P, and temperature T. The system exchanges both energy and volume with its surroundings. This corresponds to most laboratory conditions — a sample at ambient pressure and controlled temperature.</p>
 <p>Which ensemble we simulate determines what statistical distribution we sample. This matters for calculating thermodynamic properties and for comparing with experiment.</p>
 </div>
-<div id="thermostats-and-barostats" class="section level2 hasAnchor" number="7.6">
-<h2><span class="header-section-number">7.6</span> Thermostats and barostats<a href="molecular-dynamics-principles.html#thermostats-and-barostats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="thermostats-and-barostats" class="section level2 hasAnchor" number="7.7">
+<h2><span class="header-section-number">7.7</span> Thermostats and barostats<a href="molecular-dynamics-principles.html#thermostats-and-barostats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To simulate NVT or NPT, we need to modify the equations of motion so that the trajectory samples the correct statistical distribution. A thermostat couples the system to a heat bath; a barostat couples it to a pressure reservoir.</p>
 <p>The details of how thermostats work are technical, but the key point is conceptual: a good thermostat is designed so that, over a long trajectory, configurations are visited with the correct Boltzmann weights. The time-average of any property over the trajectory then equals the ensemble average — the thermodynamic expectation value.</p>
 <p>This is the ergodic hypothesis in practice: for a sufficiently long trajectory, the time spent in each region of phase space is proportional to its statistical weight. We can therefore compute ensemble averages — the quantities that connect to thermodynamics and to time-averaged experimental measurements — from a single long trajectory.</p>
 </div>
-<div id="what-you-get-1" class="section level2 hasAnchor" number="7.7">
-<h2><span class="header-section-number">7.7</span> What you get<a href="molecular-dynamics-principles.html#what-you-get-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="what-you-get-1" class="section level2 hasAnchor" number="7.8">
+<h2><span class="header-section-number">7.8</span> What you get<a href="molecular-dynamics-principles.html#what-you-get-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A molecular dynamics simulation produces a trajectory: atomic positions (and velocities) at each timestep. From this trajectory, we can calculate:</p>
 <p><strong>Equilibrium properties</strong> — averages over the trajectory. The mean potential energy, the average structure, the distribution of atomic positions. These are ensemble averages, directly comparable to time-averaged experimental measurements.</p>
 <p><strong>Dynamic properties</strong> — how the system evolves in time. How do atomic positions correlate between different times? How quickly do correlations decay? These time correlation functions contain information about dynamics that equilibrium measurements cannot access.</p>
 <p><strong>Transport properties</strong> — diffusion coefficients, viscosities, thermal conductivities. These emerge from how quickly the system loses memory of its initial state.</p>
 </div>
-<div id="the-er-choice" class="section level2 hasAnchor" number="7.8">
-<h2><span class="header-section-number">7.8</span> The <span class="math inline">\(E(r)\)</span> choice<a href="molecular-dynamics-principles.html#the-er-choice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-er-choice" class="section level2 hasAnchor" number="7.9">
+<h2><span class="header-section-number">7.9</span> The <span class="math inline">\(E(r)\)</span> choice<a href="molecular-dynamics-principles.html#the-er-choice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Every MD timestep requires calculating forces — one evaluation of <span class="math inline">\(E(r)\)</span> and its gradient. A typical simulation might run for millions of timesteps. The cost of <span class="math inline">\(E(r)\)</span> therefore determines what simulations are feasible.</p>
 <p><strong>Classical potentials</strong> are cheap to evaluate. Simulations of millions of atoms for nanoseconds to microseconds are routine. The limitation is accuracy: the functional form constrains what physics can be captured.</p>
 <p><strong>Ab initio MD (AIMD)</strong> calculates forces from DFT at each timestep. This is accurate but expensive — practical for hundreds of atoms and picoseconds. Many dynamical processes happen on longer timescales or require larger system sizes.</p>
