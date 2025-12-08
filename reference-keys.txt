@@ -49,11 +49,12 @@ what-you-get-1
 the-er-choice
 md-observables
 from-trajectories-to-observables
-vibrational-density-of-states
 ensemble-averaged-structure
 pair-distribution-functions
+time-correlation-functions
+vibrational-density-of-states
 diffusion-and-mean-squared-displacement
-mechanisms-and-the-van-hove-correlation-function
+the-van-hove-correlation-function
 connection-to-sq-ω
 the-computationalexperimental-loop
 monte-carlo-sampling

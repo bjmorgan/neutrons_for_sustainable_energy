@@ -151,13 +151,14 @@
 <li class="chapter" data-level="8" data-path="md-observables.html"><a href="md-observables.html"><i class="fa fa-check"></i><b>8</b> Molecular dynamics: observables and neutron connections</a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="md-observables.html"><a href="md-observables.html#from-trajectories-to-observables"><i class="fa fa-check"></i><b>8.1</b> From trajectories to observables</a></li>
-<li class="chapter" data-level="8.2" data-path="md-observables.html"><a href="md-observables.html#vibrational-density-of-states"><i class="fa fa-check"></i><b>8.2</b> Vibrational density of states</a></li>
-<li class="chapter" data-level="8.3" data-path="md-observables.html"><a href="md-observables.html#ensemble-averaged-structure"><i class="fa fa-check"></i><b>8.3</b> Ensemble-averaged structure</a></li>
-<li class="chapter" data-level="8.4" data-path="md-observables.html"><a href="md-observables.html#pair-distribution-functions"><i class="fa fa-check"></i><b>8.4</b> Pair distribution functions</a></li>
-<li class="chapter" data-level="8.5" data-path="md-observables.html"><a href="md-observables.html#diffusion-and-mean-squared-displacement"><i class="fa fa-check"></i><b>8.5</b> Diffusion and mean squared displacement</a></li>
-<li class="chapter" data-level="8.6" data-path="md-observables.html"><a href="md-observables.html#mechanisms-and-the-van-hove-correlation-function"><i class="fa fa-check"></i><b>8.6</b> Mechanisms and the Van Hove correlation function</a></li>
-<li class="chapter" data-level="8.7" data-path="md-observables.html"><a href="md-observables.html#connection-to-sq-ω"><i class="fa fa-check"></i><b>8.7</b> Connection to S(Q, ω)</a></li>
-<li class="chapter" data-level="8.8" data-path="md-observables.html"><a href="md-observables.html#the-computationalexperimental-loop"><i class="fa fa-check"></i><b>8.8</b> The computational–experimental loop</a></li>
+<li class="chapter" data-level="8.2" data-path="md-observables.html"><a href="md-observables.html#ensemble-averaged-structure"><i class="fa fa-check"></i><b>8.2</b> Ensemble-averaged structure</a></li>
+<li class="chapter" data-level="8.3" data-path="md-observables.html"><a href="md-observables.html#pair-distribution-functions"><i class="fa fa-check"></i><b>8.3</b> Pair distribution functions</a></li>
+<li class="chapter" data-level="8.4" data-path="md-observables.html"><a href="md-observables.html#time-correlation-functions"><i class="fa fa-check"></i><b>8.4</b> Time correlation functions</a></li>
+<li class="chapter" data-level="8.5" data-path="md-observables.html"><a href="md-observables.html#vibrational-density-of-states"><i class="fa fa-check"></i><b>8.5</b> Vibrational density of states</a></li>
+<li class="chapter" data-level="8.6" data-path="md-observables.html"><a href="md-observables.html#diffusion-and-mean-squared-displacement"><i class="fa fa-check"></i><b>8.6</b> Diffusion and mean squared displacement</a></li>
+<li class="chapter" data-level="8.7" data-path="md-observables.html"><a href="md-observables.html#the-van-hove-correlation-function"><i class="fa fa-check"></i><b>8.7</b> The Van Hove correlation function</a></li>
+<li class="chapter" data-level="8.8" data-path="md-observables.html"><a href="md-observables.html#connection-to-sq-ω"><i class="fa fa-check"></i><b>8.8</b> Connection to S(Q, ω)</a></li>
+<li class="chapter" data-level="8.9" data-path="md-observables.html"><a href="md-observables.html#the-computationalexperimental-loop"><i class="fa fa-check"></i><b>8.9</b> The computational–experimental loop</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="part-iii-configurational-disorder.html"><a href="part-iii-configurational-disorder.html"><i class="fa fa-check"></i>Part III: Configurational Disorder</a></li>
 <li class="chapter" data-level="9" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html"><i class="fa fa-check"></i><b>9</b> Monte Carlo sampling</a>
@@ -261,7 +262,7 @@
 <p><span class="math display">\[\frac{P(1 \to 2)}{P(2 \to 1)} = \frac{\pi_2}{\pi_1}\]</span></p>
 <p>For many states, we impose this constraint on every pair. The result is that we sample each state with probability proportional to our target distribution.</p>
 <p>For the Boltzmann distribution, the ratio of target probabilities is:</p>
-<p><span class="math display">\[\frac{\pi_2}{\pi_1} = \frac{e^{-E_2/kT}}{e^{-E_1/kT}} = e^{-\Delta E/kT}\]</span></p>
+<p><span class="math display">\[\frac{\pi_2}{\pi_1} = \frac{\mathrm{e}^{-E_2/kT}}{\mathrm{e}^{-E_1/kT}} = \mathrm{e}^{-\Delta E/kT}\]</span></p>
 <p>This depends only on the energy difference between the two states — not on absolute energies. Since we only ever compare states pairwise, we never need to know the partition function or evaluate absolute energies.</p>
 <p>Any acceptance rule where the ratio of forward to backward acceptance probabilities equals <span class="math inline">\(\exp(-\Delta E/kT)\)</span> will sample from the Boltzmann distribution. The Metropolis criterion is one such choice.</p>
 </div>
@@ -269,13 +270,13 @@
 <h2><span class="header-section-number">9.5</span> The Metropolis algorithm<a href="monte-carlo-sampling.html#the-metropolis-algorithm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The Metropolis algorithm is the standard approach. The procedure is:</p>
 <ol style="list-style-type: decimal">
-<li>Start from some configuration with energy E<sub>1</sub></li>
+<li>Start from some configuration with energy <span class="math inline">\(E_1\)</span></li>
 <li>Propose a move — for configurational disorder, typically swapping two atoms of different types</li>
-<li>Calculate the energy E<sub>2</sub> of the new configuration</li>
+<li>Calculate the energy <span class="math inline">\(E_2\)</span> of the new configuration</li>
 <li>Accept or reject the move:
 <ul>
-<li>If ΔE ≤ 0 (energy decreased): accept</li>
-<li>If ΔE &gt; 0 (energy increased): accept with probability <span class="math inline">\(\exp(-\Delta E/kT)\)</span></li>
+<li>If <span class="math inline">\(\Delta E\)</span> ≤ 0 (energy decreased): accept</li>
+<li>If <span class="math inline">\(\Delta E\)</span> &gt; 0 (energy increased): accept with probability <span class="math inline">\(\exp(-\Delta E/kT)\)</span></li>
 </ul></li>
 <li>If accepted, the new configuration becomes the current one; if rejected, stay in the old configuration</li>
 <li>Repeat from step 2</li>
