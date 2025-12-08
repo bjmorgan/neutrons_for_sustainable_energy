@@ -46,7 +46,7 @@ For many states, we impose this constraint on every pair. The result is that we 
 
 For the Boltzmann distribution, the ratio of target probabilities is:
 
-$$\frac{\pi_2}{\pi_1} = \frac{e^{-E_2/kT}}{e^{-E_1/kT}} = e^{-\Delta E/kT}$$
+$$\frac{\pi_2}{\pi_1} = \frac{\mathrm{e}^{-E_2/kT}}{\mathrm{e}^{-E_1/kT}} = \mathrm{e}^{-\Delta E/kT}$$
 
 This depends only on the energy difference between the two states — not on absolute energies. Since we only ever compare states pairwise, we never need to know the partition function or evaluate absolute energies.
 
@@ -56,12 +56,12 @@ Any acceptance rule where the ratio of forward to backward acceptance probabilit
 
 The Metropolis algorithm is the standard approach. The procedure is:
 
-1. Start from some configuration with energy E<sub>1</sub>
+1. Start from some configuration with energy $E_1$
 2. Propose a move — for configurational disorder, typically swapping two atoms of different types
-3. Calculate the energy E<sub>2</sub> of the new configuration
+3. Calculate the energy $E_2$ of the new configuration
 4. Accept or reject the move:
-   - If ΔE ≤ 0 (energy decreased): accept
-   - If ΔE > 0 (energy increased): accept with probability $\exp(-\Delta E/kT)$
+   - If $\Delta E$ ≤ 0 (energy decreased): accept
+   - If $\Delta E$ > 0 (energy increased): accept with probability $\exp(-\Delta E/kT)$
 5. If accepted, the new configuration becomes the current one; if rejected, stay in the old configuration
 6. Repeat from step 2
 
