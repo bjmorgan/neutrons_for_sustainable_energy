@@ -15,6 +15,7 @@ rmd_files: [
   "chapters/geometry_optimisation.Rmd",
   "chapters/phonons.Rmd",
   "chapters/molecular_dynamics.Rmd",
+  "chapters/md_observables.Rmd",
   "parts/part3.Rmd",
   "chapters/monte_carlo.Rmd",
   "chapters/cluster_expansion.Rmd",

@@ -1,0 +1,117 @@
+# Molecular dynamics: observables and neutron connections
+
+## From trajectories to observables
+
+A molecular dynamics trajectory is a sequence of atomic configurations over time. The raw data — positions and velocities at each timestep — must be processed to extract physically meaningful quantities. Many of the most important quantities take the form of time correlation functions: how does some property at time $t$ relate to the same property at time 0?
+
+The general form is:
+
+$$C_{AB}(t) = \langle A(0) B(t) \rangle$$
+
+where $A$ and $B$ are dynamical variables and the angle brackets denote an average over time origins. In practice, this is computed by averaging over many starting points along the trajectory:
+
+$$C_{AB}(t) = \frac{1}{T-t} \int_0^{T-t} A(t') B(t' + t) \, dt'$$
+
+where $T$ is the total trajectory length. Different choices of $A$ and $B$ give different physical information.
+
+## Vibrational density of states
+
+For harmonic systems, the vibrational density of states comes from diagonalising the dynamical matrix, as described in Chapter \@ref(phonons). MD provides an alternative that does not assume harmonicity.
+
+The velocity autocorrelation function measures how atomic velocities correlate with themselves at later times:
+
+$$C_{vv}(t) = \langle \mathbf{v}(0) \cdot \mathbf{v}(t) \rangle$$
+
+At $t = 0$, this equals $\langle v^2 \rangle$, proportional to the temperature. As time increases, velocities lose correlation with their initial values — collisions and interactions randomise them. The rate at which this happens, and the oscillations along the way, encode information about the vibrational motion.
+
+The Fourier transform of the velocity autocorrelation function gives the vibrational density of states:
+
+$$g(\omega) = \int_{-\infty}^{\infty} C_{vv}(t) \, e^{-i\omega t} \, dt$$
+
+This works because oscillatory motion at frequency $\omega$ contributes oscillations at that frequency to the velocity autocorrelation function, which appear as a peak at $\omega$ in the Fourier transform.
+
+The result includes all anharmonic effects — the atoms move on the full potential energy surface, not a quadratic approximation to it. For strongly anharmonic systems, the MD-derived density of states may differ substantially from harmonic phonon calculations. Comparison with INS then tests whether the simulation captures the real anharmonicity.
+
+## Ensemble-averaged structure
+
+Neutron diffraction measures a time-averaged structure. Atoms vibrate; the measured positions are averages over that motion. At higher temperatures, the amplitude of vibration increases, and for some systems atoms may sample multiple local configurations.
+
+MD naturally provides this ensemble average. The time-averaged atomic positions from a trajectory correspond to what diffraction measures — both average over the thermal motion of atoms. For an ordered crystal, this gives thermally-expanded lattice parameters and anisotropic displacement parameters that can be compared directly with Rietveld refinement.
+
+For disordered systems, the comparison is more subtle. Bragg diffraction reports the average structure, which may not correspond to any single instantaneous configuration. If atoms locally displace from high-symmetry positions but do so differently in different unit cells, diffraction sees only the average. The MD trajectory contains the full distribution of local configurations.
+
+## Pair distribution functions
+
+The pair distribution function $g(r)$ measures the probability of finding an atom at distance $r$ from another atom, relative to a uniform distribution. It is the Fourier transform of the structure factor $S(Q)$, accessible experimentally through total scattering measurements.
+
+From an MD trajectory, $g(r)$ is computed by histogramming interatomic distances across all configurations:
+
+$$g(r) = \frac{V}{4\pi r^2 N^2} \left\langle \sum_{i \neq j} \delta(r - |\mathbf{r}_i - \mathbf{r}_j|) \right\rangle$$
+
+The average is over trajectory frames. In practice, distances are binned into shells of width $\delta r$ and normalised appropriately.
+
+This provides a direct comparison between simulation and experiment. If the simulated $g(r)$ matches the measured PDF, the simulation captures the local structure correctly. Disagreement points to problems with the $E(\mathbf{r})$ method or the structural model.
+
+For systems with multiple atom types, partial pair distribution functions $g_{\alpha\beta}(r)$ separate contributions from different pair types. Simulation provides these automatically; experimentally, isotope substitution or anomalous X-ray scattering can separate them, though this is more challenging.
+
+## Diffusion and mean squared displacement
+
+Many energy materials involve ionic transport — lithium in batteries, protons in fuel cells, oxygen in solid oxide cells. MD simulates this transport directly.
+
+The mean squared displacement (MSD) measures how far atoms move from their initial positions:
+
+$$\text{MSD}(t) = \langle |\mathbf{r}(t) - \mathbf{r}(0)|^2 \rangle$$
+
+where the average is over all atoms of the species of interest and over time origins.
+
+For atoms vibrating around fixed sites, the MSD oscillates and remains bounded — atoms do not go anywhere on average. For diffusing species, the MSD grows with time. At long times, diffusive motion gives:
+
+$$\text{MSD}(t) \rightarrow 6Dt$$
+
+where $D$ is the diffusion coefficient and the factor of 6 comes from three-dimensional motion (2 for each dimension). Plotting MSD against time and fitting the slope gives $D$ directly.
+
+This can be decomposed by species: in a lithium-ion conductor, lithium motion (which should show diffusion) can be tracked separately from the framework atoms (which should show only vibration). The simulation reveals not just that diffusion occurs, but which atoms are diffusing.
+
+## Mechanisms and the Van Hove correlation function
+
+The MSD gives a diffusion coefficient — a single number characterising the rate. But the trajectory contains the actual atomic motion, from which mechanisms can be identified. For simple systems, visualising trajectories may suffice: an atom hops from one site to another, and the pathway can be identified and events counted. For more complex systems — correlated motion of multiple atoms, competing mechanisms, transient intermediates — more sophisticated analysis is needed. The information is in the trajectory; the challenge is extracting it.
+
+The Van Hove correlation function $G(\mathbf{r}, t)$ provides a systematic approach. It generalises the pair distribution function to include time dependence, measuring the probability of finding an atom at position $\mathbf{r}$ at time $t$, given that an atom (the same one, or a different one) was at the origin at time 0.
+
+The **self part** $G_s(\mathbf{r}, t)$ tracks where the *same* atom has moved to:
+
+$$G_s(\mathbf{r}, t) = \frac{1}{N} \left\langle \sum_i \delta(\mathbf{r} - [\mathbf{r}_i(t) - \mathbf{r}_i(0)]) \right\rangle$$
+
+At $t = 0$, this is a delta function at the origin — each atom is where it started. As time evolves, $G_s(\mathbf{r}, t)$ broadens as atoms move. For vibrating atoms, it broadens but remains centred near the origin. For diffusing atoms, it broadens and the width grows with time.
+
+$G_s(\mathbf{r}, t)$ provides direct mechanistic insight. For jump diffusion, discrete peaks appear at neighbouring site distances that grow with time. For continuous diffusion, there is smooth broadening. For confined motion, the distribution broadens but remains bounded. The real-space, real-time picture shows how atoms actually move.
+
+The **distinct part** $G_d(\mathbf{r}, t)$ tracks where *different* atoms are:
+
+$$G_d(\mathbf{r}, t) = \frac{1}{N} \left\langle \sum_{i \neq j} \delta(\mathbf{r} - [\mathbf{r}_j(t) - \mathbf{r}_i(0)]) \right\rangle$$
+
+At $t = 0$, this equals $g(r) - 1$ (the pair distribution function). As time evolves, it reflects how the structure around each atom changes.
+
+## Connection to S(Q, ω)
+
+Inelastic neutron scattering measures $S(\mathbf{Q}, \omega)$, the dynamic structure factor. This is related to the Van Hove functions by a space-time Fourier transform:
+
+$$S(\mathbf{Q}, \omega) = \int \int G(\mathbf{r}, t) \, e^{i(\mathbf{Q} \cdot \mathbf{r} - \omega t)} \, d\mathbf{r} \, dt$$
+
+The self and distinct parts of $G(\mathbf{r}, t)$ contribute differently to the measured scattering. For nuclei with large incoherent scattering cross-sections — hydrogen being the prime example — the scattering is dominated by the self part, reflecting single-particle motion. For coherent scatterers, the distinct part contributes, and the scattering reflects collective dynamics and structural correlations.[^scattering-note]
+
+[^scattering-note]: The relationship between self/distinct correlation functions and incoherent/coherent scattering involves the coherent and incoherent scattering lengths of the nuclei. The self correlation function contributes to incoherent scattering weighted by $b_\text{inc}^2$, while both self and distinct parts contribute to coherent scattering weighted by $b_\text{coh}^2$. For a full treatment, see Squires, *Introduction to the Theory of Thermal Neutron Scattering*.
+
+$S(\mathbf{Q}, \omega)$ is in reciprocal space and frequency domain — the mechanistic information is encoded but not directly visible. Extracting mechanisms from experimental $S(\mathbf{Q}, \omega)$ requires fitting models: simple Fickian diffusion gives a Lorentzian whose width increases as $Q^2$; jump diffusion (Chudley-Elliott model) gives a width that saturates at large $Q$; confined motion gives elastic components plus broadened quasielastic scattering. The model parameters reveal something about the mechanism, but a functional form must be assumed to extract them.
+
+MD reverses this logic. The simulation provides $G(\mathbf{r}, t)$ directly — the real-space picture where mechanisms are visible. The Fourier transform to $S(\mathbf{Q}, \omega)$ then provides the comparison with experiment: does the simulation, which shows a particular mechanism, reproduce the measured scattering?
+
+## The computational–experimental loop
+
+The connection between MD and neutron scattering runs both ways.
+
+Computation provides microscopic detail. From trajectories, $G(\mathbf{r}, t)$ reveals how atoms move — mechanisms are visible directly. Calculating $S(\mathbf{Q}, \omega)$ from the simulation then allows comparison with experiment. Agreement means the microscopic picture from simulation is consistent with the measured dynamics.
+
+Disagreement raises questions. The $E(\mathbf{r})$ method may be inadequate — the potential may not capture the relevant physics. But simulations typically model idealised structures: perfect stoichiometry, no impurities, no grain boundaries, infinite crystals via periodic boundary conditions. Real samples have defects, secondary phases, surface effects, non-stoichiometry. Disagreement might mean the simulation is wrong, or it might mean the sample differs from its idealised description. Computation can reveal what ideal behaviour should look like, highlighting where real samples deviate.
+
+Experiment provides constraints and raises questions. Unexpected QENS broadening, a lineshape that does not fit standard models, dynamics that differ from predictions — these prompt computational investigation. What mechanism would produce this scattering? The most productive work often involves iteration: measurement raises a question, simulation proposes an answer, comparison tests the proposal.
