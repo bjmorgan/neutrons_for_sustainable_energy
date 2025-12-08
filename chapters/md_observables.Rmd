@@ -10,7 +10,7 @@ $$C_{AB}(t) = \langle A(0) B(t) \rangle$$
 
 where $A$ and $B$ are dynamical variables and the angle brackets denote an average over time origins. In practice, this is computed by averaging over many starting points along the trajectory:
 
-$$C_{AB}(t) = \frac{1}{T-t} \int_0^{T-t} A(t') B(t' + t) \, dt'$$
+$$C_{AB}(t) = \frac{1}{T-t} \int_0^{T-t} A(t') B(t' + t) \, \mathrm{d}t'$$
 
 where $T$ is the total trajectory length. Different choices of $A$ and $B$ give different physical information.
 
@@ -26,7 +26,7 @@ At $t = 0$, this equals $\langle v^2 \rangle$, proportional to the temperature. 
 
 The Fourier transform of the velocity autocorrelation function gives the vibrational density of states:
 
-$$g(\omega) = \int_{-\infty}^{\infty} C_{vv}(t) \, e^{-i\omega t} \, dt$$
+$$g(\omega) = \int_{-\infty}^{\infty} C_{vv}(t) \, e^{-\mathrm{i}\omega t} \, \mathrm{d}t$$
 
 This works because oscillatory motion at frequency $\omega$ contributes oscillations at that frequency to the velocity autocorrelation function, which appear as a peak at $\omega$ in the Fourier transform.
 
@@ -76,9 +76,9 @@ This can be decomposed by species: in a lithium-ion conductor, lithium motion (w
 
 The MSD gives a diffusion coefficient — a single number characterising the rate. But the trajectory contains the actual atomic motion, from which mechanisms can be identified. For simple systems, visualising trajectories may suffice: an atom hops from one site to another, and the pathway can be identified and events counted. For more complex systems — correlated motion of multiple atoms, competing mechanisms, transient intermediates — more sophisticated analysis is needed. The information is in the trajectory; the challenge is extracting it.
 
-The Van Hove correlation function $G(\mathbf{r}, t)$ provides a systematic approach. It generalises the pair distribution function to include time dependence, measuring the probability of finding an atom at position $\mathbf{r}$ at time $t$, given that an atom (the same one, or a different one) was at the origin at time 0.
+The Van Hove correlation function $G(\mathbf{r}, t)$ provides one systematic approach. It generalises the pair distribution function to include time dependence, measuring the probability of finding an atom at position $\mathbf{r}$ at time $t$, given that an atom (the same one, or a different one) was at the origin at time 0.
 
-The **self part** $G_s(\mathbf{r}, t)$ tracks where the *same* atom has moved to:
+The **self part** $G_s(\mathbf{r}, t)$ asks: given that atom $i$ was at some position at time 0, what is the probability of finding *that same atom* at distance $\mathbf{r}$ from its initial position after time $t$?
 
 $$G_s(\mathbf{r}, t) = \frac{1}{N} \left\langle \sum_i \delta(\mathbf{r} - [\mathbf{r}_i(t) - \mathbf{r}_i(0)]) \right\rangle$$
 
@@ -86,17 +86,19 @@ At $t = 0$, this is a delta function at the origin — each atom is where it sta
 
 $G_s(\mathbf{r}, t)$ provides direct mechanistic insight. For jump diffusion, discrete peaks appear at neighbouring site distances that grow with time. For continuous diffusion, there is smooth broadening. For confined motion, the distribution broadens but remains bounded. The real-space, real-time picture shows how atoms actually move.
 
-The **distinct part** $G_d(\mathbf{r}, t)$ tracks where *different* atoms are:
+The **distinct part** $G_d(\mathbf{r}, t)$ asks a different question: given that atom $i$ was at some position at time 0, what is the probability of finding a *different* atom $j$ at distance $\mathbf{r}$ from that initial position after time $t$?
 
 $$G_d(\mathbf{r}, t) = \frac{1}{N} \left\langle \sum_{i \neq j} \delta(\mathbf{r} - [\mathbf{r}_j(t) - \mathbf{r}_i(0)]) \right\rangle$$
 
-At $t = 0$, this equals $g(r) - 1$ (the pair distribution function). As time evolves, it reflects how the structure around each atom changes.
+At $t = 0$, this is the pair distribution function $g(r) - 1$: peaks at the neighbour distances, reflecting the local structure around each atom. As time evolves, $G_d(\mathbf{r}, t)$ reveals how this local structure changes. In a solid, the peaks persist — neighbours vibrate but remain in place. In a liquid, the peaks decay as neighbours diffuse away and are replaced by other atoms. The timescale over which correlations decay characterises structural relaxation.
+
+For a diffusing species in a solid framework, the behaviour is intermediate. The mobile ions lose their initial correlations as they hop between sites, while the framework atoms maintain theirs. The distinct part thus probes collective behaviour: not just where one atom goes, but how the arrangement of atoms evolves.
 
 ## Connection to S(Q, ω)
 
 Inelastic neutron scattering measures $S(\mathbf{Q}, \omega)$, the dynamic structure factor. This is related to the Van Hove functions by a space-time Fourier transform:
 
-$$S(\mathbf{Q}, \omega) = \int \int G(\mathbf{r}, t) \, e^{i(\mathbf{Q} \cdot \mathbf{r} - \omega t)} \, d\mathbf{r} \, dt$$
+$$S(\mathbf{Q}, \omega) = \int \int G(\mathbf{r}, t) \, e^{i(\mathbf{Q} \cdot \mathbf{r} - \omega t)} \, \mathrm{d}\mathbf{r} \, \mathrm{d}t$$
 
 The self and distinct parts of $G(\mathbf{r}, t)$ contribute differently to the measured scattering. For nuclei with large incoherent scattering cross-sections — hydrogen being the prime example — the scattering is dominated by the self part, reflecting single-particle motion. For coherent scatterers, the distinct part contributes, and the scattering reflects collective dynamics and structural correlations.[^scattering-note]
 

@@ -1,1 +1,3 @@
-# (PART) Structure and Dynamics {-}
+# Part II: Structure and Dynamics {-}
+
+Given the ability to calculate $E(\mathbf{r})$, what questions can be answered? This part covers methods that interrogate the potential energy surface to determine structure and dynamics. Geometry optimisation locates minima — finding stable structures that can be compared with diffraction. Phonon calculations characterise the curvature at those minima — predicting vibrational frequencies and densities of states measurable by inelastic neutron scattering. Molecular dynamics simulates atomic motion at finite temperature, providing access to ensemble-averaged structures, diffusion coefficients, and the dynamic structure factor $S(Q, \omega)$ measured by quasielastic neutron scattering. Each technique connects computational results directly to neutron observables.

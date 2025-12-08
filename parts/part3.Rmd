@@ -1,1 +1,3 @@
-# (PART) Configurational Disorder {-}
+# Part III:  Configurational Disorder {-}
+
+Many energy materials exhibit disorder: mixed site occupancies, local distortions, or short-range correlations that lack long-range periodicity. This part covers computational approaches to configurational disorder. Monte Carlo sampling generates representative configurations at thermal equilibrium without following dynamics. Cluster expansion parameterises configurational energies efficiently, enabling extensive Monte Carlo sampling at near-DFT accuracy. Together, these methods predict short-range order that Bragg diffraction cannot detect but that appears in the pair distribution function from total scattering. A case study illustrates how computation and PDF measurements combine to characterise local structure in a real material.

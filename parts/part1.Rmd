@@ -1,1 +1,3 @@
-# (PART) Calculating <i>E</i>(<i>r</i>) {-}
+# Part I: Calculating E(r) {-}
+
+For any arrangement of atoms, there is an associated energy. This mapping — configuration to energy — is the potential energy surface, and calculating it is the foundation of computational materials science. This part covers the potential energy surface itself and three approaches to calculating $E(\mathbf{r})$: classical potentials, which are fast but limited by their functional form; density functional theory, which is transferable but computationally expensive; and machine-learned interatomic potentials, which learn from quantum mechanical data to approach first-principles accuracy at reduced cost. These methods differ in their tradeoffs, but any of them can be combined with the techniques covered in Parts II and III.
