@@ -4,51 +4,81 @@
 
 Geometry optimisation finds minima on the potential energy surface. Phonon calculations characterise the curvature at those minima — how the energy changes for small displacements. Both assume atoms remain close to their equilibrium positions: optimisation iterates toward a minimum, and the harmonic approximation expands the energy around it.
 
-At finite temperature, this picture becomes incomplete. Atoms have kinetic energy and explore the potential energy surface. For mildly anharmonic systems, we can extend lattice dynamics with higher-order terms — but as we saw, this becomes expensive. For systems where atoms don't remain near any single minimum — diffusing ions, phase transitions, liquids — no Taylor expansion around one point will suffice.
+At finite temperature, this picture becomes incomplete. Atoms have kinetic energy and explore the potential energy surface. For mildly anharmonic systems, we can extend lattice dynamics with higher-order terms — but this becomes expensive. For systems where atoms don't remain near any single minimum — diffusing ions, phase transitions, liquids — no expansion around one point will suffice.
 
-Molecular dynamics takes a different approach. Rather than expanding $E(r)$ and truncating, we follow the actual motion of atoms over the potential energy surface. Given positions and velocities at some instant, we calculate the forces on all atoms, use these to update the velocities and positions a short time later, and repeat. The result is a trajectory: a sequence of configurations showing how the system evolves in time.
+Molecular dynamics takes a different approach. Rather than expanding $E(\mathbf{r})$ and truncating, we follow the actual motion of atoms over the potential energy surface. Given positions and velocities at some instant, we calculate the forces on all atoms, use these to update the velocities and positions a short time later, and repeat. The result is a trajectory: a sequence of configurations showing how the system evolves in time.
 
 ## Equations of motion
 
-The force on atom i is the negative gradient of the potential energy:
+The force on atom $i$ is the negative gradient of the potential energy:
 
 $$\mathbf{F}_i = -\nabla_i E(\mathbf{r})$$
 
 Given the force, Newton's second law gives the acceleration:
 
-$$m_i \frac{d^2 \mathbf{r}_i}{dt^2} = \mathbf{F}_i$$
+$$m_i \frac{\mathrm{d}^2 \mathbf{r}_i}{\mathrm{d}t^2} = \mathbf{F}_i$$
 
-The motion of our system is described by two coupled differential equations:
+We can split this into two first-order equations:
 
-$$\frac{d\mathbf{r}}{dt} = \mathbf{v}$$
+$$\frac{\mathrm{d}\mathbf{v}}{\mathrm{d}t} = \mathbf{a} = \frac{\mathbf{F}}{m}$$
 
-$$\frac{d\mathbf{v}}{dt} = \mathbf{a} = \frac{\mathbf{F}}{m}$$
+$$\frac{\mathrm{d}\mathbf{r}}{\mathrm{d}t} = \mathbf{v}$$
 
-If we could integrate these equations exactly, we could predict the positions and velocities at any future time. But the forces depend on positions, which change as the system evolves — for any realistic system, we cannot solve these equations analytically.
+Written in integral form, these become:
+
+$$\mathbf{v}(t) = \mathbf{v}(0) + \int_0^t \mathbf{a}(t') \, \mathrm{d}t'$$
+
+$$\mathbf{r}(t) = \mathbf{r}(0) + \int_0^t \mathbf{v}(t') \, \mathrm{d}t'$$
+
+If we knew how the acceleration varied with time, we could evaluate these integrals and predict the trajectory exactly. But the acceleration depends on the positions, which depend on the velocities, which depend on the accelerations — the problem is self-referential. For any realistic system, we cannot solve these equations analytically.
 
 ## Numerical integration
 
-Instead, we integrate numerically. The principle is to approximate the continuous equations over small time intervals. If we assume the acceleration is roughly constant over a short time Δt, we can write:
+Instead, we integrate numerically by advancing the system in small time steps. The simplest approach is to assume the acceleration is roughly constant over a short interval $\Delta t$. The velocity integral then becomes straightforward:
 
-$$\mathbf{v}(t + \Delta t) \approx \mathbf{v}(t) + \mathbf{a}(t) \Delta t$$
+$$\mathbf{v}(\Delta t) = \mathbf{v}(0) + \int_0^{\Delta t} \mathbf{a}(0) \, \mathrm{d}t' = \mathbf{v}(0) + \mathbf{a}(0) \Delta t$$
 
-$$\mathbf{r}(t + \Delta t) \approx \mathbf{r}(t) + \mathbf{v}(t) \Delta t + \frac{1}{2}\mathbf{a}(t) \Delta t^2$$
+For the position, we need to integrate the velocity — but now the velocity is changing during the interval. Substituting $\mathbf{v}(t') = \mathbf{v}(0) + \mathbf{a}(0) t'$ into the position integral:
 
-This is Euler integration: use the current acceleration and velocity to predict the state at the next timestep, then repeat. The approximation becomes exact as Δt → 0, but practical calculations require finite timesteps.
+$$\mathbf{r}(\Delta t) = \mathbf{r}(0) + \int_0^{\Delta t} \left[\mathbf{v}(0) + \mathbf{a}(0) t'\right] \mathrm{d}t' = \mathbf{r}(0) + \mathbf{v}(0) \Delta t + \frac{1}{2}\mathbf{a}(0) \Delta t^2$$
 
-Euler integration has problems. First, it introduces systematic errors at each step — small discrepancies between the predicted trajectory and the true one. These errors accumulate over many steps, causing the total energy to drift rather than remaining constant as it should for an isolated system.
+These are the familiar kinematic equations for motion under constant acceleration. At each timestep, we calculate the forces, update positions and velocities, then repeat. The approximation becomes exact as $\Delta t \to 0$, but practical calculations require finite timesteps.
 
-Second, Euler integration is not time-reversible. Newtonian mechanics is symmetric under time reversal: if we reverse all velocities, the system should retrace its path. Euler's method breaks this symmetry because it uses information only from the beginning of each timestep. A forward step followed by reversing velocities and stepping again does not return to the starting point.
+This simple approach has problems. The assumption of constant acceleration introduces errors at each step — small discrepancies between the predicted trajectory and the true one. These errors accumulate over many steps, causing the total energy to drift rather than remaining constant as it should for an isolated system.
 
-The velocity Verlet algorithm, used in most practical MD codes, avoids these problems. It updates positions using both the current and next accelerations:
+There is also a more subtle problem. Newtonian mechanics is symmetric under time reversal: if we reverse all velocities, the system should retrace its path. But using only the acceleration at the start of each timestep breaks this symmetry — a forward step followed by reversing velocities and stepping again does not return exactly to the starting point.
+
+## Velocity Verlet
+
+The velocity Verlet algorithm partially addresses these problems by treating the two halves of each timestep symmetrically.
+
+The idea is to split the velocity update into two half-steps. In the first half, we advance the velocity from $t$ to $t + \frac{\Delta t}{2}$ using the acceleration at time $t$:
+
+$$\mathbf{v}(t + \frac{\Delta t}{2}) = \mathbf{v}(t) + \frac{1}{2}\mathbf{a}(t)\Delta t$$
+
+Then we update positions using this half-step velocity:
+
+$$\mathbf{r}(t + \Delta t) = \mathbf{r}(t) + \mathbf{v}(t + \frac{\Delta t}{2}) \Delta t$$
+
+With the new positions, we calculate the forces to get $\mathbf{a}(t + \Delta t)$. Finally, we complete the velocity update using this new acceleration:
+
+$$\mathbf{v}(t + \Delta t) = \mathbf{v}(t + \frac{\Delta t}{2}) + \frac{1}{2}\mathbf{a}(t + \Delta t)\Delta t$$
+
+The two half-steps are mirror images of each other: the first uses the acceleration at the start, the second uses the acceleration at the end. This symmetry is what makes the algorithm time-reversible.
+
+In practice, these steps can be combined. Substituting the half-step velocity into the position update gives:
 
 $$\mathbf{r}(t + \Delta t) = \mathbf{r}(t) + \mathbf{v}(t) \Delta t + \frac{1}{2}\mathbf{a}(t) \Delta t^2$$
 
+And combining the two velocity half-steps:
+
 $$\mathbf{v}(t + \Delta t) = \mathbf{v}(t) + \frac{1}{2}[\mathbf{a}(t) + \mathbf{a}(t + \Delta t)] \Delta t$$
 
-The velocity update uses the average of the old and new accelerations, making the algorithm time-reversible. Energy is not conserved exactly, but fluctuates around the correct value without systematic drift.
+The position equation is unchanged from the simple scheme. The velocity update now uses the average of the old and new accelerations — the trapezoidal rule rather than a rectangle.
 
-The timestep must be small enough to capture the fastest motion in the system — typically the highest-frequency vibrations — which means Δt is usually around 1 femtosecond. A nanosecond trajectory therefore requires 10⁶ timesteps, each requiring a force evaluation.
+Discretisation errors remain — the trajectory is still approximate. But the symmetry makes velocity Verlet time-reversible: run the system forward one step, reverse all velocities, run another step, and you return exactly to where you started. This eliminates systematic energy drift. Energy still fluctuates due to discretisation, but the fluctuations remain bounded rather than accumulating over time. In practice, this means we can run longer simulations without them becoming unphysical.
+
+The timestep must still be small enough to capture the fastest motion in the system — typically the highest-frequency vibrations — which means $\Delta t$ is usually around 1 femtosecond. A nanosecond trajectory therefore requires $10^6$ timesteps, each requiring a force evaluation.
 
 ## Phase space and trajectories
 
