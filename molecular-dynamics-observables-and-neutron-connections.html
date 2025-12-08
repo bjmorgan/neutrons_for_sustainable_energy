@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="molecular-dynamics-principles.html"/>
-<link rel="next" href="monte-carlo-sampling.html"/>
+<link rel="next" href="part-iii-configurational-disorder.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -83,7 +83,7 @@
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#scope"><i class="fa fa-check"></i>Scope</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#energy-materials"><i class="fa fa-check"></i>Energy materials</a></li>
 </ul></li>
-<li class="part"><span><b>I Calculating <i>E</i>(<i>r</i>)</b></span></li>
+<li class="chapter" data-level="" data-path="part-i-calculating-er.html"><a href="part-i-calculating-er.html"><i class="fa fa-check"></i>Part I: Calculating E(r)</a></li>
 <li class="chapter" data-level="1" data-path="the-potential-energy-surface.html"><a href="the-potential-energy-surface.html"><i class="fa fa-check"></i><b>1</b> The potential energy surface</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="the-potential-energy-surface.html"><a href="the-potential-energy-surface.html#configuration-and-energy"><i class="fa fa-check"></i><b>1.1</b> Configuration and energy</a></li>
@@ -116,7 +116,7 @@
 <li class="chapter" data-level="4.4" data-path="mlips.html"><a href="mlips.html#strengths-and-limitations-2"><i class="fa fa-check"></i><b>4.4</b> Strengths and limitations</a></li>
 <li class="chapter" data-level="4.5" data-path="mlips.html"><a href="mlips.html#when-to-use"><i class="fa fa-check"></i><b>4.5</b> When to use</a></li>
 </ul></li>
-<li class="part"><span><b>II Structure and Dynamics</b></span></li>
+<li class="chapter" data-level="" data-path="part-ii-structure-and-dynamics.html"><a href="part-ii-structure-and-dynamics.html"><i class="fa fa-check"></i>Part II: Structure and Dynamics</a></li>
 <li class="chapter" data-level="5" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html"><i class="fa fa-check"></i><b>5</b> Finding minima: geometry optimisation</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="finding-minima-geometry-optimisation.html"><a href="finding-minima-geometry-optimisation.html#why-compute-a-structure"><i class="fa fa-check"></i><b>5.1</b> Why compute a structure?</a></li>
@@ -156,7 +156,7 @@
 <li class="chapter" data-level="8.7" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#connection-to-sq-ω"><i class="fa fa-check"></i><b>8.7</b> Connection to S(Q, ω)</a></li>
 <li class="chapter" data-level="8.8" data-path="molecular-dynamics-observables-and-neutron-connections.html"><a href="molecular-dynamics-observables-and-neutron-connections.html#the-computationalexperimental-loop"><i class="fa fa-check"></i><b>8.8</b> The computational–experimental loop</a></li>
 </ul></li>
-<li class="part"><span><b>III Configurational Disorder</b></span></li>
+<li class="chapter" data-level="" data-path="part-iii-configurational-disorder.html"><a href="part-iii-configurational-disorder.html"><i class="fa fa-check"></i>Part III: Configurational Disorder</a></li>
 <li class="chapter" data-level="9" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html"><i class="fa fa-check"></i><b>9</b> Monte Carlo sampling</a>
 <ul>
 <li class="chapter" data-level="9.1" data-path="monte-carlo-sampling.html"><a href="monte-carlo-sampling.html#beyond-molecular-dynamics"><i class="fa fa-check"></i><b>9.1</b> Beyond molecular dynamics</a></li>
@@ -234,7 +234,7 @@
 <p>The general form is:</p>
 <p><span class="math display">\[C_{AB}(t) = \langle A(0) B(t) \rangle\]</span></p>
 <p>where <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are dynamical variables and the angle brackets denote an average over time origins. In practice, this is computed by averaging over many starting points along the trajectory:</p>
-<p><span class="math display">\[C_{AB}(t) = \frac{1}{T-t} \int_0^{T-t} A(t&#39;) B(t&#39; + t) \, dt&#39;\]</span></p>
+<p><span class="math display">\[C_{AB}(t) = \frac{1}{T-t} \int_0^{T-t} A(t&#39;) B(t&#39; + t) \, \mathrm{d}t&#39;\]</span></p>
 <p>where <span class="math inline">\(T\)</span> is the total trajectory length. Different choices of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> give different physical information.</p>
 </div>
 <div id="vibrational-density-of-states" class="section level2 hasAnchor" number="8.2">
@@ -244,7 +244,7 @@
 <p><span class="math display">\[C_{vv}(t) = \langle \mathbf{v}(0) \cdot \mathbf{v}(t) \rangle\]</span></p>
 <p>At <span class="math inline">\(t = 0\)</span>, this equals <span class="math inline">\(\langle v^2 \rangle\)</span>, proportional to the temperature. As time increases, velocities lose correlation with their initial values — collisions and interactions randomise them. The rate at which this happens, and the oscillations along the way, encode information about the vibrational motion.</p>
 <p>The Fourier transform of the velocity autocorrelation function gives the vibrational density of states:</p>
-<p><span class="math display">\[g(\omega) = \int_{-\infty}^{\infty} C_{vv}(t) \, e^{-i\omega t} \, dt\]</span></p>
+<p><span class="math display">\[g(\omega) = \int_{-\infty}^{\infty} C_{vv}(t) \, e^{-\mathrm{i}\omega t} \, \mathrm{d}t\]</span></p>
 <p>This works because oscillatory motion at frequency <span class="math inline">\(\omega\)</span> contributes oscillations at that frequency to the velocity autocorrelation function, which appear as a peak at <span class="math inline">\(\omega\)</span> in the Fourier transform.</p>
 <p>The result includes all anharmonic effects — the atoms move on the full potential energy surface, not a quadratic approximation to it. For strongly anharmonic systems, the MD-derived density of states may differ substantially from harmonic phonon calculations. Comparison with INS then tests whether the simulation captures the real anharmonicity.</p>
 </div>
@@ -277,19 +277,20 @@
 <div id="mechanisms-and-the-van-hove-correlation-function" class="section level2 hasAnchor" number="8.6">
 <h2><span class="header-section-number">8.6</span> Mechanisms and the Van Hove correlation function<a href="molecular-dynamics-observables-and-neutron-connections.html#mechanisms-and-the-van-hove-correlation-function" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The MSD gives a diffusion coefficient — a single number characterising the rate. But the trajectory contains the actual atomic motion, from which mechanisms can be identified. For simple systems, visualising trajectories may suffice: an atom hops from one site to another, and the pathway can be identified and events counted. For more complex systems — correlated motion of multiple atoms, competing mechanisms, transient intermediates — more sophisticated analysis is needed. The information is in the trajectory; the challenge is extracting it.</p>
-<p>The Van Hove correlation function <span class="math inline">\(G(\mathbf{r}, t)\)</span> provides a systematic approach. It generalises the pair distribution function to include time dependence, measuring the probability of finding an atom at position <span class="math inline">\(\mathbf{r}\)</span> at time <span class="math inline">\(t\)</span>, given that an atom (the same one, or a different one) was at the origin at time 0.</p>
-<p>The <strong>self part</strong> <span class="math inline">\(G_s(\mathbf{r}, t)\)</span> tracks where the <em>same</em> atom has moved to:</p>
+<p>The Van Hove correlation function <span class="math inline">\(G(\mathbf{r}, t)\)</span> provides one systematic approach. It generalises the pair distribution function to include time dependence, measuring the probability of finding an atom at position <span class="math inline">\(\mathbf{r}\)</span> at time <span class="math inline">\(t\)</span>, given that an atom (the same one, or a different one) was at the origin at time 0.</p>
+<p>The <strong>self part</strong> <span class="math inline">\(G_s(\mathbf{r}, t)\)</span> asks: given that atom <span class="math inline">\(i\)</span> was at some position at time 0, what is the probability of finding <em>that same atom</em> at distance <span class="math inline">\(\mathbf{r}\)</span> from its initial position after time <span class="math inline">\(t\)</span>?</p>
 <p><span class="math display">\[G_s(\mathbf{r}, t) = \frac{1}{N} \left\langle \sum_i \delta(\mathbf{r} - [\mathbf{r}_i(t) - \mathbf{r}_i(0)]) \right\rangle\]</span></p>
 <p>At <span class="math inline">\(t = 0\)</span>, this is a delta function at the origin — each atom is where it started. As time evolves, <span class="math inline">\(G_s(\mathbf{r}, t)\)</span> broadens as atoms move. For vibrating atoms, it broadens but remains centred near the origin. For diffusing atoms, it broadens and the width grows with time.</p>
 <p><span class="math inline">\(G_s(\mathbf{r}, t)\)</span> provides direct mechanistic insight. For jump diffusion, discrete peaks appear at neighbouring site distances that grow with time. For continuous diffusion, there is smooth broadening. For confined motion, the distribution broadens but remains bounded. The real-space, real-time picture shows how atoms actually move.</p>
-<p>The <strong>distinct part</strong> <span class="math inline">\(G_d(\mathbf{r}, t)\)</span> tracks where <em>different</em> atoms are:</p>
+<p>The <strong>distinct part</strong> <span class="math inline">\(G_d(\mathbf{r}, t)\)</span> asks a different question: given that atom <span class="math inline">\(i\)</span> was at some position at time 0, what is the probability of finding a <em>different</em> atom <span class="math inline">\(j\)</span> at distance <span class="math inline">\(\mathbf{r}\)</span> from that initial position after time <span class="math inline">\(t\)</span>?</p>
 <p><span class="math display">\[G_d(\mathbf{r}, t) = \frac{1}{N} \left\langle \sum_{i \neq j} \delta(\mathbf{r} - [\mathbf{r}_j(t) - \mathbf{r}_i(0)]) \right\rangle\]</span></p>
-<p>At <span class="math inline">\(t = 0\)</span>, this equals <span class="math inline">\(g(r) - 1\)</span> (the pair distribution function). As time evolves, it reflects how the structure around each atom changes.</p>
+<p>At <span class="math inline">\(t = 0\)</span>, this is the pair distribution function <span class="math inline">\(g(r) - 1\)</span>: peaks at the neighbour distances, reflecting the local structure around each atom. As time evolves, <span class="math inline">\(G_d(\mathbf{r}, t)\)</span> reveals how this local structure changes. In a solid, the peaks persist — neighbours vibrate but remain in place. In a liquid, the peaks decay as neighbours diffuse away and are replaced by other atoms. The timescale over which correlations decay characterises structural relaxation.</p>
+<p>For a diffusing species in a solid framework, the behaviour is intermediate. The mobile ions lose their initial correlations as they hop between sites, while the framework atoms maintain theirs. The distinct part thus probes collective behaviour: not just where one atom goes, but how the arrangement of atoms evolves.</p>
 </div>
 <div id="connection-to-sq-ω" class="section level2 hasAnchor" number="8.7">
 <h2><span class="header-section-number">8.7</span> Connection to S(Q, ω)<a href="molecular-dynamics-observables-and-neutron-connections.html#connection-to-sq-ω" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Inelastic neutron scattering measures <span class="math inline">\(S(\mathbf{Q}, \omega)\)</span>, the dynamic structure factor. This is related to the Van Hove functions by a space-time Fourier transform:</p>
-<p><span class="math display">\[S(\mathbf{Q}, \omega) = \int \int G(\mathbf{r}, t) \, e^{i(\mathbf{Q} \cdot \mathbf{r} - \omega t)} \, d\mathbf{r} \, dt\]</span></p>
+<p><span class="math display">\[S(\mathbf{Q}, \omega) = \int \int G(\mathbf{r}, t) \, e^{i(\mathbf{Q} \cdot \mathbf{r} - \omega t)} \, \mathrm{d}\mathbf{r} \, \mathrm{d}t\]</span></p>
 <p>The self and distinct parts of <span class="math inline">\(G(\mathbf{r}, t)\)</span> contribute differently to the measured scattering. For nuclei with large incoherent scattering cross-sections — hydrogen being the prime example — the scattering is dominated by the self part, reflecting single-particle motion. For coherent scatterers, the distinct part contributes, and the scattering reflects collective dynamics and structural correlations.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <p><span class="math inline">\(S(\mathbf{Q}, \omega)\)</span> is in reciprocal space and frequency domain — the mechanistic information is encoded but not directly visible. Extracting mechanisms from experimental <span class="math inline">\(S(\mathbf{Q}, \omega)\)</span> requires fitting models: simple Fickian diffusion gives a Lorentzian whose width increases as <span class="math inline">\(Q^2\)</span>; jump diffusion (Chudley-Elliott model) gives a width that saturates at large <span class="math inline">\(Q\)</span>; confined motion gives elastic components plus broadened quasielastic scattering. The model parameters reveal something about the mechanism, but a functional form must be assumed to extract them.</p>
 <p>MD reverses this logic. The simulation provides <span class="math inline">\(G(\mathbf{r}, t)\)</span> directly — the real-space picture where mechanisms are visible. The Fourier transform to <span class="math inline">\(S(\mathbf{Q}, \omega)\)</span> then provides the comparison with experiment: does the simulation, which shows a particular mechanism, reproduce the measured scattering?</p>
@@ -303,10 +304,6 @@
 
 </div>
 </div>
-
-
-
-</div>
 <div class="footnotes">
 <hr />
 <ol start="1">
@@ -319,7 +316,7 @@
         </div>
       </div>
 <a href="molecular-dynamics-principles.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="monte-carlo-sampling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="part-iii-configurational-disorder.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

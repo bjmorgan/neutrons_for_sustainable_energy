@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1 The potential energy surface | Computational Techniques for Sustainable Energy Materials</title>
+  <title>Part II: Structure and Dynamics | Computational Techniques for Sustainable Energy Materials</title>
   <meta name="description" content="Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1 The potential energy surface | Computational Techniques for Sustainable Energy Materials" />
+  <meta property="og:title" content="Part II: Structure and Dynamics | Computational Techniques for Sustainable Energy Materials" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   <meta name="github-repo" content="bjmorgan/neutrons_for_sustainable_energy" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1 The potential energy surface | Computational Techniques for Sustainable Energy Materials" />
+  <meta name="twitter:title" content="Part II: Structure and Dynamics | Computational Techniques for Sustainable Energy Materials" />
   
   <meta name="twitter:description" content="Notes accompanying the Computational Tools lectures for the 2025 Neutrons for Sustainable Energy training school." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="part-i-calculating-er.html"/>
-<link rel="next" href="classical-potentials.html"/>
+<link rel="prev" href="mlips.html"/>
+<link rel="next" href="finding-minima-geometry-optimisation.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -226,42 +226,18 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="the-potential-energy-surface" class="section level1 hasAnchor" number="1">
-<h1><span class="header-section-number">1</span> The potential energy surface<a href="the-potential-energy-surface.html#the-potential-energy-surface" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>All computational modelling of materials rests on a common foundation: for any arrangement of atoms, there is an associated energy. This mapping — configuration to energy — defines the potential energy surface (PES).</p>
-<div id="configuration-and-energy" class="section level2 hasAnchor" number="1.1">
-<h2><span class="header-section-number">1.1</span> Configuration and energy<a href="the-potential-energy-surface.html#configuration-and-energy" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Consider a crystal with two types of atoms in a square unit cell. Call this structure <span class="math inline">\(S_1\)</span>, with atomic positions <span class="math inline">\(\mathbf{r}_1\)</span> and energy <span class="math inline">\(E_1\)</span>.</p>
-<p>Swap some atoms: sites that held A atoms now hold B atoms, and vice versa. The atoms sit at different positions, <span class="math inline">\(\mathbf{r}_2\)</span>, and this structure <span class="math inline">\(S_2\)</span> has a different energy <span class="math inline">\(E_2\)</span>. We can consider different changes — shearing the unit cell into a parallelogram, for example, gives structure <span class="math inline">\(S_3\)</span>, with another different set of positions <span class="math inline">\(\mathbf{r}_3\)</span> and another different energy <span class="math inline">\(E_3\)</span>. This behaviour generalises: a structure is defined by a set of atomic positions, and each set of positions maps to a corresponding energy.</p>
-<p>The shear transformation reveals something more. The transition from <span class="math inline">\(S_1\)</span> to <span class="math inline">\(S_3\)</span> is continuous: gradually shearing the cell, every point along the way has positions slightly different from the last, with a correspondingly different energy. The mapping from positions to energy is not just defined at discrete structures — it is a continuous surface.</p>
-<p>This is the potential energy surface: <span class="math inline">\(E(\mathbf{r})\)</span>, where <span class="math inline">\(\mathbf{r}\)</span> represents the positions of all atoms. For <span class="math inline">\(N\)</span> atoms in three dimensions, <span class="math inline">\(\mathbf{r}\)</span> has <span class="math inline">\(3N\)</span> coordinates. Any point in this <span class="math inline">\(3N\)</span>-dimensional space is a <strong>configuration</strong> — a complete specification of all atomic positions. And every configuration has an energy <span class="math inline">\(E(\mathbf{r})\)</span>.</p>
-<p>The potential energy surface is a mathematical object. A direct physical pathway between two points is not required for both to exist on the surface. The transition from <span class="math inline">\(S_1\)</span> to <span class="math inline">\(S_2\)</span> has no direct pathway — exchanging atom types would require atoms to pass through each other. Yet both are well-defined points with well-defined energies. In real materials, such changes happen by indirect routes: vacancy diffusion, interstitial migration, or other mechanisms that avoid atomic overlap. These indirect routes are themselves paths on the surface.</p>
-</div>
-<div id="features-of-the-pes" class="section level2 hasAnchor" number="1.2">
-<h2><span class="header-section-number">1.2</span> Features of the PES<a href="the-potential-energy-surface.html#features-of-the-pes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The features of the potential energy surface have direct physical significance.</p>
-<p><strong>Minima are stable structures.</strong> A minimum is a configuration where small displacements in any direction increase the energy — forces on all atoms are zero, and the structure is locally stable. These are the crystal structures determined from diffraction: the system sits at a minimum (or near one, at finite temperature).</p>
-<p><strong>Relative energies of minima determine thermodynamics.</strong> If <span class="math inline">\(S_1\)</span> has lower energy than <span class="math inline">\(S_2\)</span>, then <span class="math inline">\(S_1\)</span> is thermodynamically preferred — at least at zero temperature. At finite temperature, entropy also matters, and the relevant quantity becomes the free energy rather than the energy.</p>
-<p><strong>Barriers control kinetics.</strong> Along the pathway from <span class="math inline">\(S_1\)</span> to <span class="math inline">\(S_2\)</span>, there is typically a maximum — an energy barrier. The height of this barrier determines how fast the transformation happens. A high barrier means the process is slow; a low barrier means it is fast. This applies to phase transitions, ionic diffusion, and any process where the system moves from one configuration to another. Diffraction reveals which structure is present; the barrier height explains why a system may be trapped in a metastable minimum.</p>
-<p>The shape of the PES determines what is physically possible, not just what is energetically preferred. Consider a direct atom swap — two atoms exchanging positions. A continuous pathway for this exists on the PES, but it requires atoms to pass through each other, where the energy diverges. The barrier is infinite; the pathway is kinetically forbidden. In real materials, atoms change places by other mechanisms — via vacancies, interstitials, or correlated motion — pathways through configuration space that avoid catastrophic overlap.</p>
-<p><strong>Curvature at minima determines vibrational properties.</strong> The energy change for small displacements around a minimum depends on the shape of the potential well. A steep, narrow well produces strong restoring forces and high vibrational frequencies. A shallow, broad well produces softer vibrations at lower frequencies. This curvature is what phonon calculations determine — and what inelastic neutron scattering measures. The shape of the PES around a minimum appears directly in INS spectra.</p>
-</div>
-<div id="two-questions" class="section level2 hasAnchor" number="1.3">
-<h2><span class="header-section-number">1.3</span> Two questions<a href="the-potential-energy-surface.html#two-questions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>How is <span class="math inline">\(E(r)\)</span> calculated?</strong> Given an arrangement of atoms, how is its energy determined? Different methods — classical potentials, density functional theory, machine-learned potentials — give different answers with different tradeoffs of accuracy and computational cost.</p>
-<p><strong>What is done with <span class="math inline">\(E(r)\)</span>?</strong> Given the ability to calculate energies, what questions can be answered? Finding the lowest-energy structure is one application. Characterising vibrations around that structure is another. Simulating atomic motion at finite temperature, or sampling over different configurations — these require different approaches.</p>
-<p>These are independent choices. Molecular dynamics can use a classical potential, DFT, or a machine-learned potential — the choice of how to calculate <span class="math inline">\(E(r)\)</span> is independent of the choice to do MD. A common misconception is that “molecular dynamics” implies classical potentials, or that “DFT” implies static calculations. Neither is true. Any method for calculating <span class="math inline">\(E(r)\)</span> can be combined with any method for using it.</p>
-<p>The remainder of Part I covers three approaches to calculating E(r): classical potentials, density functional theory, and machine-learned interatomic potentials. Parts II and III turn to what is done with that ability — geometry optimisation, phonon calculations, molecular dynamics, and Monte Carlo sampling.</p>
+<div id="part-ii-structure-and-dynamics" class="section level1 unnumbered hasAnchor">
+<h1>Part II: Structure and Dynamics<a href="part-ii-structure-and-dynamics.html#part-ii-structure-and-dynamics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Given the ability to calculate <span class="math inline">\(E(\mathbf{r})\)</span>, what questions can be answered? This part covers methods that interrogate the potential energy surface to determine structure and dynamics. Geometry optimisation locates minima — finding stable structures that can be compared with diffraction. Phonon calculations characterise the curvature at those minima — predicting vibrational frequencies and densities of states measurable by inelastic neutron scattering. Molecular dynamics simulates atomic motion at finite temperature, providing access to ensemble-averaged structures, diffusion coefficients, and the dynamic structure factor <span class="math inline">\(S(Q, \omega)\)</span> measured by quasielastic neutron scattering. Each technique connects computational results directly to neutron observables.</p>
 
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="part-i-calculating-er.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="classical-potentials.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="mlips.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="finding-minima-geometry-optimisation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -292,7 +268,7 @@ gitbook.start({
     "size": 2
   },
   "edit": {
-    "link": "https://github.com/bjmorgan/neutrons_for_sustainable_energy/main/chapters/potential_energy_surface.Rmd",
+    "link": "https://github.com/bjmorgan/neutrons_for_sustainable_energy/main/parts/part2.Rmd",
     "text": "Edit"
   },
   "history": {
