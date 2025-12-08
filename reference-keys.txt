@@ -31,7 +31,9 @@ local-and-global-minima
 phonons
 vibrations-around-equilibrium
 the-harmonic-approximation
-periodic-systems-and-phonon-dispersion
+many-atoms
+periodicity-simplifies-the-problem
+acoustic-and-optical-branches
 calculating-phonons-in-practice
 what-you-get
 limitations
@@ -44,7 +46,7 @@ ensembles-and-what-they-mean
 thermostats-and-barostats
 what-you-get-1
 the-er-choice
-molecular-dynamics-observables-and-neutron-connections
+md-observables
 from-trajectories-to-observables
 vibrational-density-of-states
 ensemble-averaged-structure
@@ -83,11 +85,11 @@ the-physical-origin-anion-polarisation
 what-this-example-illustrates
 four-themes
 what-now
-derivation-of-the-dynamical-matrix-for-periodic-systems
+appendix-dynamical-matrix
 setup-and-notation
 translational-symmetry
 plane-wave-ansatz
 substitution-into-equations-of-motion
 the-dynamical-matrix
-the-key-result
+the-final-result
 connection-to-experiment
