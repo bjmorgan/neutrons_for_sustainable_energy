@@ -1,6 +1,6 @@
 # (APPENDIX) Appendix {-}
 
-# Derivation of the dynamical matrix for periodic systems
+# Derivation of the dynamical matrix for periodic systems {#appendix-dynamical-matrix}
 
 This appendix provides the full derivation of how translational symmetry reduces the phonon problem from a 3<i>N</i> × 3<i>N</i> eigenvalue problem (for <i>N</i> atoms in the crystal) to a 3<i>n</i> × 3<i>n</i> problem (for <i>n</i> atoms in the primitive cell) at each wavevector $\mathbf{q}$.
 
@@ -74,7 +74,7 @@ $$\omega^2 \tilde{\mathbf{e}} = \mathbf{D}(\mathbf{q}) \tilde{\mathbf{e}}$$
 
 This is a standard eigenvalue problem. The eigenvalues are $\omega^2$ and the eigenvectors $\mathbf{\tilde{e}}_i$ give the (mass-weighted) displacement patterns within the unit cell.
 
-## The key result
+## The final result
 
 The dynamical matrix $D(\mathbf{q})$ has dimensions 3n × 3n, where n is the number of atoms in the primitive cell. At each wavevector $\mathbf{q}$, we diagonalise this matrix to obtain 3n eigenvalues $\omega^2(\mathbf{q})$ and eigenvectors.
 

@@ -47,7 +47,7 @@ part that can be calculated plus a remainder.
 For the electron-electron interaction, the classical Coulomb energy of a 
 charge distribution is:
 
-$$J[\rho] = \frac{1}{2}\int\int \frac{\rho(\mathbf{r})\rho(\mathbf{r}')}{|\mathbf{r}-\mathbf{r}'|}\, d\mathbf{r}\, d\mathbf{r}'$$
+$$J[\rho] = \frac{1}{2}\int\int \frac{\rho(\mathbf{r})\rho(\mathbf{r}')}{|\mathbf{r}-\mathbf{r}'|}\, \mathrm{d}\mathbf{r}\, \mathrm{d}\mathbf{r}'$$
 
 This can be evaluated directly from the density. What it misses are exchange 
 (electrons with parallel spin avoid each other, a consequence of the Pauli 
@@ -79,13 +79,7 @@ $$E[\rho] = T_s[\rho] + J[\rho] + \int v(\mathbf{r})\rho(\mathbf{r})\,d\mathbf{r
 The first three terms can be calculated; all the unknowns are in 
 $E_\mathrm{xc}$.
 
-To evaluate $T_s$ requires finding the orbitals of the non-interacting 
-system. These satisfy one-electron Schrödinger equations in an effective 
-potential $v_\mathrm{eff} = v + v_J + v_\mathrm{xc}$, where $v$ is the nuclear 
-potential, $v_J$ is the classical Coulomb potential from the electron 
-density, and $v_\mathrm{xc}$ is the functional derivative of $E_\mathrm{xc}$ 
-with respect to $\rho$. The density is constructed from the occupied 
-orbitals:
+To evaluate $T_s$ requires finding the orbitals of the non-interacting system. These satisfy one-electron Schrödinger equations in an effective potential $v_\mathrm{eff} = v + v_J + v_\mathrm{xc}$, where $v$ is the nuclear potential, $v_J$ is the classical Coulomb potential from the electron density, and $v_\mathrm{xc}$ is the functional derivative of $E_\mathrm{xc}$ with respect to $\rho$. The density is constructed from the occupied orbitals:
 
 $$\rho(\mathbf{r}) = \sum_i |\phi_i(\mathbf{r})|^2$$
 

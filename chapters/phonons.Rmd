@@ -2,102 +2,131 @@
 
 ## Vibrations around equilibrium
 
-Geometry optimisation finds a minimum on the potential energy surface — a configuration where forces vanish. But atoms don't sit motionless at these positions. At any temperature above absolute zero, thermal energy causes atoms to vibrate around their equilibrium sites. Even at 0 K, quantum zero-point motion means atoms are never truly stationary, though for our purposes the classical picture of thermal vibrations suffices.
+Geometry optimisation finds a minimum on the potential energy surface — a configuration where forces vanish. But atoms do not sit motionless at these positions. At any temperature above absolute zero, thermal energy causes atoms to vibrate around their equilibrium sites.
 
-This atomic motion is precisely what inelastic neutron scattering probes. When a neutron scatters inelastically from a sample, it exchanges energy with vibrational modes. The measured spectrum S(Q,ω) encodes information about how atoms move — their vibrational frequencies and displacement patterns.
+This atomic motion is precisely what inelastic neutron scattering probes. When a neutron scatters inelastically from a sample, it exchanges energy with vibrational modes. The measured spectrum $S(Q,\omega)$ encodes information about how atoms move — their vibrational frequencies and displacement patterns.
 
-Phonon calculations aim to predict this vibrational behaviour. At a minimum, forces vanish but the Hessian — the matrix of second derivatives — remains, encoding how the energy changes when atoms are displaced from equilibrium. This curvature of the potential energy surface approximately determines vibrational behaviour. Stiff bonds (high curvature) give strong restoring forces and high vibrational frequencies. Soft bonds (low curvature) give weak restoring forces and low frequencies.
+Phonon calculations aim to predict this vibrational behaviour from the potential energy surface. The approach rests on a key observation: near a minimum, the PES is smooth and bowl-shaped. Small displacements from equilibrium produce restoring forces that push atoms back. The shape of the bowl — its curvature — determines the vibrational frequencies.
 
 ## The harmonic approximation
 
-Near a minimum, the potential energy surface is smooth and bowl-shaped. Expanding the energy in a Taylor series around equilibrium:
+Start with the simplest case: a single atom in a one-dimensional potential. Near a minimum, any smooth potential is approximately parabolic — the energy increases quadratically with displacement. This is the harmonic approximation:
 
-$$E = E_0 + \sum_i \frac{\partial E}{\partial r_i} \delta r_i + \frac{1}{2} \sum_{ij} \frac{\partial^2 E}{\partial r_i \partial r_j} \delta r_i \delta r_j + \ldots$$
+$$E = \frac{1}{2}k x^2$$
 
-At equilibrium, the first derivatives vanish. If we truncate at second order — the harmonic approximation — the energy becomes quadratic in displacements:
+where $x$ is the displacement from equilibrium and $k$ is the force constant, which measures the curvature of the potential at the minimum. Stiffer potentials have larger $k$.
 
-$$E = E_0 + \frac{1}{2} \sum_{ij} H_{ij} \, \delta r_i \, \delta r_j$$
+The force on the atom is:
 
-where H is the Hessian matrix. This is the same approximation we used in Newton-Raphson optimisation, but now it serves a different purpose. In optimisation, it was a computational convenience for finding minima efficiently. Here, it makes the vibrational problem tractable — and for many systems, it's also physically accurate.
+$$F = -\frac{dE}{dx} = -kx$$
 
-A quadratic energy means linear restoring forces: F = −Hδr. The equation of motion for atom i is then:
+This is a restoring force: it points back toward equilibrium, with strength proportional to the displacement. The equation of motion is:
 
-$$m_i \frac{d^2 \delta r_i}{dt^2} = -\sum_j H_{ij} \delta r_j$$
+$$m\frac{d^2 x}{dt^2} = -kx$$
 
-This is a system of coupled linear differential equations. We seek solutions where all atoms oscillate at the same frequency — normal modes. For a harmonic oscillator, solutions are sinusoidal in time. It is mathematically convenient to write these as complex exponentials δrᵢ(t) = uᵢ exp(iωt), with the understanding that the physical displacement is the real part. Differentiating twice:
+The solution is sinusoidal oscillation at a single frequency:
+
+$$\omega = \sqrt{\frac{k}{m}}$$
+
+Stiffer potentials (larger $k$) give higher frequencies. Heavier atoms give lower frequencies. One atom, one frequency — the curvature of the potential energy surface determines the vibrational frequency.
+
+## Many atoms
+
+For $N$ atoms in three dimensions, there are $3N$ displacement coordinates. Near equilibrium, the same logic applies: the potential is approximately quadratic in the displacements. But now the curvature is described by a matrix — the Hessian:
+
+$$E = E_0 + \frac{1}{2}\sum_{ij} H_{ij} \, \delta r_i \, \delta r_j$$
+
+where $\delta r_i$ is a displacement coordinate and $H_{ij} = \partial^2 E / \partial r_i \partial r_j$ is the matrix of second derivatives evaluated at the minimum. The Hessian captures how the energy changes when atoms move: the diagonal elements describe the restoring force on each atom; the off-diagonal elements describe how motion of one atom affects the force on another.
+
+Each atom obeys Newton's second law, but now the equations are coupled — the force on atom $i$ depends on the displacements of other atoms:
+
+$$m_i \frac{d^2 \delta r_i}{dt^2} = -\sum_j H_{ij} \, \delta r_j$$
+
+This is a system of coupled differential equations. We seek solutions where all atoms oscillate at the same frequency — normal modes. For a harmonic oscillator, solutions are sinusoidal in time. It is mathematically convenient to write these as complex exponentials $\delta r_i(t) = u_i \exp(i\omega t)$, with the understanding that the physical displacement is the real part. Differentiating twice:
 
 $$\frac{d^2 \delta r_i}{dt^2} = -\omega^2 u_i \exp(i\omega t)$$
 
-Substituting into the equation of motion, the exp(iωt) factors appear on both sides and cancel, leaving:
+Substituting into the equation of motion, the $\exp(i\omega t)$ factors appear on both sides and cancel, leaving:
 
-$$-m_i \omega^2 u_i = -\sum_j H_{ij} u_j$$
+$$m_i \omega^2 u_i = \sum_j H_{ij} u_j$$
 
 This is an eigenvalue problem, though not quite in standard form because of the mass factor. Introducing the mass-weighted dynamical matrix:
 
 $$D_{ij} = \frac{H_{ij}}{\sqrt{m_i m_j}}$$
 
-converts this to standard form. Diagonalising D gives eigenvalues ω² and eigenvectors that describe the displacement patterns — which atoms move, in what directions, with what relative amplitudes. Each eigenvector corresponds to a normal mode: a collective motion in which all atoms oscillate at the same frequency, maintaining fixed phase relationships.
+converts this to standard form. Diagonalising $\mathbf{D}$ gives eigenvalues $\omega^2$ and eigenvectors that describe the displacement patterns — which atoms move, in what directions, with what relative amplitudes. Each eigenvector corresponds to a normal mode: a collective motion in which all atoms oscillate at the same frequency, maintaining fixed phase relationships.
 
-For a system with N atoms in three dimensions, there are 3N eigenvalues and hence 3N normal modes. Three of these correspond to uniform translation (zero frequency); for periodic solids these become the acoustic modes at q = 0.
+For $N$ atoms in three dimensions, there are $3N$ eigenvalues and hence $3N$ normal modes. Three of these correspond to uniform translation (zero frequency). The remaining $3N - 3$ are the vibrational modes.
 
-## Periodic systems and phonon dispersion
+This is the complete solution — in principle. In practice, diagonalising a $3N \times 3N$ matrix for a macroscopic crystal is impossible.
 
-The derivation above applies to any collection of atoms, but for a macroscopic crystal we cannot diagonalise a matrix with 3N rows for every atom in the sample. Translational symmetry solves this.
+## Periodicity simplifies the problem
 
-A normal mode requires all atoms to oscillate at the same frequency — that's what makes it a normal mode. But they need not oscillate in phase. In a periodic crystal, translational symmetry constrains which phase relationships are allowed: if the physics is unchanged by shifting the whole crystal by a lattice vector **R**, the solution must transform consistently under that shift.
+For a macroscopic crystal, the approach above is intractable — we cannot diagonalise a matrix with $10^{23}$ rows. But crystals have translational symmetry, and this transforms the problem.
 
-The functions with well-defined behaviour under discrete translations are plane waves exp(i**q**·**R**). Different wavevectors **q** correspond to different phase relationships between unit cells. At **q** = 0, exp(i**q**·**R**) = 1 for all **R**, so all cells move in phase. As **q** increases, the phase difference between adjacent cells grows. At the Brillouin zone boundary, exp(i**q**·**R**) = −1 for nearest-neighbour cells — adjacent cells move in antiphase. Beyond the zone boundary, you're relabelling the same physical modes, which is why reciprocal space is periodic.
+Every unit cell has identical surroundings. The forces on an atom in cell 1 follow the same rules as the forces on the equivalent atom in cell 2, cell 3, or any other cell. This means the pattern of motion within each cell must be the same everywhere — what can vary is only the phase. Cell 2 might be doing exactly what cell 1 is doing, just slightly delayed (or advanced). This phase relationship between cells is the key.
 
-For each **q**, the displacement pattern within a unit cell is an eigenvector of the dynamical matrix D(**q**); the full solution across the crystal is this pattern multiplied by exp(i**q**·**R**). The key result — derived in the appendix — is that D(**q**) has size 3n × 3n, where n is the number of atoms in the primitive cell. Computationally, this is essential: we diagonalise a small matrix at each **q**, rather than a single impossibly large matrix for the whole crystal.
+Translational symmetry constrains which phase relationships are allowed. If the physics is unchanged by shifting the crystal by a lattice vector $\mathbf{R}$, the displacement pattern must transform consistently under that shift. The functions with this property are plane waves $e^{i\mathbf{q}\cdot\mathbf{R}}$, where the wavevector $\mathbf{q}$ labels the phase relationship.
 
-At each **q**, diagonalisation gives 3n eigenvalues and eigenvectors, corresponding to the 3n branches of the dispersion relation ω(**q**). The phonon band structure plots these dispersion curves along high-symmetry directions in the Brillouin zone. The phonon density of states integrates over all wavevectors, giving the distribution of frequencies regardless of which **q** they came from — this is what powder INS measures directly.
+At $\mathbf{q} = 0$, all cells move in phase — the same displacement everywhere, at the same time. As $\mathbf{q}$ increases, a phase shift develops between neighbouring cells: one cell lags slightly behind the next. At the Brillouin zone boundary, adjacent cells move in exact antiphase — when one moves left, its neighbour moves right.
+
+The frequency depends on which phase relationship we are looking at. Consider a chain of atoms connected by springs. When neighbours move together ($\mathbf{q} = 0$), the springs between them do not stretch — there is no restoring force from those springs, so the frequency is low (in fact zero for acoustic modes, since this is just uniform translation). When neighbours move in opposite directions (zone boundary), the springs are maximally stretched and compressed, the restoring forces are strongest, and the frequency is highest. The dispersion relation $\omega(\mathbf{q})$ encodes this: frequency varies with wavevector because different phase relationships produce different restoring forces.
+
+The mathematical consequence is that the dynamical matrix becomes block-diagonal in the plane-wave basis. Instead of one $3N \times 3N$ matrix for the whole crystal, there is a $3n \times 3n$ matrix $D(\mathbf{q})$ at each wavevector, where $n$ is the number of atoms in the primitive cell. We solve many small problems instead of one impossible one. The dynamical matrix at wavevector $\mathbf{q}$ is the Fourier transform of the real-space force constants:
+
+$$D_{ij}(\mathbf{q}) = \frac{1}{\sqrt{m_i m_j}} \sum_{\mathbf{R}} \Phi_{ij}(\mathbf{R}) \, e^{-i\mathbf{q}\cdot\mathbf{R}}$$
+
+where $\Phi_{ij}(\mathbf{R})$ is the force constant coupling atoms $i$ and $j$ separated by lattice vector $\mathbf{R}$. The full derivation is given in Appendix \@ref(appendix-dynamical-matrix).
+
+At each $\mathbf{q}$, diagonalising $D(\mathbf{q})$ gives $3n$ eigenvalues — the squared frequencies $\omega^2$ of the $3n$ branches at that wavevector. The eigenvectors describe the displacement pattern within the unit cell; the full displacement pattern across the crystal is this eigenvector multiplied by the phase factor $e^{i\mathbf{q}\cdot\mathbf{R}}$.
+
+The phonon band structure plots these dispersion curves $\omega(\mathbf{q})$ along high-symmetry paths through the Brillouin zone. The phonon density of states integrates over all wavevectors, giving the distribution of frequencies regardless of which $\mathbf{q}$ they came from — this is what powder INS measures directly.
+
+## Acoustic and optical branches
+
+For a structure with one atom per primitive cell, there are three branches — one for each direction of motion. These are the acoustic branches: at long wavelength ($\mathbf{q} \to 0$), they describe sound waves, with frequency proportional to wavevector.
+
+With more atoms per cell, additional branches appear. Consider two atoms per cell. At $\mathbf{q} = 0$, one solution has both atoms moving together — uniform translation of the unit cell, with $\omega = 0$. This is the acoustic mode at long wavelength. Another solution has the atoms moving in opposite directions while the centre of mass stays fixed. This costs energy even at $\mathbf{q} = 0$, so the frequency is non-zero — an optical mode. In ionic crystals, this out-of-phase motion creates an oscillating electric dipole that can couple to light, hence the name.
+
+In general, $n$ atoms per cell gives $3n$ branches: 3 acoustic and $3n - 3$ optical. The acoustic branches have $\omega \to 0$ as $\mathbf{q} \to 0$; the optical branches have finite frequency at the zone centre.
 
 ## Calculating phonons in practice
 
-Phonon calculations require the Hessian — the matrix of second derivatives of energy with respect to atomic positions. Most $E(r)$ methods provide forces (first derivatives) directly, but not second derivatives. However, second derivatives can be constructed from forces numerically.
+Phonon calculations require the Hessian — the second derivatives of energy with respect to atomic positions. Most $E(\mathbf{r})$ methods provide forces (first derivatives) directly, but not second derivatives. However, the Hessian can be built from forces by finite differences.
 
-The Hessian element Hᵢⱼ = ∂²E/∂rᵢ∂rⱼ can be written as:
-
-$$H_{ij} = -\frac{\partial F_i}{\partial r_j}$$
-
-where Fᵢ = −∂E/∂rᵢ is the force on coordinate i. This suggests a numerical approach: displace coordinate j by a small amount δr and see how the forces change.
-
-The finite displacement method constructs the Hessian by displacing each atom in turn. For each atom and each Cartesian direction, we shift the atom by +δr, calculate the forces on all atoms, then shift by −δr and recalculate. The central difference gives:
+The finite displacement method works by displacing each atom in turn and seeing how the forces change. For each atom and each Cartesian direction, the atom is shifted by a small amount $+\delta r$, the forces on all atoms are calculated, then the atom is shifted by $-\delta r$ and the forces recalculated. The difference in forces, divided by the displacement, gives the second derivatives:
 
 $$H_{ij} \approx -\frac{F_i(r_j + \delta r) - F_i(r_j - \delta r)}{2\delta r}$$
 
-For a system with n atoms in the primitive cell, this requires 6n force calculations (positive and negative displacements in <i>x</i>, <i>y</i>, <i>z</i> for each atom). Each force calculation gives one column of the Hessian. Symmetry can reduce the number of required calculations.
+For a system with $n$ atoms in the primitive cell, this requires $6n$ force calculations — positive and negative displacements in each of the three Cartesian directions for each atom. Symmetry often reduces this: if two displacements are related by a symmetry operation, only one needs to be calculated.
 
-For a periodic system, we work in a supercell. The supercell must be large enough that the displaced atom doesn't interact significantly with its own periodic images — otherwise the force constants are contaminated by artificial periodicity. The supercell size also determines the **q**-point sampling: a 2&times;2&times;2 supercell gives the dynamical matrix at **q**-points commensurate with that supercell.
+The calculation is performed in a supercell. The supercell must be large enough that a displaced atom does not interact significantly with its own periodic images — otherwise the calculated force constants are contaminated by artificial periodicity. Larger supercells also give denser sampling of $\mathbf{q}$-points in the Brillouin zone.
 
-Density functional perturbation theory (DFPT) takes a different approach, calculating the response of the electronic structure to atomic displacements analytically within perturbation theory. This avoids the need for supercells and gives phonons at arbitrary **q**-points directly, but is more complex to implement and only available for certain $E(r)$ methods.
-
-In practice, both approaches are implemented in standard codes. The finite displacement method works with any $E(r)$ method that provides forces — DFT, MLIPs, even classical potentials. DFPT is typically used with DFT.
+Density functional perturbation theory (DFPT) offers an alternative. Instead of displacing atoms and recalculating, it computes the response of the electronic structure to atomic displacements analytically within perturbation theory. This gives phonons at arbitrary $\mathbf{q}$-points without needing supercells, but the method is more complex and only available for certain $E(\mathbf{r})$ methods.
 
 ## What you get
 
-Phonon calculations provide both eigenvalues (frequencies) and eigenvectors (displacement patterns). Experimentally, INS gives the vibrational spectrum — the density of states $g(\omega)$ — but extracting mode-specific information about which atoms move and how requires careful analysis, often guided by computation. The calculation provides both quantities directly.
+Phonon calculations provide both frequencies and displacement patterns — both eigenvalues and eigenvectors of the dynamical matrix.
 
-The phonon band structure shows dispersion curves along high-symmetry paths, revealing the frequencies of specific modes and any soft modes or instabilities. Single-crystal measurements can probe specific branches, but for complex materials or difficult-to-grow crystals, computation may be the only practical route to the full dispersion. The phonon density of states gives the distribution of vibrational frequencies, summed over all wavevectors and branches — this is what powder INS measures directly.
+The phonon band structure shows how frequencies vary with wavevector, plotted along high-symmetry paths through the Brillouin zone. This can be compared directly with single-crystal INS measurements, where the scattering geometry selects specific $\mathbf{q}$ values. Features like avoided crossings, soft modes, and the gap between acoustic and optical branches are all visible in the dispersion curves.
 
-From the phonon frequencies, thermodynamic quantities follow from standard statistical mechanics. The vibrational free energy:
+The phonon density of states shows the distribution of vibrational frequencies, integrated over all wavevectors. This is what powder INS measures — the sample averages over all crystal orientations, so information about specific $\mathbf{q}$ values is lost, but the distribution of frequencies remains. Peaks in the density of states correspond to flat regions in the dispersion where many modes have similar frequencies.
+
+From the phonon frequencies, thermodynamic quantities follow from statistical mechanics. The vibrational contribution to the free energy is:
 
 $$F_{\text{vib}} = \sum_{\mathbf{q},\nu} \left[ \frac{\hbar\omega_{\mathbf{q}\nu}}{2} + k_B T \ln\left(1 - e^{-\hbar\omega_{\mathbf{q}\nu}/k_B T}\right) \right]$$
 
-where the sum runs over wavevectors $q$ and branches $\nu$. From this, heat capacity and vibrational entropy follow by differentiation. These quantities matter for phase stability at finite temperature — a phase with lower energy may not be stable if another phase has higher entropy.
+where the sum runs over all wavevectors $\mathbf{q}$ and branches $\nu$. The first term is the zero-point energy; the second captures thermal occupation. Heat capacity and entropy follow by differentiation. These quantities matter for phase stability at finite temperature — a phase with higher energy at 0 K may become stable at higher temperatures if it has more low-frequency modes and hence higher vibrational entropy.
 
 ## Limitations
 
-The harmonic approximation assumes small displacements around a well-defined minimum. This breaks down in several situations.
+The harmonic approximation assumes the potential is quadratic — that displacements remain small enough for the parabolic approximation to hold. This works well at low temperatures, where atoms stay close to their equilibrium positions.
 
-At high temperatures, atomic displacements become large and the quadratic approximation fails. Anharmonic terms in the potential — the higher-order terms we truncated — become significant. This leads to effects like phonon-phonon scattering, finite thermal conductivity, and temperature-dependent phonon frequencies. This is true anharmonicity: atoms still oscillate around equilibrium positions, but the potential well is not quadratic.
+At higher temperatures, atoms venture further from equilibrium and sample regions where the potential deviates from a parabola. Effects that the harmonic picture cannot capture become significant. Phonon frequencies shift with temperature. Phonons scatter from each other, giving finite thermal conductivity. Thermal expansion occurs — something a purely harmonic crystal cannot exhibit, since the equilibrium positions would be temperature-independent.
 
-When the harmonic approximation fails in this sense, one option stays within the lattice dynamics framework but includes higher-order terms. Recall that the harmonic approximation truncates the Taylor expansion at second order. Including third and fourth order terms:
+Including anharmonic effects is possible but substantially more expensive. The third-order force constants describe three-phonon interactions: one phonon decaying into two, or two combining into one. These processes are responsible for thermal resistance. Fourth-order terms describe four-phonon processes. The number of terms grows rapidly with order, and the modes are no longer independent — the simple eigenvalue picture breaks down.
 
-$$E = E_0 + \frac{1}{2}\sum_{ij} H_{ij} \delta r_i \delta r_j + \frac{1}{6}\sum_{ijk} \Phi_{ijk} \delta r_i \delta r_j \delta r_k + \frac{1}{24}\sum_{ijkl} \Phi_{ijkl} \delta r_i \delta r_j \delta r_k \delta r_l + \ldots$$
+For some systems, the harmonic picture fails qualitatively rather than just quantitatively. Superionic conductors have mobile ions that diffuse through the structure rather than vibrating around fixed sites — there is no equilibrium position to expand around. Soft modes with frequencies approaching zero signal structural instabilities: the curvature of the PES is nearly flat or even negative in some direction, and the structure may be unstable. Phase transitions involve atoms moving between different potential wells, not oscillating within one.
 
-The third-order terms $\Phi_{ijk} describe three-phonon processes — one phonon decaying into two, or two combining into one. These are responsible for finite thermal conductivity. The fourth-order terms describe four-phonon processes.
-
-The problem is that while the Hessian has <i>n</i><sup>2</sup> elements (for <i>n</i> atomic coordinates), the third-order tensor has <i>n</i><sup>3</sup> elements and the fourth-order tensor has <i>n</i><sup>4</sup>. More fundamentally, the harmonic problem gives 3<i>N</i> independent modes. Including anharmonicity couples these modes to each other: you need to consider how each mode interacts with every other mode (for three-phonon) or every pair of modes (for four-phonon). The number of terms grows combinatorially, making these calculations substantially more expensive.
-
-Some systems go beyond anharmonicity — the picture of atoms oscillating around fixed equilibrium positions breaks down entirely. Superionic conductors, where ions diffuse rapidly through a solid framework, cannot be described by vibrations around fixed sites. Soft modes that approach zero frequency signal structural instabilities. Phase transitions involve large-amplitude motion between different structural basins. For these, no Taylor expansion around a single minimum will suffice.
+For these situations, molecular dynamics offers an alternative. Rather than assuming harmonic motion and solving for frequencies, MD follows the actual atomic trajectories on the full potential energy surface. Vibrational information can then be extracted from velocity autocorrelation functions, as described in Chapter \@ref(md-observables). This captures anharmonicity naturally, though at greater computational cost.
+```

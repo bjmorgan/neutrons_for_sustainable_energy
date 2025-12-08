@@ -1,4 +1,4 @@
-# Molecular dynamics: observables and neutron connections
+# Molecular dynamics: observables and neutron connections {#md-observables}
 
 ## From trajectories to observables
 
