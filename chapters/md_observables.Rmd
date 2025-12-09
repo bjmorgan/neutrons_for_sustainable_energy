@@ -28,9 +28,13 @@ This provides a direct comparison between simulation and experiment. If the simu
 
 For systems with multiple atom types, partial pair distribution functions $g_{\alpha\beta}(r)$ separate contributions from different pair types: Li–Li, Li–O, O–O, and so on. Simulation provides these automatically. Experimentally, isotope substitution or anomalous X-ray scattering can separate them, though this is more challenging. The partials reveal which correlations are responsible for features in the total $g(r)$ — information that aids interpretation of complex structures.
 
-## Time correlation functions
+## Dynamics and the dynamic structure factor
 
 The quantities above are static — averages over the trajectory with no reference to how the system evolves in time. But MD also captures dynamics: how properties change, how quickly correlations decay, how the system moves from one configuration to another.
+
+For dynamics, the key experimental observable is the dynamic structure factor $S(\mathbf{Q}, \omega)$, measured by inelastic neutron scattering. At higher energy transfers, $S(\mathbf{Q}, \omega)$ captures vibrational excitations — phonons. Near the elastic line, small energy transfers reveal diffusive motion and relaxation processes; this is the quasielastic regime. Several routes connect MD trajectories to $S(\mathbf{Q}, \omega)$: velocity autocorrelation functions for vibrations, mean squared displacements for diffusion coefficients, and Van Hove correlation functions for the full space-time picture.
+
+## Time correlation functions
 
 Many dynamical quantities take the form of time correlation functions. The idea is simple: how does some property at time $t$ relate to the same property at time 0? If a property fluctuates randomly, it will quickly become uncorrelated with its initial value. If it changes slowly or oscillates, correlations persist.
 
@@ -60,7 +64,7 @@ $$g(\omega) = \int_{-\infty}^{\infty} C_{vv}(t) \, \mathrm{e}^{-\mathrm{i}\omega
 
 This works because oscillatory motion at frequency $\omega$ contributes oscillations at that frequency to the velocity autocorrelation function, which appear as a peak at $\omega$ in the Fourier transform.
 
-The result includes all anharmonic effects — the atoms move on the full potential energy surface, not a quadratic approximation to it. For strongly anharmonic systems, the MD-derived density of states may differ substantially from harmonic phonon calculations. Comparison with INS then tests whether the simulation captures the real anharmonicity.
+The result includes all anharmonic effects — the atoms move on the full potential energy surface, not a quadratic approximation to it. For strongly anharmonic systems, the MD-derived density of states may differ substantially from harmonic phonon calculations. Comparison with the high-energy-transfer region of $S(\mathbf{Q}, \omega)$ from INS then tests whether the simulation captures the real anharmonicity.
 
 For systems with multiple atom types, partial densities of states can be computed by restricting the velocity autocorrelation to specific species — lithium vibrations, oxygen vibrations, and so on. Simulation provides these decompositions directly. Experimentally, separating contributions is harder, though isotope substitution can help: replacing hydrogen with deuterium shifts the frequencies associated with those atoms, allowing their contribution to be identified. The partials reveal which species are responsible for features in the total spectrum — a peak at a particular frequency might come from light, fast-moving lithium ions or from heavier framework atoms, and the decomposition tells you which.
 
@@ -78,25 +82,27 @@ For atoms vibrating around fixed sites, the MSD oscillates and remains bounded �
 
 $$\text{MSD}(t) \rightarrow 6D^*t$$
 
-where $D^*$ is the **self-diffusion coefficient** and the factor of 6 comes from three-dimensional motion (2 for each dimension). Plotting MSD against time and fitting the slope gives $D$ directly.
+where $D^*$ is the self-diffusion coefficient and the factor of 6 comes from three-dimensional motion (2 for each dimension). Plotting MSD against time and fitting the slope gives $D^*$ directly.
 
 This can be decomposed by species. In a lithium-ion conductor, lithium motion (which should show diffusion) can be tracked separately from the framework atoms (which should show only vibration). The simulation reveals not just that diffusion occurs, but which atoms are mobile and which are not.
 
-## The Van Hove correlation function
+## Mechanistic insight from trajectories
 
 The trajectory contains more than just a diffusion coefficient. Every atomic position at every timestep is recorded — in principle, the complete mechanistic picture is there. For simple diffusion mechanisms, this can be extracted directly by tracking individual atoms through the trajectory. Does a lithium ion hop between discrete sites, or does it follow a continuous path? Does it wait at one site for a long time then jump quickly, or does it move gradually? Are jumps correlated — does one ion moving trigger another to move? These questions can be answered by visualising trajectories and by statistical analysis of jump events.
 
 For more complex mechanisms, the analysis becomes harder. If many atoms move cooperatively, or if the motion involves subtle rearrangements of the surrounding structure, identifying what is happening requires more sophisticated analysis. But the information is present in the trajectory — the challenge is extracting it.
 
-The Van Hove correlation function provides a systematic way to do this. The quantities discussed earlier separate spatial and temporal information: $g(r)$ captures where atoms are relative to each other; MSD and velocity autocorrelation capture how things change in time. The Van Hove function combines both, measuring spatial correlations as a function of time.
+This mechanistic insight can also inform experimental analysis. Quasielastic scattering data are typically fitted to models — jump diffusion, continuous diffusion, confined motion — but the choice of model is often unclear from the scattering data alone. If trajectory analysis shows that lithium ions hop between discrete sites with a well-defined residence time, this justifies using a jump diffusion model. Computation provides the mechanistic picture; experiment tests whether that picture is consistent with the measured scattering.
+
+## The Van Hove correlation function
+
+The quantities discussed so far either capture spatial information ($g(r)$) or temporal information (velocity autocorrelation, MSD). The Van Hove correlation function combines both, measuring spatial correlations as a function of time — and its Fourier transform connects directly to the $S(\mathbf{Q}, \omega)$ that neutron scattering measures.
 
 The **self part** $G_s(\mathbf{r}, t)$ asks: given that an atom was at some position at time 0, what is the probability of finding *that same atom* at displacement $\mathbf{r}$ from its initial position after time $t$?
 
 $$G_s(\mathbf{r}, t) = \frac{1}{N} \left\langle \sum_i \delta(\mathbf{r} - [\mathbf{r}_i(t) - \mathbf{r}_i(0)]) \right\rangle$$
 
 At $t = 0$, this is a delta function at the origin — each atom is where it started. As time evolves, $G_s(\mathbf{r}, t)$ broadens as atoms move. For vibrating atoms, it broadens but remains centred near the origin. For diffusing atoms, the distribution spreads and the width grows with time.
-
-$G_s(\mathbf{r}, t)$ provides direct mechanistic insight. For jump diffusion — atoms hopping between discrete sites — peaks appear at the neighbour distances, growing with time as more atoms complete jumps. For continuous liquid-like diffusion, there is smooth broadening with no discrete structure. For confined motion, the distribution broadens but remains bounded. The real-space, real-time picture shows how atoms actually move.
 
 The **distinct part** $G_d(\mathbf{r}, t)$ asks a different question: given that atom $i$ was at some position at time 0, what is the probability of finding a *different* atom $j$ at distance $\mathbf{r}$ from that initial position after time $t$?
 
@@ -106,17 +112,15 @@ At $t = 0$, this is the pair distribution function $g(r) - 1$: peaks at the neig
 
 For a diffusing species in a solid framework, the behaviour is intermediate. The mobile ions lose their initial correlations as they hop between sites, while the framework atoms maintain theirs. The distinct part thus probes collective behaviour: not just where one atom goes, but how the arrangement of atoms evolves.
 
-## Connection to S(Q, ω)
+## Connection to experiment
 
-Quasielastic neutron scattering measures $S(\mathbf{Q}, \omega)$, the dynamic structure factor. This is related to the Van Hove functions by a space-time Fourier transform:
+The Van Hove functions connect to $S(\mathbf{Q}, \omega)$ through a space-time Fourier transform:
 
 $$S(\mathbf{Q}, \omega) = \int \int G(\mathbf{r}, t) \, \mathrm{e}^{\mathrm{i}(\mathbf{Q} \cdot \mathbf{r} - \omega t)} \, \mathrm{d}\mathbf{r} \, \mathrm{d}t$$
 
-The self and distinct parts of $G(\mathbf{r}, t)$ contribute differently to the measured scattering. For nuclei with large incoherent scattering cross-sections — hydrogen being the prime example — the scattering is dominated by the self part, reflecting single-particle motion. For coherent scatterers, the distinct part contributes, and the scattering reflects collective dynamics and structural correlations.
+The self and distinct parts contribute differently to the measured scattering. For nuclei with large incoherent scattering cross-sections — hydrogen being the prime example — the scattering is dominated by the self part, reflecting single-particle motion. For coherent scatterers, the distinct part contributes, and the scattering reflects collective dynamics and structural correlations.
 
-$S(\mathbf{Q}, \omega)$ is in reciprocal space and frequency domain — the mechanistic information is encoded but not directly visible. Extracting mechanisms from experimental $S(\mathbf{Q}, \omega)$ typically requires fitting models: simple Fickian diffusion gives a Lorentzian whose width increases as $Q^2$; jump diffusion models give a width that saturates at large $Q$; confined motion gives elastic components plus broadened quasielastic scattering. The model parameters reveal something about the mechanism, but a functional form must be assumed.
-
-MD reverses this logic. The simulation provides $G(\mathbf{r}, t)$ directly — the real-space, real-time picture where mechanisms are visible. The Fourier transform to $S(\mathbf{Q}, \omega)$ then provides the comparison with experiment: does the simulation, which shows a particular mechanism, reproduce the measured scattering?
+MD provides $G(\mathbf{r}, t)$ directly — a real-space, real-time picture. The Fourier transform to $S(\mathbf{Q}, \omega)$ then allows comparison with experiment: does the simulation reproduce the measured scattering? If it does, the mechanistic picture extracted from trajectory analysis is consistent with what the neutrons see.
 
 ## The computational–experimental loop
 
@@ -126,4 +130,4 @@ Computation provides microscopic detail. From trajectories, we see how atoms mov
 
 Disagreement raises questions. The $E(\mathbf{r})$ method may be inadequate — the potential may not capture the relevant physics. But simulations typically model idealised structures: perfect stoichiometry, no impurities, no grain boundaries, infinite crystals via periodic boundary conditions. Real samples have defects, secondary phases, surface effects, non-stoichiometry. Disagreement might mean the simulation is wrong, or it might mean the sample differs from its idealised description. Computation can reveal what ideal behaviour should look like, highlighting where real samples deviate.
 
-Experiment provides constraints and raises questions. Unexpected QENS broadening, a lineshape that does not fit standard models, dynamics that differ from predictions — these prompt computational investigation. What mechanism would produce this scattering? The most productive work often involves iteration: measurement raises a question, simulation proposes an answer, comparison tests the proposal.
+Experiment provides constraints and raises questions. Unexpected quasielastic broadening, a lineshape that does not fit standard models, dynamics that differ from predictions — these prompt computational investigation. What mechanism would produce this scattering? The most productive work often involves iteration: measurement raises a question, simulation proposes an answer, comparison tests the proposal.
