@@ -51,11 +51,13 @@ md-observables
 from-trajectories-to-observables
 ensemble-averaged-structure
 pair-distribution-functions
+dynamics-and-the-dynamic-structure-factor
 time-correlation-functions
 vibrational-density-of-states
 diffusion-and-mean-squared-displacement
+mechanistic-insight-from-trajectories
 the-van-hove-correlation-function
-connection-to-sq-ω
+connection-to-experiment
 the-computationalexperimental-loop
 monte-carlo-sampling
 beyond-molecular-dynamics
@@ -94,4 +96,4 @@ plane-wave-ansatz
 substitution-into-equations-of-motion
 the-dynamical-matrix
 the-final-result
-connection-to-experiment
+connection-to-experiment-1
